@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "IFueB3L30B4=",
+  "dgSpecHash": "GPM5RQgIYvo=",
   "success": true,
-  "projectFilePath": "C:\\Repo\\gruppe5-nettside\\KartverketGruppe5.csproj",
+  "projectFilePath": "/app/KartverketGruppe5.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ingri\\.nuget\\packages\\bootstrap\\5.3.3\\bootstrap.5.3.3.nupkg.sha512",
-    "C:\\Users\\ingri\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.21.0\\microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
+    "/root/.nuget/packages/bootstrap/5.3.3/bootstrap.5.3.3.nupkg.sha512",
+    "/root/.nuget/packages/microsoft.visualstudio.azure.containers.tools.targets/1.21.0/microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
   ],
   "logs": []
 }
