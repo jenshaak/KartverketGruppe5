@@ -2,7 +2,12 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+# This stage is used when running from VS in fast mode (Default for Debug configuration)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dev
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
