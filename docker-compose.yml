@@ -1,20 +1,32 @@
 version: '3.8'
+
 services:
-  webapp:
+  kartverketgruppe5:
+    image: ${DOCKER_REGISTRY-}kartverketgruppe5
     build:
       context: .
       dockerfile: Dockerfile
-      target: dev
     ports:
       - "8080:8080"
+    depends_on:
+      - mariadb
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
-      - ApiSettings__KommuneInfoApiBaseUrl=https://ws.geonorge.no/kommuneinfo/v1
-      - ApiSettings__StedsnavnApiBaseUrl=https://ws.geonorge.no/stedsnavn/v1
+      - ConnectionStrings__DefaultConnection=Server=mariadb;Database=geochangesdb;User=root;Password=gruppe5;
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: gruppe5
+      MYSQL_DATABASE: geochangesdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: gruppe5
+    ports:
+      - "3306:3306"
     volumes:
-      - .:/app
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-    command: dotnet watch run --no-launch-profile
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

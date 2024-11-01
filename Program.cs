@@ -1,5 +1,7 @@
 using KartverketGruppe5.Services;
 using KartverketGruppe5;
+using KartverketGruppe5.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,11 @@ builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configure Entity Framework with MariaDB
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(10, 5, 9))));
 
 var app = builder.Build();
 
