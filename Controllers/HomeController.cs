@@ -22,7 +22,12 @@ namespace KartverketGruppe5.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new HomeViewModel
+            {
+                UserName = HttpContext.Session.GetString("UserName")
+            };
+            
+            return View(viewModel);
         }
 
         [HttpPost]

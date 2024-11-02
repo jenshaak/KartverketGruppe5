@@ -22,6 +22,17 @@
                     <li class="nav-item">
                         <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" asp-controller="Home" asp-action="CorrectMap">Meld inn endring</a>
                     </li>
+                    <li class="nav-item">
+                        @if (Context.Session.GetString("UserName") == null)
+                        {
+                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" asp-controller="Login" asp-action="Index">Logg inn</a>
+                        }
+                        else
+                        {
+                            <span class="px-4 py-2">Hei, @Context.Session.GetString("UserName")!</span>
+                            <a class="px-4 py-2 rounded-md bg-red-300 hover:scale-105 hover:text-black" asp-controller="Login" asp-action="Logout">Logg ut</a>
+                        }
+                    </li>
                 </ul>
             </div>
         </nav>
