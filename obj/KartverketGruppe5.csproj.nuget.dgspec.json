@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/app/KartverketGruppe5.csproj": {}
+    "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-code\\KartverketGruppe5\\KartverketGruppe5.csproj": {}
   },
   "projects": {
-    "/app/KartverketGruppe5.csproj": {
+    "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-code\\KartverketGruppe5\\KartverketGruppe5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/app/KartverketGruppe5.csproj",
+        "projectUniqueName": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-code\\KartverketGruppe5\\KartverketGruppe5.csproj",
         "projectName": "KartverketGruppe5",
-        "projectPath": "/app/KartverketGruppe5.csproj",
-        "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/app/obj/",
+        "projectPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-code\\KartverketGruppe5\\KartverketGruppe5.csproj",
+        "packagesPath": "C:\\Users\\jensh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-code\\KartverketGruppe5\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/root/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\jensh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,13 +46,45 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.35, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.21.0, )"
             },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.3.7, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "bootstrap": {
               "target": "Package",
               "version": "[5.3.3, )"
+            },
+            "leaflet": {
+              "target": "Package",
+              "version": "[0.7.3, )"
             }
           },
           "imports": [
@@ -71,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
