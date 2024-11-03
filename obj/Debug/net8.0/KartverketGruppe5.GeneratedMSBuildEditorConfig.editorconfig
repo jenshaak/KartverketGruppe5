@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\jensh\OneDrive\Skrivebord\Skole\UiA høst 2024\vs-code\KartverketGruppe5
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-code/KartverketGruppe5/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-code/KartverketGruppe5/Views/Home/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-code/KartverketGruppe5/Views/Home/CorrectionOverview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb3JyZWN0aW9uT3ZlcnZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -56,6 +64,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-code/KartverketGruppe5/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-code/KartverketGruppe5/Views/Login/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-code/KartverketGruppe5/Views/Shared/Error.cshtml]

@@ -2,6 +2,7 @@ using KartverketGruppe5.Services;
 using KartverketGruppe5;
 using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSet
 // Register services and their interfaces
 builder.Services.AddHttpClient<IKommuneInfoService, KommuneInfoService>();
 builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
+
+// Add this with your other service registrations
+builder.Services.AddScoped<BrukerService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -28,6 +32,16 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/Home/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +56,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
