@@ -10,6 +10,7 @@
                 <th>Email</th>
                 <th>Rolle</th>
                 <th>Registrert</th>
+                <th>Bruker ID</th>
                 <th>Handling</th>
             </tr>
         </thead>
@@ -21,8 +22,9 @@
                     <td>@bruker.Email</td>
                     <td>@bruker.Rolle</td>
                     <td>@bruker.OpprettetDato.ToString("dd.MM.yyyy")</td>
+                    <td>@bruker.BrukerId</td>
                     <td>
-                        <form asp-action="EndreRolle" method="post" class="d-inline">
+                        <form asp-controller="Bruker" asp-action="EndreRolle" method="post" class="d-inline">
                             <input type="hidden" name="brukerId" value="@bruker.BrukerId" />
                             <select name="nyRolle" class="form-select form-select-sm d-inline w-auto">
                                 <option value="bruker" selected="@(bruker.Rolle == "bruker")">Bruker</option>
@@ -36,4 +38,18 @@
             }
         </tbody>
     </table>
+
+    <form asp-action="PopulateFylkerOgKommuner" method="post">
+        <button type="submit" class="btn btn-primary">Oppdater Fylker og Kommuner</button>
+    </form>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
 </div> 

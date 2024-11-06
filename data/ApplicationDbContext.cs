@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using KartverketGruppe5.Data;
+using KartverketGruppe5.Models;
 
 namespace KartverketGruppe5.Data
 {
@@ -10,5 +11,6 @@ namespace KartverketGruppe5.Data
         }
 
         public DbSet<GeoChange> GeoChanges { get; set; }
+        public DbSet<Bruker> Brukere { get; set; }
     }
 }

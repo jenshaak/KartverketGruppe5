@@ -15,6 +15,10 @@ builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
 
 // Add this with your other service registrations
 builder.Services.AddScoped<BrukerService>();
+builder.Services.AddScoped<GeoChangeService>();
+builder.Services.AddScoped<LokasjonService>();
+builder.Services.AddScoped<InnmeldingService>();
+builder.Services.AddScoped<KommunePopulateService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

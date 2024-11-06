@@ -19,8 +19,8 @@ namespace KartverketGruppe5.Services
         {
             using var connection = new MySqlConnection(_connectionString);
             return await connection.QueryFirstOrDefaultAsync<Bruker>(
-                "SELECT * FROM bruker WHERE email = @Email", 
-                new { Email = email });
+                "SELECT * FROM Bruker WHERE email = @email", 
+                new { email = email });
         }
 
         public async Task<bool> CreateBruker(Bruker bruker)
@@ -31,13 +31,14 @@ namespace KartverketGruppe5.Services
             try
             {
                 await connection.ExecuteAsync(@"
-                    INSERT INTO Bruker (Fornavn, Etternavn, Email, Passord) 
-                    VALUES (@Fornavn, @Etternavn, @Email, @Passord)",
+                    INSERT INTO Bruker (fornavn, etternavn, email, passord) 
+                    VALUES (@fornavn, @etternavn, @email, @passord)",
                     bruker);
                 return true;
             }
-            catch (MySqlException)
+            catch (MySqlException ex)
             {
+                Console.WriteLine($"Database error: {ex.Message}");
                 return false;
             }
         }
@@ -58,7 +59,7 @@ namespace KartverketGruppe5.Services
         {
             using var connection = new MySqlConnection(_connectionString);
             var affected = await connection.ExecuteAsync(
-                "UPDATE bruker SET rolle = @Rolle WHERE bruker_id = @BrukerId",
+                "UPDATE Bruker SET rolle = @Rolle WHERE brukerId = @BrukerId",
                 new { Rolle = nyRolle, BrukerId = brukerId });
             return affected > 0;
         }
@@ -67,7 +68,7 @@ namespace KartverketGruppe5.Services
         {
             using var connection = new MySqlConnection(_connectionString);
             return await connection.QueryAsync<Bruker>(
-                "SELECT bruker_id, fornavn, etternavn, email, rolle, opprettet_dato FROM bruker ORDER BY opprettet_dato DESC");
+                "SELECT brukerId, fornavn, etternavn, email, rolle, opprettetDato FROM Bruker ORDER BY opprettetDato DESC");
         }
     }
 } 
