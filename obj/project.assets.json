@@ -430,11 +430,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/simenholmen/Downloads/KartverketGruppe5/KartverketGruppe5.csproj",
+      "projectUniqueName": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj",
       "projectName": "KartverketGruppe5",
-      "projectPath": "/Users/simenholmen/Downloads/KartverketGruppe5/KartverketGruppe5.csproj",
+      "projectPath": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj",
       "packagesPath": "/Users/simenholmen/.nuget/packages/",
-      "outputPath": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/",
+      "outputPath": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/simenholmen/.nuget/NuGet/NuGet.Config"

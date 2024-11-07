@@ -9,55 +9,55 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = KartverketGruppe5
 build_property.RootNamespace = KartverketGruppe5
-build_property.ProjectDir = /Users/simenholmen/Downloads/KartverketGruppe5/
+build_property.ProjectDir = /Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/simenholmen/Downloads/KartverketGruppe5
+build_property.MSBuildProjectDirectory = /Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Home/CorrectionOverview.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Home/CorrectionOverview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Db3JyZWN0aW9uT3ZlcnZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Home/CorrectMap.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Home/CorrectMap.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Db3JyZWN0TWFwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Home/Index.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Home/Overview.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Home/Overview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9PdmVydmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Home/Privacy.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Home/RegistrationForm.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Home/RegistrationForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9SZWdpc3RyYXRpb25Gb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Shared/Error.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/_ViewImports.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/_ViewStart.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/simenholmen/Downloads/KartverketGruppe5/Views/Shared/_Layout.cshtml]
+[/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-hg625dshku
