@@ -8,11 +8,13 @@ namespace KartverketGruppe5.Services
     {
         private readonly IConfiguration _configuration;
         private readonly string? _connectionString;
+        private readonly ILogger<InnmeldingService> _logger;
 
-        public InnmeldingService(IConfiguration configuration)
+        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger)
         {
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            _logger = logger;
         }
 
         private IDbConnection Connection => new MySqlConnection(_connectionString);
@@ -48,6 +50,18 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        public IEnumerable<Innmelding> GetMineInnmeldinger(int brukerId)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string query = @"SELECT i.*, l.latitude, l.longitude, l.geoJson 
+                               FROM Innmelding i 
+                                JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
+                               WHERE i.brukerId = @BrukerId";
+                return dbConnection.Query<Innmelding>(query, new { BrukerId = brukerId });
+            }
+        }
+
         public Innmelding GetInnmeldingById(int id)
         {
             using (IDbConnection dbConnection = Connection)
@@ -75,6 +89,35 @@ namespace KartverketGruppe5.Services
             {
                 string query = "UPDATE Innmelding SET kommentar = @Kommentar WHERE innmeldingId = @Id";
                 dbConnection.Execute(query, new { Id = innmeldingId, Kommentar = kommentar });
+            }
+        }
+
+        public InnmeldingModel GetInnmeldingForLokasjon(int lokasjonId)
+        {
+            try
+            {
+                using (IDbConnection db = new MySqlConnection(_connectionString))
+                {
+                    const string sql = @"
+                        SELECT 
+                            innmeldingId,
+                            brukerId,
+                            kommuneId,
+                            lokasjonId,
+                            beskrivelse,
+                            tidspunkt
+                        FROM Innmelding 
+                        WHERE lokasjonId = @LokasjonId
+                        ORDER BY tidspunkt DESC
+                        LIMIT 1";
+
+                    return db.QueryFirstOrDefault<InnmeldingModel>(sql, new { LokasjonId = lokasjonId });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error getting innmelding for lokasjon {lokasjonId}: {ex.Message}");
+                return null;
             }
         }
     }

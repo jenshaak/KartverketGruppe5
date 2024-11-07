@@ -1,0 +1,38 @@
+@model List<KartverketGruppe5.Models.InnmeldingModel>
+@{
+    ViewData["Title"] = "Mine innmeldinger";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Mine innmeldinger</h1>
+
+    <!-- Filter/Sortering -->
+    <div class="flex justify-between mb-6">
+        <select class="border rounded p-2">
+            <option>Filter etter kommune</option>
+        </select>
+        <select class="border rounded p-2">
+            <option>Sorter etter dato</option>
+        </select>
+        <select class="border rounded p-2">
+            <option>Filter etter status</option>
+        </select>
+    </div>
+
+    <!-- Innmeldinger Liste -->
+    <div class="space-y-2">
+        @foreach (var innmelding in Model)
+        {
+            <div class="flex justify-between items-center p-4 bg-white rounded shadow">
+                <div>
+                    <p class="font-semibold">Kommune: @innmelding.KommuneNavn</p>
+                    <p class="text-gray-600">@innmelding.Beskrivelse</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-gray-500">@innmelding.OpprettetDato.ToShortDateString()</span>
+                    <span class="px-3 py-1 rounded-full @innmelding.StatusClass">@innmelding.Status</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>

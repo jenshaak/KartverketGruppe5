@@ -1,46 +1,84 @@
+using System.Data;
 using Dapper;
 using MySqlConnector;
-using System.Data;
 using KartverketGruppe5.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Services
 {
     public class LokasjonService
     {
-        private readonly IConfiguration _configuration;
-        private readonly string? _connectionString;
+        private readonly string _connectionString;
+        private readonly ILogger<LokasjonService> _logger;
 
-        public LokasjonService(IConfiguration configuration)
+        public LokasjonService(IConfiguration configuration, ILogger<LokasjonService> logger)
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection") 
+                ?? throw new ArgumentNullException(nameof(configuration));
+            _logger = logger;
         }
 
-        private IDbConnection Connection => new MySqlConnection(_connectionString);
+        public List<LokasjonModel> GetAllLokasjoner()
+        {
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    SELECT 
+                        lokasjonId,
+                        geoJson,
+                        latitude,
+                        longitude,
+                        geometriType
+                    FROM Lokasjon";
+
+                return connection.Query<LokasjonModel>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error getting all lokasjoner: {ex.Message}");
+                return new List<LokasjonModel>();
+            }
+        }
 
         public int AddLokasjon(string geoJson, double latitude, double longitude, string geometriType)
         {
-            using (IDbConnection dbConnection = Connection)
+            try
             {
-                string query = @"INSERT INTO Lokasjon (geoJson, latitude, longitude, geometriType) 
-                               VALUES (@GeoJson, @Latitude, @Longitude, @GeometriType);
-                               SELECT LAST_INSERT_ID();";
-                
-                return dbConnection.ExecuteScalar<int>(query, new { 
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    INSERT INTO Lokasjon (geoJson, latitude, longitude, geometriType) 
+                    VALUES (@GeoJson, @Latitude, @Longitude, @GeometriType);
+                    SELECT LAST_INSERT_ID();";
+
+                return connection.ExecuteScalar<int>(sql, new 
+                { 
                     GeoJson = geoJson,
                     Latitude = latitude,
                     Longitude = longitude,
                     GeometriType = geometriType
                 });
             }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error adding lokasjon: {ex.Message}");
+                throw;
+            }
         }
 
         public Lokasjon GetLokasjonById(int id)
         {
-            using (IDbConnection dbConnection = Connection)
+            try 
             {
-                string query = "SELECT * FROM Lokasjon WHERE lokasjonId = @Id";
-                return dbConnection.QuerySingleOrDefault<Lokasjon>(query, new { Id = id });
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = "SELECT * FROM Lokasjon WHERE lokasjonId = @Id";
+                return connection.QuerySingleOrDefault<Lokasjon>(sql, new { Id = id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error getting lokasjon by id {id}: {ex.Message}");
+                return null;
             }
         }
     }

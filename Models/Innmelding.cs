@@ -12,9 +12,9 @@ namespace KartverketGruppe5.Models
         public DateTime OpprettetDato { get; set; }
         public DateTime? OppdatertDato { get; set; }
 
-        // Navigasjonsproperties fra JOIN
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public string? GeoJson { get; set; }
+        // Navigasjonsegenskaper hvis du bruker Entity Framework
+        // public virtual Bruker? Bruker { get; set; }
+        // public virtual Kommune? Kommune { get; set; }
+        // public virtual Lokasjon? Lokasjon { get; set; }
     }
 } 

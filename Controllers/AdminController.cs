@@ -32,15 +32,16 @@ namespace KartverketGruppe5.Controllers
         {
             try
             {
-                await _kommunePopulateService.PopulateFylkerOgKommuner();
-                TempData["Message"] = "Successfully populated Fylker og Kommuner";
+                var result = await _kommunePopulateService.PopulateFylkerOgKommuner();
+                TempData["Message"] = result;
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error in PopulateFylkerOgKommuner: {ex.Message}");
                 TempData["Error"] = "Failed to populate Fylker og Kommuner";
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
         }
     }
 } 

@@ -20,12 +20,27 @@ namespace KartverketGruppe5.Controllers
             return View();
         }
 
+        public IActionResult CorrectionOverview()
+        {
+            var positions = _lokasjonService.GetAllLokasjoner()
+                .Select(l => new PositionModel
+                {
+                    Latitude = l.Latitude,
+                    Longitude = l.Longitude,
+                    Description = _innmeldingService.GetInnmeldingForLokasjon(l.LokasjonId)?.Beskrivelse,
+                    GeoJson = l.GeoJson,
+                    GeometriType = l.GeometriType
+                })
+                .ToList();
+
+            return View(positions);
+        }
+
         [HttpPost]
-        public IActionResult CorrectMap(PositionModel model)
+        public IActionResult CorrectionOverview(PositionModel model)
         {
             if (ModelState.IsValid)
             {
-                // Først lagre lokasjonen
                 int lokasjonId = _lokasjonService.AddLokasjon(
                     model.GeoJson,
                     model.Latitude,
@@ -33,15 +48,14 @@ namespace KartverketGruppe5.Controllers
                     model.GeometriType
                 );
 
-                // Så lagre innmeldingen (du må implementere denne metoden)
                 _innmeldingService.AddInnmelding(
-                    brukerId: 1, // Dette bør komme fra innlogget bruker
-                    kommuneId: 1, // Dette bør beregnes basert på koordinater
+                    brukerId: 1,
+                    kommuneId: 1,
                     lokasjonId: lokasjonId,
                     beskrivelse: model.Description
                 );
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("CorrectionOverview", "MapChange");
             }
             return View(model);
         }
