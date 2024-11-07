@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "s9xMwrfF1twfWdxXqXozIAkB6O0dbijfIXqp3cSqjb8=",
+  "Hash": "Y36FgvqjD7ANc0nd0THRCTYaDLBWhD2ID0YBO7mHUTw=",
   "Source": "KartverketGruppe5",
   "BasePath": "_content/KartverketGruppe5",
   "Mode": "Default",
@@ -8,19 +8,19 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "KartverketGruppe5/wwwroot",
+      "Name": "KartverketGruppe5\\wwwroot",
       "Source": "KartverketGruppe5",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -71,13 +71,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -90,13 +90,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.rtl.css",
       "AssetKind": "All",
@@ -109,13 +109,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.rtl.css.map",
       "AssetKind": "All",
@@ -128,13 +128,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.rtl.min.css",
       "AssetKind": "All",
@@ -147,13 +147,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-grid.rtl.min.css.map",
       "AssetKind": "All",
@@ -166,13 +166,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.rtl.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -185,13 +185,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -204,13 +204,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -223,13 +223,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -242,13 +242,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.rtl.css",
       "AssetKind": "All",
@@ -261,13 +261,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.rtl.css.map",
       "AssetKind": "All",
@@ -280,13 +280,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.rtl.min.css",
       "AssetKind": "All",
@@ -299,13 +299,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-reboot.rtl.min.css.map",
       "AssetKind": "All",
@@ -318,13 +318,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-reboot.rtl.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.css",
       "AssetKind": "All",
@@ -337,13 +337,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.css.map",
       "AssetKind": "All",
@@ -356,13 +356,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.min.css",
       "AssetKind": "All",
@@ -375,13 +375,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.min.css.map",
       "AssetKind": "All",
@@ -394,13 +394,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.rtl.css",
       "AssetKind": "All",
@@ -413,13 +413,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.rtl.css.map",
       "AssetKind": "All",
@@ -432,13 +432,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.rtl.min.css",
       "AssetKind": "All",
@@ -451,13 +451,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap-utilities.rtl.min.css.map",
       "AssetKind": "All",
@@ -470,13 +470,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap-utilities.rtl.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.css",
       "AssetKind": "All",
@@ -489,13 +489,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.css.map",
       "AssetKind": "All",
@@ -508,13 +508,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.min.css",
       "AssetKind": "All",
@@ -527,13 +527,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -546,13 +546,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.rtl.css",
       "AssetKind": "All",
@@ -565,13 +565,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.rtl.css.map",
       "AssetKind": "All",
@@ -584,13 +584,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.rtl.min.css",
       "AssetKind": "All",
@@ -603,13 +603,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.min.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/bootstrap.rtl.min.css.map",
       "AssetKind": "All",
@@ -622,13 +622,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/css/bootstrap.rtl.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.js",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -641,13 +641,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.js"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.js"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.js.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -660,13 +660,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.js.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.min.js",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -679,13 +679,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.min.js"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.min.js.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.min.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -698,13 +698,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.bundle.min.js.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.js",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.esm.js",
       "AssetKind": "All",
@@ -717,13 +717,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.js"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.js"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.js.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.esm.js.map",
       "AssetKind": "All",
@@ -736,13 +736,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.js.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.min.js",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.esm.min.js",
       "AssetKind": "All",
@@ -755,13 +755,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.min.js"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.min.js.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.min.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.esm.min.js.map",
       "AssetKind": "All",
@@ -774,13 +774,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.esm.min.js.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.js",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.js",
       "AssetKind": "All",
@@ -793,13 +793,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.js"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.js"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.js.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.js.map",
       "AssetKind": "All",
@@ -812,13 +812,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.js.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.min.js",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.min.js",
       "AssetKind": "All",
@@ -831,13 +831,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.min.js"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.min.js.map",
+      "Identity": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.min.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -850,13 +850,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/contentFiles/any/any/wwwroot/js/bootstrap.min.js.map"
+      "OriginalItemSpec": "C:\\Users\\jensh\\.nuget\\packages\\bootstrap\\5.3.3\\contentFiles\\any\\any\\wwwroot\\js\\bootstrap.min.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/Debug/net8.0/scopedcss/bundle/KartverketGruppe5.styles.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\bundle\\KartverketGruppe5.styles.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/Debug/net8.0/scopedcss/bundle/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "KartverketGruppe5.styles.css",
       "AssetKind": "All",
@@ -869,13 +869,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/Debug/net8.0/scopedcss/bundle/KartverketGruppe5.styles.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\bundle\\KartverketGruppe5.styles.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/Debug/net8.0/scopedcss/projectbundle/KartverketGruppe5.bundle.scp.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\KartverketGruppe5.bundle.scp.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/Debug/net8.0/scopedcss/projectbundle/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "KartverketGruppe5.bundle.scp.css",
       "AssetKind": "All",
@@ -888,13 +888,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/simenholmen/Downloads/KartverketGruppe5/obj/Debug/net8.0/scopedcss/projectbundle/KartverketGruppe5.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\KartverketGruppe5.bundle.scp.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/css/site.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\css\\site.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -907,13 +907,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/css/site.css"
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/css/styles.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\css\\styles.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/styles.css",
       "AssetKind": "All",
@@ -926,13 +926,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/css/styles.css"
+      "OriginalItemSpec": "wwwroot\\css\\styles.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/css/tailwind.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\css\\tailwind.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "css/tailwind.css",
       "AssetKind": "All",
@@ -945,13 +945,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/css/tailwind.css"
+      "OriginalItemSpec": "wwwroot\\css\\tailwind.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/favicon.ico",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\favicon.ico",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -964,13 +964,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/favicon.ico"
+      "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/js/site.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\js\\site.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -983,13 +983,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/js/site.js"
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -1002,13 +1002,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -1021,13 +1021,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -1040,13 +1040,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -1059,13 +1059,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
       "AssetKind": "All",
@@ -1078,13 +1078,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
       "AssetKind": "All",
@@ -1097,13 +1097,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
       "AssetKind": "All",
@@ -1116,13 +1116,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
       "AssetKind": "All",
@@ -1135,13 +1135,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -1154,13 +1154,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -1173,13 +1173,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -1192,13 +1192,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -1211,13 +1211,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
       "AssetKind": "All",
@@ -1230,13 +1230,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
       "AssetKind": "All",
@@ -1249,13 +1249,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
       "AssetKind": "All",
@@ -1268,13 +1268,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
       "AssetKind": "All",
@@ -1287,13 +1287,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css",
       "AssetKind": "All",
@@ -1306,13 +1306,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css.map",
       "AssetKind": "All",
@@ -1325,13 +1325,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css",
       "AssetKind": "All",
@@ -1344,13 +1344,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
       "AssetKind": "All",
@@ -1363,13 +1363,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
       "AssetKind": "All",
@@ -1382,13 +1382,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
       "AssetKind": "All",
@@ -1401,13 +1401,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
       "AssetKind": "All",
@@ -1420,13 +1420,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
       "AssetKind": "All",
@@ -1439,13 +1439,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css",
       "AssetKind": "All",
@@ -1458,13 +1458,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css.map",
       "AssetKind": "All",
@@ -1477,13 +1477,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css",
       "AssetKind": "All",
@@ -1496,13 +1496,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -1515,13 +1515,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css",
       "AssetKind": "All",
@@ -1534,13 +1534,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css.map",
       "AssetKind": "All",
@@ -1553,13 +1553,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css",
       "AssetKind": "All",
@@ -1572,13 +1572,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
       "AssetKind": "All",
@@ -1591,13 +1591,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -1610,13 +1610,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -1629,13 +1629,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -1648,13 +1648,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -1667,13 +1667,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js",
       "AssetKind": "All",
@@ -1686,13 +1686,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js.map",
       "AssetKind": "All",
@@ -1705,13 +1705,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js",
       "AssetKind": "All",
@@ -1724,13 +1724,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
       "AssetKind": "All",
@@ -1743,13 +1743,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js",
       "AssetKind": "All",
@@ -1762,13 +1762,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.js"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js.map",
       "AssetKind": "All",
@@ -1781,13 +1781,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.js.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js",
       "AssetKind": "All",
@@ -1800,13 +1800,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -1819,13 +1819,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/bootstrap/LICENSE",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\LICENSE",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/bootstrap/LICENSE",
       "AssetKind": "All",
@@ -1838,13 +1838,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/bootstrap/LICENSE"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -1857,13 +1857,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -1876,13 +1876,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -1895,13 +1895,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -1914,13 +1914,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/additional-methods.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -1933,13 +1933,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/additional-methods.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -1952,13 +1952,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/jquery.validate.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -1971,13 +1971,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery-validation/LICENSE.md",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -1990,13 +1990,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery-validation/LICENSE.md"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery/dist/jquery.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -2009,13 +2009,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery/dist/jquery.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery/dist/jquery.min.js",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -2028,13 +2028,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery/dist/jquery.min.js"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery/dist/jquery.min.map",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -2047,13 +2047,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery/dist/jquery.min.map"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/lib/jquery/LICENSE.txt",
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "KartverketGruppe5",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/simenholmen/Downloads/KartverketGruppe5/wwwroot/",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\",
       "BasePath": "_content/KartverketGruppe5",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
@@ -2066,7 +2066,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/lib/jquery/LICENSE.txt"
+      "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
     }
   ]
 }

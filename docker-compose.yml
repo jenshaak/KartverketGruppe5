@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  kartverketgruppe5:
+    image: ${DOCKER_REGISTRY-}kartverketgruppe5
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=mariadb;Database=kartverketdb;User=root;Password=gruppe5;
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: gruppe5
+      MYSQL_DATABASE: kartverketdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: gruppe5
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

@@ -3,6 +3,8 @@
 <h2 class="text-center text-4xl text-semibold">Register en endring</h2>
 
 <form asp-action="CorrectMap" method="post" class="flex flex-col gap-4 m-8">
+
+     
     <div class="form-group">
         <label for="latitude">Latitude</label>
         <input type="text" id="latitude" name="Latitude" class="form-control" readonly />
@@ -13,27 +15,93 @@
         <label for="description">Description</label>
         <textarea type="text" id="description" name="Description" class="form-control"></textarea>
     </div>
+
+    <input type="hidden" id="geoJsonInput" name="geoJson" />
     <button type="submit" class="btn btn-primary">Send inn</button>
 </form>
 
 <div id="map" style="height: 400px;"></div>
 
+
 @section Scripts {
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
     <script>
         var map = L.map('map').setView([58.17000, 8.00000], 13);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; < a href="https://www.openstreetmap.org/copyright" > OpenStreetMap</a> contributors' 
-        }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <ahref="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
 
-        map.on('click', function (e) {
-            var lat = e.latlng.lat;
-            var lng = e.latlng.lng;
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
 
+    
+    var drawControl = new L.Control.Draw({
+        draw: {
+            polygon: true,
+            polyline: true,
+            marker: true,
+            circle: false, 
+            rectangle: true
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
+   
+    map.on(L.Draw.Event.CREATED, function (e) {
+        var type = e.layerType,
+            layer = e.layer;
+
+        drawnItems.addLayer(layer);
+
+      
+        var geoJsonData = layer.toGeoJSON();
+        var geoJsonString = JSON.stringify(geoJsonData);
+        document.getElementById('geoJsonInput').value = geoJsonString;
+
+        if (type === 'marker') {
+            var lat = layer.getLatLng().lat;
+            var lng = layer.getLatLng().lng;
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
+        }
+    });
 
-            L.marker([lat, lng]).addTo(map);
+    map.on('click', function (e) {
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+
+        var marker = L.marker([lat, lng]).addTo(map);
+
+        var geoJsonPoint = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lng, lat] 
+            },
+            "properties": {
+                "description": "User clicked location"
+            }
+        };
+            var geoJsonString = JSON.stringify(geoJsonPoint);
+            document.getElementById('geoJsonInput').value = geoJsonString;
+
+            marker.bindPopup("GeoJSON Data:<br>" + geoJsonString).openPopup();
         });
     </script>
+
+
+
 }
+
