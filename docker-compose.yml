@@ -13,14 +13,15 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=mariadb;Database=geochangesdb;User=root;Password=gruppe5;
+      - ConnectionStrings__DefaultConnection=Server=mariadb;Database=kartverketdb;User=root;Password=gruppe5;
 
   mariadb:
     image: mariadb:latest
     container_name: mariadb
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: gruppe5
-      MYSQL_DATABASE: geochangesdb
+      MYSQL_DATABASE: kartverketdb
       MYSQL_USER: root
       MYSQL_PASSWORD: gruppe5
     ports:

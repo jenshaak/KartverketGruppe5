@@ -1,0 +1,32 @@
+@model KartverketGruppe5.Models.Bruker
+@{
+    ViewData["Title"] = "Logg inn";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Logg inn</h3>
+                    <form asp-action="Index" method="post">
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Passord">Password</label>
+                            <input asp-for="Passord" type="password" class="form-control" />
+                            <span asp-validation-for="Passord" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Logg inn</button>
+                            <a asp-action="Register" class="btn btn-link">Registrer ny bruker</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

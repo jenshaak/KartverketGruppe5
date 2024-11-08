@@ -1,0 +1,10 @@
+services:
+  kartverketgruppe5:
+    build:
+      target: dev
+    volumes:
+      - .:/app
+      - /app/bin
+      - /app/obj
+    environment:
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true 
