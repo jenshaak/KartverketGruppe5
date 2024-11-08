@@ -1,4 +1,4 @@
-@model KartverketGruppe5.Models.User
+@model KartverketGruppe5.Models.Bruker
 @{
     ViewData["Title"] = "Logg inn";
 }
@@ -10,13 +10,15 @@
                 <div class="card-body">
                     <h3 class="card-title text-center">Logg inn</h3>
                     <form asp-action="Index" method="post">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
-                            <label for="passord" class="form-label">Passord</label>
-                            <input type="password" class="form-control" id="passord" name="passord" required>
+                        <div class="form-group">
+                            <label asp-for="Passord">Password</label>
+                            <input asp-for="Passord" type="password" class="form-control" />
+                            <span asp-validation-for="Passord" class="text-danger"></span>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Logg inn</button>

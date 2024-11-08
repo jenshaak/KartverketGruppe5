@@ -50,16 +50,49 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public IEnumerable<Innmelding> GetMineInnmeldinger(int brukerId)
+        public List<InnmeldingModel> GetMineInnmeldinger(int brukerId)
         {
-            using (IDbConnection dbConnection = Connection)
+            using var connection = new MySqlConnection(_connectionString);
+            
+            // Hent innmeldinger med kommunenavn i én spørring
+            const string sql = @"
+                SELECT 
+                    i.innmeldingId,
+                    i.brukerId,
+                    i.kommuneId,
+                    i.lokasjonId,
+                    i.beskrivelse,
+                    i.status,
+                    i.opprettetDato,
+                    k.navn as kommuneNavn
+                FROM Innmelding i
+                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
+                WHERE i.brukerId = @BrukerId
+                ORDER BY i.opprettetDato DESC";
+
+            var innmeldinger = connection.Query<(int innmeldingId, int brukerId, int kommuneId, 
+                int lokasjonId, string beskrivelse, string status, DateTime opprettetDato, string kommuneNavn)>
+                (sql, new { BrukerId = brukerId });
+
+            return innmeldinger.Select(i => new InnmeldingModel
             {
-                string query = @"SELECT i.*, l.latitude, l.longitude, l.geoJson 
-                               FROM Innmelding i 
-                                JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
-                               WHERE i.brukerId = @BrukerId";
-                return dbConnection.Query<Innmelding>(query, new { BrukerId = brukerId });
-            }
+                InnmeldingId = i.innmeldingId,
+                BrukerId = i.brukerId,
+                KommuneId = i.kommuneId,
+                LokasjonId = i.lokasjonId,
+                Beskrivelse = i.beskrivelse,
+                Status = i.status,
+                OpprettetDato = i.opprettetDato,
+                KommuneNavn = i.kommuneNavn,
+                StatusClass = i.status switch
+                {
+                    "Ny" => "bg-blue-100 text-blue-800",
+                    "Under behandling" => "bg-yellow-100 text-yellow-800",
+                    "Fullført" => "bg-green-100 text-green-800",
+                    "Avvist" => "bg-red-100 text-red-800",
+                    _ => "bg-gray-100 text-gray-800"
+                }
+            }).ToList();
         }
 
         public Innmelding GetInnmeldingById(int id)
@@ -105,10 +138,10 @@ namespace KartverketGruppe5.Services
                             kommuneId,
                             lokasjonId,
                             beskrivelse,
-                            tidspunkt
+                            opprettetDato
                         FROM Innmelding 
                         WHERE lokasjonId = @LokasjonId
-                        ORDER BY tidspunkt DESC
+                        ORDER BY opprettetDato DESC
                         LIMIT 1";
 
                     return db.QueryFirstOrDefault<InnmeldingModel>(sql, new { LokasjonId = lokasjonId });

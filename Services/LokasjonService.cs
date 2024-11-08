@@ -4,6 +4,8 @@ using MySqlConnector;
 using KartverketGruppe5.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using System.Net.Http;
 
 namespace KartverketGruppe5.Services
 {
@@ -14,8 +16,7 @@ namespace KartverketGruppe5.Services
 
         public LokasjonService(IConfiguration configuration, ILogger<LokasjonService> logger)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection") 
-                ?? throw new ArgumentNullException(nameof(configuration));
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _logger = logger;
         }
 
@@ -67,18 +68,75 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public Lokasjon GetLokasjonById(int id)
+        public LokasjonModel GetLokasjonById(int id)
         {
-            try 
+            try
             {
                 using var connection = new MySqlConnection(_connectionString);
-                const string sql = "SELECT * FROM Lokasjon WHERE lokasjonId = @Id";
-                return connection.QuerySingleOrDefault<Lokasjon>(sql, new { Id = id });
+                const string sql = @"
+                    SELECT lokasjonId, latitude, longitude, geoJson
+                    FROM Lokasjon 
+                    WHERE lokasjonId = @Id";
+
+                return connection.QueryFirstOrDefault<LokasjonModel>(sql, new { Id = id });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting lokasjon by id {id}: {ex.Message}");
+                _logger.LogError($"Error getting lokasjon: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task<int> GetKommuneIdFromCoordinates(double latitude, double longitude)
+        {
+            try
+            {
+                using var client = new HttpClient();
+                // Legg til User-Agent header som er påkrevd av Nominatim
+                client.DefaultRequestHeaders.Add("User-Agent", "KartverketGruppe5");
+                
+                var url = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}";
+                var response = await client.GetStringAsync(url);
+                var data = JsonSerializer.Deserialize<JsonDocument>(response);
+                
+                // Hent kommune fra address objektet
+                var address = data.RootElement.GetProperty("address");
+                string municipality;
+                
+                // Nominatim kan returnere kommune i forskjellige felter
+                if (address.TryGetProperty("municipality", out var municipalityElement))
+                {
+                    municipality = municipalityElement.GetString();
+                }
+                else if (address.TryGetProperty("city", out var cityElement))
+                {
+                    municipality = cityElement.GetString();
+                }
+                else
+                {
+                    throw new Exception("Kunne ikke finne kommune for disse koordinatene");
+                }
+
+                // Finn kommune ID fra databasen basert på navn
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = "SELECT kommuneId FROM Kommune WHERE navn LIKE @Navn";
+                var kommuneId = await connection.QuerySingleOrDefaultAsync<int>(
+                    sql, 
+                    new { Navn = $"%{municipality}%" }
+                );
+
+                if (kommuneId == 0)
+                {
+                    _logger.LogError($"Kommune {municipality} ikke funnet i databasen");
+                    throw new Exception("Kommune ikke funnet i databasen");
+                }
+
+                return kommuneId;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error getting kommune from coordinates: {ex.Message}");
+                throw;
             }
         }
     }
