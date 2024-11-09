@@ -1,38 +1,29 @@
-@model IEnumerable<KartverketGruppe5.Models.Bruker>
+@model IEnumerable<KartverketGruppe5.Models.Saksbehandler>
 
-<div class="container mt-4">
-    <h2>Administrer Brukere</h2>
-    
+<div class="container mt-5">
+    <h2>Saksbehandlere</h2>
+    <a asp-action="Register" class="btn btn-primary mb-3">Registrer ny saksbehandler</a>
+
     <table class="table">
         <thead>
             <tr>
                 <th>Navn</th>
                 <th>Email</th>
-                <th>Rolle</th>
-                <th>Registrert</th>
-                <th>Bruker ID</th>
-                <th>Handling</th>
+                <th>Admin</th>
+                <th>Opprettet</th>
+                <th>Handlinger</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var bruker in Model)
+            @foreach (var saksbehandler in Model)
             {
                 <tr>
-                    <td>@bruker.Fornavn @bruker.Etternavn</td>
-                    <td>@bruker.Email</td>
-                    <td>@bruker.Rolle</td>
-                    <td>@bruker.OpprettetDato.ToString("dd.MM.yyyy")</td>
-                    <td>@bruker.BrukerId</td>
+                    <td>@saksbehandler.Fornavn @saksbehandler.Etternavn</td>
+                    <td>@saksbehandler.Email</td>
+                    <td>@(saksbehandler.Admin ? "Ja" : "Nei")</td>
+                    <td>@saksbehandler.OpprettetDato.ToShortDateString()</td>
                     <td>
-                        <form asp-controller="Bruker" asp-action="EndreRolle" method="post" class="d-inline">
-                            <input type="hidden" name="brukerId" value="@bruker.BrukerId" />
-                            <select name="nyRolle" class="form-select form-select-sm d-inline w-auto">
-                                <option value="bruker" selected="@(bruker.Rolle == "bruker")">Bruker</option>
-                                <option value="saksbehandler" selected="@(bruker.Rolle == "saksbehandler")">Saksbehandler</option>
-                                <option value="admin" selected="@(bruker.Rolle == "admin")">Admin</option>
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-primary">Oppdater</button>
-                        </form>
+                        <a asp-action="Edit" asp-route-id="@saksbehandler.SaksbehandlerId" class="btn btn-sm btn-primary">Rediger</a>
                     </td>
                 </tr>
             }

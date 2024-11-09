@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models
 {
-    public class Bruker
+    public class Saksbehandler
     {
         [Key]
-        public int BrukerId { get; set; }
+        public int SaksbehandlerId { get; set; }
         
         [Required]
         [StringLength(50)]
@@ -23,6 +23,8 @@ namespace KartverketGruppe5.Models
         [Required]
         [StringLength(256)]
         public string Passord { get; set; } = string.Empty;
+        
+        public bool Admin { get; set; } = false;
         
         public DateTime OpprettetDato { get; set; }
     }
