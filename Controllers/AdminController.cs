@@ -1,47 +1,60 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using KartverketGruppe5.Models;
 using KartverketGruppe5.Services;
 
 namespace KartverketGruppe5.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
-        private readonly BrukerService _brukerService;
-        private readonly KommunePopulateService _kommunePopulateService;
+        private readonly SaksbehandlerService _saksbehandlerService;
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(
-            BrukerService brukerService,
-            KommunePopulateService kommunePopulateService,
+            SaksbehandlerService saksbehandlerService, 
             ILogger<AdminController> logger)
         {
-            _brukerService = brukerService;
-            _kommunePopulateService = kommunePopulateService;
+            _saksbehandlerService = saksbehandlerService;
             _logger = logger;
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(Saksbehandler saksbehandler)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(saksbehandler);
+            }
+
+            try
+            {
+                // TODO: Hash passord før lagring
+                var result = await _saksbehandlerService.CreateSaksbehandler(saksbehandler);
+                if (result)
+                {
+                    TempData["Success"] = "Saksbehandler opprettet!";
+                    return RedirectToAction("Index", "Admin");
+                }
+                
+                ModelState.AddModelError("", "Kunne ikke opprette saksbehandler");
+                return View(saksbehandler);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creating saksbehandler: {ex.Message}");
+                ModelState.AddModelError("", "En feil oppstod ved registrering");
+                return View(saksbehandler);
+            }
         }
 
         public async Task<IActionResult> Index()
         {
-            var brukere = await _brukerService.GetAlleBrukere();
-            return View(brukere);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> PopulateFylkerOgKommuner()
-        {
-            try
-            {
-                var result = await _kommunePopulateService.PopulateFylkerOgKommuner();
-                TempData["Message"] = result;
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error in PopulateFylkerOgKommuner: {ex.Message}");
-                TempData["Error"] = "Failed to populate Fylker og Kommuner";
-                return RedirectToAction("Index");
-            }
+            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
+            return View(saksbehandlere);
         }
     }
 } 

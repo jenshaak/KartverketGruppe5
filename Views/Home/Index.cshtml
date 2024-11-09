@@ -5,21 +5,11 @@
 
 <div class="text-center flex flex-col items-center gap-4">
     <h1 class="text-4xl">Velkommen til Kartverket 2.0</h1>
-    @if (!string.IsNullOrEmpty(Model?.UserName))
-    {
-        <div class="alert alert-success" role="alert">
-            Welcome, @Model.UserName!
-        </div>
-    }
-    <a asp-action="Correctmap" class="text-black no-underline hover:text-black">
+    <a asp-controller="MapChange" asp-action="Index" class="text-black no-underline hover:text-black">
         <div class="bg-green-100 w-max border border-green-300 hover:scale-105 transition-all ease-in-out 
         duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">Meld inn endring</div>
     </a>
-    <a asp-controller="MapChange" asp-action="Index" class="text-black no-underline hover:text-black">
-        <div class="bg-green-100 w-max border border-green-300 hover:scale-105 transition-all ease-in-out 
-        duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">Meld inn endring 2</div>
-    </a>
-    <a asp-action="MineInnmeldinger" class="text-black no-underline hover:text-black">
+    <a asp-controller="MineInnmeldinger" asp-action="Index" class="text-black no-underline hover:text-black">
         <div class="bg-green-100 w-max border border-green-300 hover:scale-105 transition-all ease-in-out 
         duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">Mine innmeldinger</div>
     </a>

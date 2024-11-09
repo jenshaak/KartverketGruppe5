@@ -22,42 +22,78 @@ namespace KartverketGruppe5.Controllers
 
         public IActionResult CorrectionOverview()
         {
-            var positions = _lokasjonService.GetAllLokasjoner()
-                .Select(l => new PositionModel
-                {
-                    Latitude = l.Latitude,
-                    Longitude = l.Longitude,
-                    Description = _innmeldingService.GetInnmeldingForLokasjon(l.LokasjonId)?.Beskrivelse,
-                    GeoJson = l.GeoJson,
-                    GeometriType = l.GeometriType
-                })
-                .ToList();
+            var lokasjoner = _lokasjonService.GetAllLokasjoner();
+            var innmeldinger = lokasjoner.Select(l => new
+            {
+                Lokasjon = l,
+                Innmelding = _innmeldingService.GetInnmeldingForLokasjon(l.LokasjonId)
+            }).ToList();
 
-            return View(positions);
+            return View(innmeldinger);
         }
 
         [HttpPost]
-        public IActionResult CorrectionOverview(PositionModel model)
+        public async Task<IActionResult> CorrectionOverview(LokasjonModel model, string beskrivelse)
         {
             if (ModelState.IsValid)
             {
-                int lokasjonId = _lokasjonService.AddLokasjon(
-                    model.GeoJson,
-                    model.Latitude,
-                    model.Longitude,
-                    model.GeometriType
-                );
+                var brukerId = HttpContext.Session.GetInt32("BrukerId");
+                if (brukerId == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-                _innmeldingService.AddInnmelding(
-                    brukerId: 1,
-                    kommuneId: 1,
-                    lokasjonId: lokasjonId,
-                    beskrivelse: model.Description
-                );
+                try
+                {
+                    if (string.IsNullOrEmpty(model.GeoJson))
+                    {
+                        ModelState.AddModelError("", "GeoJson data mangler");
+                        return View("Index", model);
+                    }
 
-                return RedirectToAction("CorrectionOverview", "MapChange");
+                    int lokasjonId = _lokasjonService.AddLokasjon(
+                        model.GeoJson,
+                        model.Latitude,
+                        model.Longitude,
+                        model.GeometriType
+                    );
+
+                    int kommuneId = await _lokasjonService.GetKommuneIdFromCoordinates(model.Latitude, model.Longitude);
+
+                    _innmeldingService.AddInnmelding(
+                        brukerId: brukerId.Value,
+                        kommuneId: kommuneId,
+                        lokasjonId: lokasjonId,
+                        beskrivelse: beskrivelse
+                    );
+
+                    return RedirectToAction("Index", "MineInnmeldinger");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Kunne ikke lagre innmeldingen");
+                    return View("Index", model);
+                }
             }
-            return View(model);
+            return View("Index", model);
+        }
+
+        public IActionResult ViewInnmelding(int id)
+        {
+            var innmelding = _innmeldingService.GetInnmeldingById(id);
+            if (innmelding == null)
+            {
+                return NotFound();
+            }
+
+            var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            if (lokasjon == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Innmelding = innmelding;
+            return View(lokasjon);
         }
     }
 } 

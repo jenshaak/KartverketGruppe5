@@ -3,6 +3,7 @@ using KartverketGruppe5;
 using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddScoped<LokasjonService>();
 builder.Services.AddScoped<InnmeldingService>();
 builder.Services.AddScoped<KommunePopulateService>();
 builder.Services.AddScoped<KommuneService>();
+builder.Services.AddScoped<SaksbehandlerService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -46,6 +48,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddAuthorization();
+
+// Legg til denne konfigurasjonen før andre services
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
+    .SetApplicationName("KartverketGruppe5");
 
 var app = builder.Build();
 
