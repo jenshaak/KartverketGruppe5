@@ -7,13 +7,16 @@ namespace KartverketGruppe5.Controllers
     public class AdminController : Controller
     {
         private readonly SaksbehandlerService _saksbehandlerService;
+        private readonly KommunePopulateService _kommunePopulateService;
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(
-            SaksbehandlerService saksbehandlerService, 
+            SaksbehandlerService saksbehandlerService,
+            KommunePopulateService kommunePopulateService,
             ILogger<AdminController> logger)
         {
             _saksbehandlerService = saksbehandlerService;
+            _kommunePopulateService = kommunePopulateService;
             _logger = logger;
         }
 
@@ -55,6 +58,23 @@ namespace KartverketGruppe5.Controllers
         {
             var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
             return View(saksbehandlere);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PopulateFylkerOgKommuner()
+        {
+            try
+            {
+                var result = await _kommunePopulateService.PopulateFylkerOgKommuner();
+                TempData["Message"] = result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Feil under oppdatering av fylker og kommuner: {ex.Message}");
+                TempData["Error"] = "Det oppstod en feil under oppdatering av fylker og kommuner.";
+            }
+
+            return RedirectToAction("Index");
         }
     }
 } 

@@ -68,6 +68,8 @@ namespace KartverketGruppe5.Services
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
+                saksbehandler.Passord = HashPassword(saksbehandler.Passord);
+
                 const string sql = @"
                     INSERT INTO Saksbehandler (fornavn, etternavn, email, passord, admin)
                     VALUES (@Fornavn, @Etternavn, @Email, @Passord, @Admin)";
@@ -119,6 +121,50 @@ namespace KartverketGruppe5.Services
                 _logger.LogError($"Error updating saksbehandler role: {ex.Message}");
                 return false;
             }
+        }
+
+        public List<InnmeldingModel> GetAllInnmeldinger()
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            
+            // Hent innmeldinger med kommunenavn i én spørring
+            const string sql = @"
+                SELECT 
+                    i.innmeldingId,
+                    i.brukerId,
+                    i.kommuneId,
+                    i.lokasjonId,
+                    i.beskrivelse,
+                    i.status,
+                    i.opprettetDato,
+                    k.navn as kommuneNavn
+                FROM Innmelding i
+                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
+                ORDER BY i.opprettetDato DESC";
+
+            var innmeldinger = connection.Query<(int innmeldingId, int brukerId, int kommuneId, 
+                int lokasjonId, string beskrivelse, string status, DateTime opprettetDato, string kommuneNavn)>
+                (sql);
+
+            return innmeldinger.Select(i => new InnmeldingModel
+            {
+                InnmeldingId = i.innmeldingId,
+                BrukerId = i.brukerId,
+                KommuneId = i.kommuneId,
+                LokasjonId = i.lokasjonId,
+                Beskrivelse = i.beskrivelse,
+                Status = i.status,
+                OpprettetDato = i.opprettetDato,
+                KommuneNavn = i.kommuneNavn,
+                StatusClass = i.status switch
+                {
+                    "Ny" => "bg-blue-100 text-blue-800",
+                    "Under behandling" => "bg-yellow-100 text-yellow-800",
+                    "Fullført" => "bg-green-100 text-green-800",
+                    "Avvist" => "bg-red-100 text-red-800",
+                    _ => "bg-gray-100 text-gray-800"
+                }
+            }).ToList();
         }
 
         private string HashPassword(string password)
