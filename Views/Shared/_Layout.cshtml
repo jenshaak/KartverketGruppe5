@@ -2,9 +2,12 @@
 @inject SaksbehandlerService SaksbehandlerService
 
 @{
-    var userEmail = Context.Session.GetString("BrukerEmail");
-    var saksbehandler = userEmail != null ? await SaksbehandlerService.GetSaksbehandlerByEmail(userEmail) : null;
-    var isAdmin = saksbehandler?.Admin ?? false;
+    var userType = Context.Session.GetString("UserType");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
+    
+    var displayName = userType == "Saksbehandler" 
+        ? Context.Session.GetString("SaksbehandlerNavn")
+        : Context.Session.GetString("BrukerNavn");
 }
 
 <!DOCTYPE html>
@@ -31,32 +34,32 @@
                         asp-controller="Home" asp-action="Index">Hjem</a>
                     </li>
                     
-                    @if (Context.Session.GetString("BrukerNavn") != null)
+                    @if (User.Identity.IsAuthenticated && userType == "Bruker")
                     {
                         <li class="nav-item">
                             <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
                             asp-controller="MineInnmeldinger" asp-action="Index">Mine Innmeldinger</a>
                         </li>
+                    }
 
-                        @if (saksbehandler != null)
+                    @if (displayName != null)
+                    {
+                        <li class="nav-item">
+                            <a class="px-4 py-2 rounded-md bg-yellow-300 hover:scale-105 hover:text-black" 
+                            asp-controller="Saksbehandling" asp-action="Index">Saksbehandling</a>
+                        </li>
+
+                        @if (isAdmin)
                         {
                             <li class="nav-item">
-                                <a class="px-4 py-2 rounded-md bg-yellow-300 hover:scale-105 hover:text-black" 
-                                asp-controller="Saksbehandling" asp-action="Index">Saksbehandling</a>
+                                <a class="px-4 py-2 rounded-md bg-purple-300 hover:scale-105 hover:text-black" 
+                                asp-controller="Admin" asp-action="Index">Administrasjon</a>
                             </li>
-
-                            @if (isAdmin)
-                            {
-                                <li class="nav-item">
-                                    <a class="px-4 py-2 rounded-md bg-purple-300 hover:scale-105 hover:text-black" 
-                                    asp-controller="Admin" asp-action="Index">Administrasjon</a>
-                                </li>
-                            }
                         }
                     }
 
                     <li class="nav-item">
-                        @if (Context.Session.GetString("BrukerNavn") == null)
+                        @if (displayName == null)
                         {
                             <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
                             asp-controller="Login" asp-action="Index">Logg inn</a>
@@ -64,8 +67,8 @@
                         else
                         {
                             <div class="flex items-center gap-2">
-                                <span class="px-4 py-2">Hei, @Context.Session.GetString("BrukerNavn")!</span>
-                                @if (saksbehandler != null)
+                                <span class="px-4 py-2">Hei, @displayName!</span>
+                                @if (userType == "Saksbehandler")
                                 {
                                     <span class="px-2 py-1 text-sm bg-yellow-200 rounded">Saksbehandler</span>
                                     @if (isAdmin)

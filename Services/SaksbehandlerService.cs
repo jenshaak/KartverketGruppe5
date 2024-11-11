@@ -167,6 +167,13 @@ namespace KartverketGruppe5.Services
             }).ToList();
         }
 
+        public async Task<InnmeldingModel> GetInnmeldingById(int id)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            const string sql = "SELECT * FROM Innmelding WHERE innmeldingId = @Id";
+            return await connection.QueryFirstOrDefaultAsync<InnmeldingModel>(sql, new { Id = id });
+        }
+
         private string HashPassword(string password)
         {
             using var sha256 = SHA256.Create();

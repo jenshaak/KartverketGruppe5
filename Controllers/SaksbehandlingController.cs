@@ -51,5 +51,26 @@ namespace KartverketGruppe5.Controllers
             }
             return RedirectToAction("Index", "Admin");
         }
+
+        public async Task<IActionResult> Detaljer(int id)
+        {
+            try 
+            {
+                var innmelding = await _saksbehandlerService.GetInnmeldingById(id);
+                if (innmelding == null)
+                {
+                    _logger.LogWarning("Fant ikke innmelding med ID: {Id}", id);
+                    return NotFound();
+                }
+
+                _logger.LogInformation("Hentet detaljer for innmelding {Id}", id);
+                return View(innmelding);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av innmelding {Id}", id);
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
