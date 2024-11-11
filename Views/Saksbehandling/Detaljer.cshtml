@@ -1,6 +1,7 @@
 @model KartverketGruppe5.Models.InnmeldingModel
 @{
     ViewData["Title"] = "Innmelding Detaljer";
+    var lokasjon = ViewBag.Lokasjon as LokasjonModel;
 }
 
 <div class="flex flex-col h-screen">
@@ -36,15 +37,66 @@
                 <p class="text-gray-700">@Model.OpprettetDato.ToString("dd.MM.yyyy HH:mm")</p>
             </div>
         </div>
-
+        <div class="bg-white rounded-lg shadow">
+            <div id="map" style="height: 400px; width: 100%;"></div>
+        </div>
         <!-- Handlinger -->
         <div class="mt-8 flex gap-4">
-            <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            <button type="button" class="bg-green-300 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                 Oppdater Status
             </button>
-            <button type="button" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+            <button type="button" class="bg-green-300 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
                 Legg til Kommentar
             </button>
         </div>
     </div>
 </div>
+
+
+
+@section Scripts {
+    <script>
+        console.log('Lokasjon:', @Json.Serialize(lokasjon));
+    </script>
+    <script>
+        // Vent til dokumentet er lastet
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser kartet
+            var map = L.map('map');
+
+            // Legg til kartlaget
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            @if (lokasjon != null)
+            {
+                <text>
+                // Sett kartvisning til lokasjonens koordinater
+                map.setView([@lokasjon.Latitude, @lokasjon.Longitude], 15);
+
+                // Legg til markør
+                var marker = L.marker([@lokasjon.Latitude, @lokasjon.Longitude]).addTo(map);
+                marker.bindPopup('@Model.Beskrivelse').openPopup();
+
+                @if (!string.IsNullOrEmpty(lokasjon.GeoJson))
+                {
+                    <text>
+                    // Legg til GeoJSON hvis det finnes
+                    var geoJsonLayer = L.geoJSON(@Html.Raw(lokasjon.GeoJson), {
+                        style: function(feature) {
+                            return {
+                                color: "#ff7800",
+                                weight: 3,
+                                opacity: 0.65
+                            };
+                        }
+                    }).addTo(map);
+                    map.fitBounds(geoJsonLayer.getBounds());
+                    </text>
+                }
+                </text>
+            }
+        });
+    </script>
+} 

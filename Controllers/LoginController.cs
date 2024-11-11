@@ -60,8 +60,14 @@ namespace KartverketGruppe5.Controllers
                         new Claim(ClaimTypes.Name, saksbehandler.Email),
                         new Claim("SaksbehandlerId", saksbehandler.SaksbehandlerId.ToString()),
                         new Claim("UserType", "Saksbehandler"),
-                        new Claim("IsAdmin", saksbehandler.Admin.ToString())
+                        new Claim("IsAdmin", saksbehandler.Admin.ToString()),
+                        new Claim(ClaimTypes.Role, "Saksbehandler")
                     };
+
+                    if (saksbehandler.Admin)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                    }
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
@@ -95,7 +101,8 @@ namespace KartverketGruppe5.Controllers
                     {
                         new Claim(ClaimTypes.Name, bruker.Email),
                         new Claim("BrukerId", bruker.BrukerId.ToString()),
-                        new Claim("UserType", "Bruker")
+                        new Claim("UserType", "Bruker"),
+                        new Claim(ClaimTypes.Role, "Bruker")
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
