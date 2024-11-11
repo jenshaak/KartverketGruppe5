@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj": {}
+    "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj": {
+    "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
+        "projectUniqueName": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj",
         "projectName": "KartverketGruppe5",
-        "projectPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
-        "packagesPath": "C:\\Users\\jensh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\",
+        "projectPath": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj",
+        "packagesPath": "/Users/simenholmen/.nuget/packages/",
+        "outputPath": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/simenholmen/.nuget/NuGet/NuGet.Config"

@@ -55,6 +55,13 @@ builder.Services.AddDataProtection()
     .SetApplicationName("KartverketGruppe5");
 
 var app = builder.Build();
+app.UseDeveloperExceptionPage();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

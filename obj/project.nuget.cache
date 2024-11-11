@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TAfNEhTtndo=",
+  "dgSpecHash": "e//h5r7hUF4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
+  "projectFilePath": "/Users/simenholmen/Documents/Skole/KodeProsjekt/KartverketGruppe5/KartverketGruppe5.csproj",
   "expectedPackageFiles": [
     "/Users/simenholmen/.nuget/packages/bootstrap/5.3.3/bootstrap.5.3.3.nupkg.sha512",
     "/Users/simenholmen/.nuget/packages/dapper/2.1.35/dapper.2.1.35.nupkg.sha512",
