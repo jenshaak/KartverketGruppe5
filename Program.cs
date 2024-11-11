@@ -2,6 +2,8 @@ using KartverketGruppe5.Services;
 using KartverketGruppe5;
 using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,15 @@ builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSet
 // Register services and their interfaces
 builder.Services.AddHttpClient<IKommuneInfoService, KommuneInfoService>();
 builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
+
+// Add this with your other service registrations
+builder.Services.AddScoped<BrukerService>();
+builder.Services.AddScoped<GeoChangeService>();
+builder.Services.AddScoped<LokasjonService>();
+builder.Services.AddScoped<InnmeldingService>();
+builder.Services.AddScoped<KommunePopulateService>();
+builder.Services.AddScoped<KommuneService>();
+builder.Services.AddScoped<SaksbehandlerService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -28,6 +39,21 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/Home/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+    });
+
+builder.Services.AddAuthorization();
+
+// Legg til denne konfigurasjonen før andre services
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
+    .SetApplicationName("KartverketGruppe5");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +68,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();

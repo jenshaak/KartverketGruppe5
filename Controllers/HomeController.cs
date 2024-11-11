@@ -11,7 +11,7 @@ namespace KartverketGruppe5.Controllers
         private readonly IKommuneInfoService _kommuneInfoService;
         private readonly IStedsnavnService _stedsnavnService;
 
-        private static List<PositionModel> positions = new List<PositionModel>();   
+        private static List<LokasjonModel> positions = new List<LokasjonModel>();   
 
         public HomeController(ILogger<HomeController> logger, IKommuneInfoService kommuneInfoService, IStedsnavnService stedsnavnService)
         {
@@ -79,36 +79,6 @@ namespace KartverketGruppe5.Controllers
         public ViewResult RegistrationForm()
         {
             return View();
-        }
-
-        [HttpPost]
-        public ViewResult RegistrationForm(UserData userData)
-        {
-            return View("Overview", userData);
-        }
-
-        [HttpGet]
-        public IActionResult CorrectMap()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult CorrectMap(PositionModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                positions.Add(model);
-
-                return View("CorrectionOverview", positions);
-            }
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult CorrectionOverview()
-        {
-            return View(positions);
         }
 
         public IActionResult Privacy()

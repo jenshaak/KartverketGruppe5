@@ -1,0 +1,39 @@
+@model KartverketGruppe5.Models.Bruker
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Registrer ny bruker</h3>
+                    <form asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Fornavn" class="form-label">Fornavn</label>
+                            <input asp-for="Fornavn" class="form-control" required>
+                            <span asp-validation-for="Fornavn" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Etternavn" class="form-label">Etternavn</label>
+                            <input asp-for="Etternavn" class="form-control" required>
+                            <span asp-validation-for="Etternavn" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Passord" class="form-label">Passord</label>
+                            <input asp-for="Passord" type="password" class="form-control" required>
+                            <span asp-validation-for="Passord" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Registrer</button>
+                            <a asp-action="Index" class="btn btn-link">Tilbake til innlogging</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

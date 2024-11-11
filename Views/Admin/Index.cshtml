@@ -1,0 +1,46 @@
+@model IEnumerable<KartverketGruppe5.Models.Saksbehandler>
+
+<div class="container mt-5">
+    <h2>Saksbehandlere</h2>
+    <a asp-action="Register" class="btn btn-primary mb-3">Registrer ny saksbehandler</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th>Opprettet</th>
+                <th>Handlinger</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var saksbehandler in Model)
+            {
+                <tr>
+                    <td>@saksbehandler.Fornavn @saksbehandler.Etternavn</td>
+                    <td>@saksbehandler.Email</td>
+                    <td>@(saksbehandler.Admin ? "Ja" : "Nei")</td>
+                    <td>@saksbehandler.OpprettetDato.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@saksbehandler.SaksbehandlerId" class="btn btn-sm btn-primary">Rediger</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <form asp-action="PopulateFylkerOgKommuner" method="post">
+        <button type="submit" class="btn btn-primary">Oppdater Fylker og Kommuner</button>
+    </form>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+</div> 
