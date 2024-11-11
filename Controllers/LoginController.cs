@@ -60,15 +60,23 @@ namespace KartverketGruppe5.Controllers
                         new Claim(ClaimTypes.Name, saksbehandler.Email),
                         new Claim("SaksbehandlerId", saksbehandler.SaksbehandlerId.ToString()),
                         new Claim("UserType", "Saksbehandler"),
-                        new Claim("IsAdmin", saksbehandler.Admin.ToString())
+                        new Claim("IsAdmin", saksbehandler.Admin.ToString()),
+                        new Claim(ClaimTypes.Role, "Saksbehandler")
                     };
+
+                    if (saksbehandler.Admin)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                    }
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                    HttpContext.Session.SetString("BrukerNavn", $"{saksbehandler.Fornavn} {saksbehandler.Etternavn}");
-                    HttpContext.Session.SetString("BrukerEmail", saksbehandler.Email);
+                    HttpContext.Session.SetString("SaksbehandlerNavn", $"{saksbehandler.Fornavn} {saksbehandler.Etternavn}");
+                    HttpContext.Session.SetString("SaksbehandlerEmail", saksbehandler.Email);
                     HttpContext.Session.SetInt32("SaksbehandlerId", saksbehandler.SaksbehandlerId);
+                    HttpContext.Session.SetString("UserType", "Saksbehandler");
+                    HttpContext.Session.SetString("IsAdmin", saksbehandler.Admin.ToString());
 
                     _logger.LogInformation("Session og claims satt for saksbehandler: {Email}", model.Email);
                     return RedirectToAction("Index", "Home");
@@ -93,7 +101,8 @@ namespace KartverketGruppe5.Controllers
                     {
                         new Claim(ClaimTypes.Name, bruker.Email),
                         new Claim("BrukerId", bruker.BrukerId.ToString()),
-                        new Claim("UserType", "Bruker")
+                        new Claim("UserType", "Bruker"),
+                        new Claim(ClaimTypes.Role, "Bruker")
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -102,6 +111,7 @@ namespace KartverketGruppe5.Controllers
                     HttpContext.Session.SetString("BrukerNavn", $"{bruker.Fornavn} {bruker.Etternavn}");
                     HttpContext.Session.SetString("BrukerEmail", bruker.Email);
                     HttpContext.Session.SetInt32("BrukerId", bruker.BrukerId);
+                    HttpContext.Session.SetString("UserType", "Bruker");
 
                     _logger.LogInformation("Session og claims satt for bruker: {Email}", model.Email);
                     return RedirectToAction("Index", "Home");

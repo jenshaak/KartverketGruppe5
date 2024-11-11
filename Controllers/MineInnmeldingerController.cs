@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Services;
 using KartverketGruppe5.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
 {
+    [Authorize]
     public class MineInnmeldingerController : Controller
     {
         private readonly InnmeldingService _innmeldingService;

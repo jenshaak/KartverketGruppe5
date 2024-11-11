@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
 using KartverketGruppe5.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
 {
+    [Authorize]
     public class MapChangeController : Controller
     {
         private readonly LokasjonService _lokasjonService;
