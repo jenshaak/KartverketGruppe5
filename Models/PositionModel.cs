@@ -2,9 +2,10 @@
 {
     public class PositionModel
     {
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public string Description { get; set; }
-        public string GeoJson { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public string? Description { get; set; }
+        public string? GeoJson { get; set; }
+        public string GeometriType { get; set; } = "Point";
     }
 }
