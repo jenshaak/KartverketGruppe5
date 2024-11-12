@@ -1,0 +1,119 @@
+@model KartverketGruppe5.Models.InnmeldingModel
+@{
+    ViewData["Title"] = "Innmelding Detaljer";
+    var lokasjon = ViewBag.Lokasjon as LokasjonModel;
+    var saksbehandlere = ViewBag.Saksbehandlere as List<Saksbehandler>;
+}
+
+<div class="flex flex-col h-screen">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="mb-6">
+            <a asp-action="Index" class="text-blue-600 hover:text-blue-800">
+                ← Tilbake til oversikt
+            </a>
+        </div>
+
+        <h1 class="text-2xl font-bold mb-6">Innmelding Detaljer</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h2 class="text-lg font-semibold mb-2">Kommune</h2>
+                <p class="text-gray-700">@Model.KommuneNavn</p>
+            </div>
+
+            <div>
+                <h2 class="text-lg font-semibold mb-2">Status</h2>
+                <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @Model.StatusClass">
+                    @Model.Status
+                </span>
+            </div>
+
+            <div class="md:col-span-2">
+                <h2 class="text-lg font-semibold mb-2">Beskrivelse</h2>
+                <p class="text-gray-700">@Model.Beskrivelse</p>
+            </div>
+
+            <div>
+                <h2 class="text-lg font-semibold mb-2">Opprettet</h2>
+                <p class="text-gray-700">@Model.OpprettetDato.ToString("dd.MM.yyyy HH:mm")</p>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow">
+            <div id="map" style="height: 400px; width: 100%;"></div>
+        </div>
+        <!-- Handlinger -->
+        <div class="mt-8 flex flex-col gap-4">
+            <form asp-action="FullforBehandling" method="post" class="flex flex-col gap-4">
+                <input type="hidden" asp-for="InnmeldingId" />
+                <input type="hidden" asp-for="SaksbehandlerId" />
+                
+                <div class="flex flex-col gap-2">
+                    <label for="kommentar" class="font-semibold">Kommentar</label>
+                    <textarea name="kommentar" id="kommentar" rows="4" 
+                              class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                              required></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" name="action" value="godkjenn" 
+                            class="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                        Godkjenn og fullfør
+                    </button>
+                    <button type="submit" name="action" value="avvis" 
+                            class="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                        Avvis
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        console.log('Lokasjon:', @Json.Serialize(lokasjon));
+    </script>
+    <script>
+        // Vent til dokumentet er lastet
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser kartet
+            var map = L.map('map');
+
+            // Legg til kartlaget
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            @if (lokasjon != null)
+            {
+                <text>
+                // Sett kartvisning til lokasjonens koordinater
+                map.setView([@lokasjon.Latitude, @lokasjon.Longitude], 15);
+
+                // Legg til markør
+                var marker = L.marker([@lokasjon.Latitude, @lokasjon.Longitude]).addTo(map);
+                marker.bindPopup('@Model.Beskrivelse').openPopup();
+
+                @if (!string.IsNullOrEmpty(lokasjon.GeoJson))
+                {
+                    <text>
+                    // Legg til GeoJSON hvis det finnes
+                    var geoJsonLayer = L.geoJSON(@Html.Raw(lokasjon.GeoJson), {
+                        style: function(feature) {
+                            return {
+                                color: "#ff7800",
+                                weight: 3,
+                                opacity: 0.65
+                            };
+                        }
+                    }).addTo(map);
+                    map.fitBounds(geoJsonLayer.getBounds());
+                    </text>
+                }
+                </text>
+            }
+        });
+    </script>
+} 

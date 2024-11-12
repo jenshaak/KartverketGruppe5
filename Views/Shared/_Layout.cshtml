@@ -1,14 +1,31 @@
-﻿<!DOCTYPE html>
+﻿@using KartverketGruppe5.Services
+@inject SaksbehandlerService SaksbehandlerService
+
+@{
+    var userType = Context.Session.GetString("UserType");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
+    
+    var displayName = userType == "Saksbehandler" 
+        ? Context.Session.GetString("SaksbehandlerNavn")
+        : Context.Session.GetString("BrukerNavn");
+
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
+    var isHomePage = currentController == "Home" && currentAction == "Index";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - KartverketGruppe5</title>
+    <title>@ViewData["Title"] - Kartverket</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/KartverketGruppe5.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
@@ -16,11 +33,54 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kartverket Gruppe 5</a>
                 <ul class="flex gap-5">
+                    @if (!isHomePage)
+                    {
+                        <li class="nav-item">
+                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                               asp-area="" 
+                               asp-controller="Home" 
+                               asp-action="Index">Hjem</a>
+                        </li>
+                    }
+                    
+                    @if (User.Identity.IsAuthenticated && userType == "Bruker")
+                    {
+                        <li class="nav-item">
+                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                            asp-controller="MineInnmeldinger" asp-action="Index">Mine Innmeldinger</a>
+                        </li>
+                    }
+
+                    @if (User.Identity.IsAuthenticated && userType == "Saksbehandler")
+                    {
+                        <li class="nav-item">
+                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                               asp-controller="Saksbehandling" asp-action="Index">Saksbehandling</a>
+                        </li>
+
+                        @if (isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="px-4 py-2 rounded-md bg-blue-300 hover:scale-105 hover:text-black" 
+                                   asp-controller="Admin" asp-action="Index">Administrasjon</a>
+                            </li>
+                        }
+                    }
+
                     <li class="nav-item">
-                        <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" asp-area="" asp-controller="Home" asp-action="Index">Hjem</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" asp-controller="Home" asp-action="CorrectMap">Meld inn endring</a>
+                        @if (displayName == null)
+                        {
+                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                            asp-controller="Login" asp-action="Index">Logg inn</a>
+                        }
+                        else
+                        {
+                            <div class="flex items-center gap-2">
+                                <span class="px-4 py-2">Hei, @displayName!</span>
+                                <a class="px-4 py-2 rounded-md bg-red-300 hover:scale-105 hover:text-black" 
+                                asp-controller="Login" asp-action="Logout">Logg ut</a>
+                            </div>
+                        }
                     </li>
                 </ul>
             </div>

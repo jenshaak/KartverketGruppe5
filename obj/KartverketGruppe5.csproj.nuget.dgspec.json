@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repo\\gruppe5-nettside\\KartverketGruppe5.csproj": {}
+    "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj": {}
   },
   "projects": {
-    "C:\\Repo\\gruppe5-nettside\\KartverketGruppe5.csproj": {
+    "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repo\\gruppe5-nettside\\KartverketGruppe5.csproj",
+        "projectUniqueName": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
         "projectName": "KartverketGruppe5",
-        "projectPath": "C:\\Repo\\gruppe5-nettside\\KartverketGruppe5.csproj",
-        "packagesPath": "C:\\Users\\ingri\\.nuget\\packages\\",
-        "outputPath": "C:\\Repo\\gruppe5-nettside\\obj\\",
+        "projectPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
+        "packagesPath": "C:\\Users\\jensh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ingri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jensh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -46,13 +46,45 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.35, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.21.0, )"
             },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.3.7, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "bootstrap": {
               "target": "Package",
               "version": "[5.3.3, )"
+            },
+            "leaflet": {
+              "target": "Package",
+              "version": "[0.7.3, )"
             }
           },
           "imports": [
