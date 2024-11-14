@@ -11,6 +11,21 @@ namespace KartverketGruppe5.Data
         }
 
         public DbSet<GeoChange> GeoChanges { get; set; }
-        public DbSet<Bruker> Brukere { get; set; }
+        public DbSet<Saksbehandler> Saksbehandlere { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Saksbehandler>(entity =>
+            {
+                entity.ToTable("Saksbehandler");
+                entity.HasKey(e => e.SaksbehandlerId);
+                entity.Property(e => e.Fornavn).IsRequired();
+                entity.Property(e => e.Etternavn).IsRequired();
+                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.Passord).IsRequired();
+            });
+        }
     }
 }

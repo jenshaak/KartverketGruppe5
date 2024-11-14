@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Services;
 using KartverketGruppe5.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
 {
+    [Authorize]
     public class MineInnmeldingerController : Controller
     {
         private readonly InnmeldingService _innmeldingService;
@@ -16,7 +18,7 @@ namespace KartverketGruppe5.Controllers
             _kommuneService = kommuneService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var brukerId = HttpContext.Session.GetInt32("BrukerId");
             if (brukerId == null)
@@ -24,13 +26,13 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var innmeldinger = _innmeldingService.GetMineInnmeldinger(brukerId.Value);
+            var innmeldinger = await _innmeldingService.GetInnmeldinger(includeKommuneNavn: true, innmelderBrukerId: brukerId.Value);
             return View(innmeldinger);
         }
 
-        public IActionResult Detaljer(int id)
+        public async Task<IActionResult> Detaljer(int id)
         {
-            var innmelding = _innmeldingService.GetInnmeldingById(id);
+            var innmelding = await _innmeldingService.GetInnmeldingById(id, true, true);
             if (innmelding == null)
             {
                 return NotFound();

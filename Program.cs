@@ -28,8 +28,18 @@ builder.Services.AddControllersWithViews();
 
 // Configure Entity Framework with MariaDB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(10, 5, 9))));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+        mySqlOptions =>
+        {
+            mySqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 10,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null
+            );
+        }
+    ));
 
 // Add these lines after builder.Services.AddRazorPages();
 builder.Services.AddSession(options =>
@@ -55,6 +65,22 @@ builder.Services.AddDataProtection()
     .SetApplicationName("KartverketGruppe5");
 
 var app = builder.Build();
+
+// Legg til dette rett etter builder.Build():
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

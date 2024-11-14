@@ -22,6 +22,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/Admin/Rediger.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVkaWdlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/Admin/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,12 +70,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZUlubm1lbGRpbmdlclxpbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/Saksbehandling/Detaljer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Frc2JlaGFuZGxpbmdcRGV0YWxqZXIuY3NodG1s
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/MineSaker/Behandle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZVNha2VyXEJlaGFuZGxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/Saksbehandling/Endre.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Frc2JlaGFuZGxpbmdcRW5kcmUuY3NodG1s
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/MineSaker/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZVNha2VyXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/Saksbehandling/Detaljer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Frc2JlaGFuZGxpbmdcRGV0YWxqZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-2/KartverketGruppe5/Views/Saksbehandling/Index.cshtml]

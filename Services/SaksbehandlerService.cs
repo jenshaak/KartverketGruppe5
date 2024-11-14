@@ -3,27 +3,29 @@ using Dapper;
 using KartverketGruppe5.Models;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using KartverketGruppe5.Data;
 
 namespace KartverketGruppe5.Services
 {
     public class SaksbehandlerService
     {
-        private readonly string _connectionString;
+        private readonly ApplicationDbContext _context;
         private readonly ILogger<SaksbehandlerService> _logger;
+        private readonly string _connectionString;
 
-        public SaksbehandlerService(IConfiguration configuration, ILogger<SaksbehandlerService> logger)
+        public SaksbehandlerService(ApplicationDbContext context, ILogger<SaksbehandlerService> logger, IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _context = context;
             _logger = logger;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public async Task<Saksbehandler> GetSaksbehandlerById(int id)
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = "SELECT * FROM Saksbehandler WHERE saksbehandlerId = @Id";
-                return await connection.QueryFirstOrDefaultAsync<Saksbehandler>(sql, new { Id = id });
+                return await _context.Saksbehandlere.FindAsync(id);
             }
             catch (Exception ex)
             {
@@ -51,10 +53,9 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = "SELECT * FROM Saksbehandler ORDER BY opprettetDato DESC";
-                var result = await connection.QueryAsync<Saksbehandler>(sql);
-                return result.ToList();
+                return await _context.Saksbehandlere
+                    .OrderByDescending(s => s.OpprettetDato)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -67,15 +68,10 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
                 saksbehandler.Passord = HashPassword(saksbehandler.Passord);
-
-                const string sql = @"
-                    INSERT INTO Saksbehandler (fornavn, etternavn, email, passord, admin)
-                    VALUES (@Fornavn, @Etternavn, @Email, @Passord, @Admin)";
-                
-                var rowsAffected = await connection.ExecuteAsync(sql, saksbehandler);
-                return rowsAffected > 0;
+                _context.Saksbehandlere.Add(saksbehandler);
+                await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {
@@ -84,21 +80,25 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public bool UpdateSaksbehandler(Saksbehandler saksbehandler)
+        public async Task<bool> UpdateSaksbehandler(Saksbehandler saksbehandler)
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    UPDATE Saksbehandler 
-                    SET fornavn = @Fornavn,
-                        etternavn = @Etternavn,
-                        email = @Email,
-                        admin = @Admin
-                    WHERE saksbehandlerId = @SaksbehandlerId";
-                
-                var rowsAffected = connection.Execute(sql, saksbehandler);
-                return rowsAffected > 0;
+                var existing = await _context.Saksbehandlere.FindAsync(saksbehandler.SaksbehandlerId);
+                if (existing == null) return false;
+
+                if (!string.IsNullOrEmpty(saksbehandler.Passord))
+                {
+                    saksbehandler.Passord = HashPassword(saksbehandler.Passord);
+                }
+                else
+                {
+                    saksbehandler.Passord = existing.Passord;
+                }
+
+                _context.Entry(existing).CurrentValues.SetValues(saksbehandler);
+                await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {
@@ -121,57 +121,6 @@ namespace KartverketGruppe5.Services
                 _logger.LogError($"Error updating saksbehandler role: {ex.Message}");
                 return false;
             }
-        }
-
-        public List<InnmeldingModel> GetAllInnmeldinger()
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            
-            // Hent innmeldinger med kommunenavn i én spørring
-            const string sql = @"
-                SELECT 
-                    i.innmeldingId,
-                    i.brukerId,
-                    i.kommuneId,
-                    i.lokasjonId,
-                    i.beskrivelse,
-                    i.status,
-                    i.opprettetDato,
-                    k.navn as kommuneNavn
-                FROM Innmelding i
-                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
-                ORDER BY i.opprettetDato DESC";
-
-            var innmeldinger = connection.Query<(int innmeldingId, int brukerId, int kommuneId, 
-                int lokasjonId, string beskrivelse, string status, DateTime opprettetDato, string kommuneNavn)>
-                (sql);
-
-            return innmeldinger.Select(i => new InnmeldingModel
-            {
-                InnmeldingId = i.innmeldingId,
-                BrukerId = i.brukerId,
-                KommuneId = i.kommuneId,
-                LokasjonId = i.lokasjonId,
-                Beskrivelse = i.beskrivelse,
-                Status = i.status,
-                OpprettetDato = i.opprettetDato,
-                KommuneNavn = i.kommuneNavn,
-                StatusClass = i.status switch
-                {
-                    "Ny" => "bg-blue-100 text-blue-800",
-                    "Under behandling" => "bg-yellow-100 text-yellow-800",
-                    "Fullført" => "bg-green-100 text-green-800",
-                    "Avvist" => "bg-red-100 text-red-800",
-                    _ => "bg-gray-100 text-gray-800"
-                }
-            }).ToList();
-        }
-
-        public async Task<InnmeldingModel> GetInnmeldingById(int id)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            const string sql = "SELECT * FROM Innmelding WHERE innmeldingId = @Id";
-            return await connection.QueryFirstOrDefaultAsync<InnmeldingModel>(sql, new { Id = id });
         }
 
         private string HashPassword(string password)

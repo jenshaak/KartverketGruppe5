@@ -1,18 +1,51 @@
 ﻿@model KartverketGruppe5.Models.HomeViewModel
 @{
-    ViewData["Title"] = "Kartverket API Search";
+    ViewData["Title"] = "Hjemmeside";
+    var userType = Context.Session.GetString("UserType");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
 }
 
 <div class="text-center flex flex-col items-center gap-4">
-    <h1 class="text-4xl">Velkommen til Kartverket 2.0</h1>
-    <a asp-controller="MapChange" asp-action="Index" class="text-black no-underline hover:text-black">
-        <div class="bg-green-100 w-max border border-green-300 hover:scale-105 transition-all ease-in-out 
-        duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">Meld inn endring</div>
-    </a>
-    <a asp-controller="MineInnmeldinger" asp-action="Index" class="text-black no-underline hover:text-black">
-        <div class="bg-green-100 w-max border border-green-300 hover:scale-105 transition-all ease-in-out 
-        duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">Mine innmeldinger</div>
-    </a>
+    <h1 class="text-4xl">Velkommen til Kartverket</h1>
+    @if (userType != "Saksbehandler")
+    {
+        <a asp-controller="MapChange" asp-action="Index" class="text-black no-underline hover:text-black">
+            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
+                Meld inn endring
+            </div>
+        </a>
+        <a asp-controller="MineInnmeldinger" asp-action="Index" class="text-black no-underline hover:text-black">
+            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
+                Mine innmeldinger
+            </div>
+        </a>
+    }
+    else if (userType == "Saksbehandler")
+    {
+        <a asp-controller="Saksbehandling" asp-action="Index" class="text-black no-underline hover:text-black">
+            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
+                Saksbehandling
+            </div>
+        </a>
+        <a asp-controller="MineSaker" asp-action="Index" class="text-black no-underline hover:text-black">
+            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
+                Mine saker
+            </div>
+        </a>
+        @if (isAdmin)
+        {
+            <a asp-controller="Admin" asp-action="Index" class="text-black no-underline hover:text-black">
+                <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+                duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
+                    Administrasjon
+                </div>
+            </a>
+        }
+    }
 </div>
 
 
