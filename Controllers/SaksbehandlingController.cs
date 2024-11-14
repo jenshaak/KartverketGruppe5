@@ -32,7 +32,7 @@ namespace KartverketGruppe5.Controllers
             }
 
             _logger.LogInformation("Henter alle innmeldinger");
-            var innmeldinger = _saksbehandlerService.GetAllInnmeldinger();
+            var innmeldinger = await _innmeldingService.GetInnmeldinger(includeKommuneNavn: true);
             _logger.LogInformation("Fant {AntallInnmeldinger} innmeldinger", innmeldinger.Count);
             return View(innmeldinger);
         }
@@ -65,30 +65,9 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
-        // public async Task<IActionResult> Detaljer(int id)
-        // {
-        //     try 
-        //     {
-        //         var innmelding = await _saksbehandlerService.GetInnmeldingById(id);
-        //         if (innmelding == null)
-        //         {
-        //             _logger.LogWarning("Fant ikke innmelding med ID: {Id}", id);
-        //             return NotFound();
-        //         }
-
-        //         _logger.LogInformation("Hentet detaljer for innmelding {Id}", id);
-        //         return View(innmelding);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogError(ex, "Feil ved henting av innmelding {Id}", id);
-        //         return RedirectToAction("Index");
-        //     }
-        // }
-
-        public IActionResult Detaljer(int id)
+        public async Task<IActionResult> Detaljer(int id)
         {
-            var innmelding = _innmeldingService.GetInnmeldingById(id);
+            var innmelding = await _innmeldingService.GetInnmeldingById(id, true, true);
             if (innmelding == null)
             {
                 return NotFound();
@@ -106,6 +85,9 @@ namespace KartverketGruppe5.Controllers
                 return NotFound();
             }
 
+            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
+            ViewBag.Saksbehandlere = saksbehandlere;
+
             var innmeldingModel = new InnmeldingModel
             {
                 InnmeldingId = innmelding.InnmeldingId,
@@ -122,6 +104,36 @@ namespace KartverketGruppe5.Controllers
             ViewBag.Lokasjon = lokasjon;
             Console.WriteLine($"Lokasjon: {lokasjon?.Latitude}, {lokasjon?.Longitude}, GeoJson: {lokasjon?.GeoJson}");
             return View(innmeldingModel);
+        }
+
+        
+
+        [HttpPost]
+        public async Task<IActionResult> Behandle(int id)
+        {
+            var innmeldingModel = await _innmeldingService.GetInnmeldingById(id);
+            if (innmeldingModel == null)
+            {
+                return NotFound();
+            }
+
+            var currentUserId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
+            
+            // Konverter til Innmelding
+            var innmelding = new Innmelding
+            {
+                InnmeldingId = innmeldingModel.InnmeldingId,
+                BrukerId = innmeldingModel.BrukerId,
+                KommuneId = innmeldingModel.KommuneId,
+                LokasjonId = innmeldingModel.LokasjonId,
+                Beskrivelse = innmeldingModel.Beskrivelse,
+                Status = "Under behandling",
+                SaksbehandlerId = currentUserId,
+                OpprettetDato = innmeldingModel.OpprettetDato
+            };
+
+            await _innmeldingService.UpdateInnmelding(innmelding);
+            return RedirectToAction("Index", "MineSaker");
         }
 
         private string GetStatusClass(string status) => status switch

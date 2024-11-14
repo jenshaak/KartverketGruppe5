@@ -43,26 +43,27 @@
         </div>
         <!-- Handlinger -->
         <div class="mt-8 flex flex-col gap-4">
-            <form asp-action="Videresend" method="post" class="flex flex-col gap-4">
+            <form asp-action="FullforBehandling" method="post" class="flex flex-col gap-4">
                 <input type="hidden" asp-for="InnmeldingId" />
-                <select name="saksbehandlerId" class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">Velg saksbehandler</option>
-                    @foreach (var saksbehandler in ViewBag.Saksbehandlere)
-                    {
-                        <option value="@saksbehandler.SaksbehandlerId">
-                            @($"{saksbehandler.Fornavn} {saksbehandler.Etternavn}")
-                        </option>
-                    }
-                </select>
-                <button type="submit" class="bg-green-300 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                    Videresendd
-                </button>
-            </form>
-            <form asp-action="Behandle" method="post">
-                <input type="hidden" name="id" value="@Model.InnmeldingId" />
-                <button type="submit" class="bg-green-300 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
-                    Ta over saken
-                </button>
+                <input type="hidden" asp-for="SaksbehandlerId" />
+                
+                <div class="flex flex-col gap-2">
+                    <label for="kommentar" class="font-semibold">Kommentar</label>
+                    <textarea name="kommentar" id="kommentar" rows="4" 
+                              class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                              required></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" name="action" value="godkjenn" 
+                            class="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                        Godkjenn og fullfør
+                    </button>
+                    <button type="submit" name="action" value="avvis" 
+                            class="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                        Avvis
+                    </button>
+                </div>
             </form>
         </div>
     </div>

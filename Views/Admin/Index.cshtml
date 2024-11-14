@@ -23,7 +23,7 @@
                     <td>@(saksbehandler.Admin ? "Ja" : "Nei")</td>
                     <td>@saksbehandler.OpprettetDato.ToShortDateString()</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@saksbehandler.SaksbehandlerId" class="btn btn-sm btn-primary">Rediger</a>
+                        <a asp-action="Rediger" asp-route-id="@saksbehandler.SaksbehandlerId" class="btn btn-sm btn-primary">Rediger</a>
                     </td>
                 </tr>
             }
