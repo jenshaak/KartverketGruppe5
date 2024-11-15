@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   kartverketgruppe5:
-    image: ${DOCKER_REGISTRY-}kartverketgruppe5
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,7 +24,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: gruppe5
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
 

@@ -43,7 +43,7 @@
                         </li>
                     }
                     
-                    @if (User.Identity.IsAuthenticated && userType == "Bruker")
+                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
                     {
                         <li class="nav-item">
                             <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
@@ -51,7 +51,7 @@
                         </li>
                     }
 
-                    @if (User.Identity.IsAuthenticated && userType == "Saksbehandler")
+                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
                     {
                         <li class="nav-item">
                             <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
