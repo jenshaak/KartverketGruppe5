@@ -4,6 +4,7 @@ using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KartverketGruppe5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115131808_AddRune")]
+    partial class AddRune
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,17 +83,6 @@ namespace KartverketGruppe5.Migrations
                         .IsUnique();
 
                     b.ToTable("Bruker", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            BrukerId = 1,
-                            Email = "ole@gmail.com",
-                            Etternavn = "Olsen",
-                            Fornavn = "Ole",
-                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 504, DateTimeKind.Utc).AddTicks(653),
-                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
-                        });
                 });
 
             modelBuilder.Entity("KartverketGruppe5.Models.Fylke", b =>
@@ -289,17 +281,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "rune@kartverket.no",
                             Etternavn = "Bengtson",
                             Fornavn = "Rune",
-                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 505, DateTimeKind.Utc).AddTicks(7429),
-                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
-                        },
-                        new
-                        {
-                            SaksbehandlerId = 2,
-                            Admin = false,
-                            Email = "lars@kartverket.no",
-                            Etternavn = "Larsen",
-                            Fornavn = "Lars",
-                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 505, DateTimeKind.Utc).AddTicks(7433),
+                            OpprettetDato = new DateTime(2024, 11, 15, 13, 18, 7, 378, DateTimeKind.Utc).AddTicks(5299),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
