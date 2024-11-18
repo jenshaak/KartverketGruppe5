@@ -7,15 +7,22 @@ namespace KartverketGruppe5.Models
         [Key]
         public int BrukerId { get; set; }
         
+        [Required]
+        [StringLength(50)]
         public string Fornavn { get; set; } = string.Empty;
         
+        [Required]
+        [StringLength(50)]
         public string Etternavn { get; set; } = string.Empty;
         
+        [Required]
+        [StringLength(80)]
+        [EmailAddress]
         public string Email { get; set; } = string.Empty;
         
+        [Required]
+        [StringLength(256)]
         public string Passord { get; set; } = string.Empty;
-        
-        public string Rolle { get; set; } = "bruker";
         
         public DateTime OpprettetDato { get; set; }
     }

@@ -1,30 +1,63 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using KartverketGruppe5.Models;
 using KartverketGruppe5.Services;
 
 namespace KartverketGruppe5.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
-        private readonly BrukerService _brukerService;
+        private readonly SaksbehandlerService _saksbehandlerService;
         private readonly KommunePopulateService _kommunePopulateService;
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(
-            BrukerService brukerService,
+            SaksbehandlerService saksbehandlerService,
             KommunePopulateService kommunePopulateService,
             ILogger<AdminController> logger)
         {
-            _brukerService = brukerService;
+            _saksbehandlerService = saksbehandlerService;
             _kommunePopulateService = kommunePopulateService;
             _logger = logger;
         }
 
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(Saksbehandler saksbehandler)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(saksbehandler);
+            }
+
+            try
+            {
+                // TODO: Hash passord før lagring
+                var result = await _saksbehandlerService.CreateSaksbehandler(saksbehandler);
+                if (result)
+                {
+                    TempData["Success"] = "Saksbehandler opprettet!";
+                    return RedirectToAction("Index", "Admin");
+                }
+                
+                ModelState.AddModelError("", "Kunne ikke opprette saksbehandler");
+                return View(saksbehandler);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creating saksbehandler: {ex.Message}");
+                ModelState.AddModelError("", "En feil oppstod ved registrering");
+                return View(saksbehandler);
+            }
+        }
+
         public async Task<IActionResult> Index()
         {
-            var brukere = await _brukerService.GetAlleBrukere();
-            return View(brukere);
+            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
+            return View(saksbehandlere);
         }
 
         [HttpPost]
@@ -34,13 +67,53 @@ namespace KartverketGruppe5.Controllers
             {
                 var result = await _kommunePopulateService.PopulateFylkerOgKommuner();
                 TempData["Message"] = result;
-                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error in PopulateFylkerOgKommuner: {ex.Message}");
-                TempData["Error"] = "Failed to populate Fylker og Kommuner";
-                return RedirectToAction("Index");
+                _logger.LogError($"Feil under oppdatering av fylker og kommuner: {ex.Message}");
+                TempData["Error"] = "Det oppstod en feil under oppdatering av fylker og kommuner.";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Rediger(int id)
+        {
+            var saksbehandler = await _saksbehandlerService.GetSaksbehandlerById(id);
+            if (saksbehandler == null)
+            {
+                return NotFound();
+            }
+            return View(saksbehandler);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Rediger(Saksbehandler saksbehandler)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(saksbehandler);
+            }
+
+            try
+            {
+                var result = await _saksbehandlerService.UpdateSaksbehandler(saksbehandler);
+                if (result)
+                {
+                    TempData["Success"] = "Saksbehandler oppdatert!";
+                    _logger.LogInformation("Saksbehandler oppdatert");
+                    return RedirectToAction("Index");
+                }
+                
+                ModelState.AddModelError("", "Kunne ikke oppdatere saksbehandler");
+                return View(saksbehandler);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error updating saksbehandler: {ex.Message}");
+                ModelState.AddModelError("", "En feil oppstod ved oppdatering");
+                return View(saksbehandler);
             }
         }
     }

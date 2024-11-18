@@ -1,22 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Services;
 using KartverketGruppe5.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace KartverketGruppe5.Controllers
 {
+    [Authorize]
     public class MineInnmeldingerController : Controller
     {
         private readonly InnmeldingService _innmeldingService;
         private readonly LokasjonService _lokasjonService;
-        private readonly KommuneService _kommuneService;
-        public MineInnmeldingerController(InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService)
+        private readonly KommuneService _kommuneService;    
+        private readonly ILogger<MineInnmeldingerController> _logger;
+        public MineInnmeldingerController(InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService, ILogger<MineInnmeldingerController> logger)
         {
             _innmeldingService = innmeldingService;
             _lokasjonService = lokasjonService;
             _kommuneService = kommuneService;
+            _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var brukerId = HttpContext.Session.GetInt32("BrukerId");
             if (brukerId == null)
@@ -24,13 +29,13 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var innmeldinger = _innmeldingService.GetMineInnmeldinger(brukerId.Value);
+            var innmeldinger = await _innmeldingService.GetInnmeldinger(includeKommuneNavn: true, innmelderBrukerId: brukerId.Value);
             return View(innmeldinger);
         }
 
-        public IActionResult Detaljer(int id)
+        public async Task<IActionResult> Detaljer(int id)
         {
-            var innmelding = _innmeldingService.GetInnmeldingById(id);
+            var innmelding = await _innmeldingService.GetInnmeldingById(id, true, true);
             if (innmelding == null)
             {
                 return NotFound();
@@ -48,6 +53,8 @@ namespace KartverketGruppe5.Controllers
                 return NotFound();
             }
 
+            _logger.LogInformation($"Bildestien: {innmelding.BildeSti}");
+
             var innmeldingModel = new InnmeldingModel
             {
                 InnmeldingId = innmelding.InnmeldingId,
@@ -58,12 +65,69 @@ namespace KartverketGruppe5.Controllers
                 Status = innmelding.Status,
                 OpprettetDato = innmelding.OpprettetDato,
                 KommuneNavn = kommune.Navn,
-                StatusClass = GetStatusClass(innmelding.Status)
+                StatusClass = GetStatusClass(innmelding.Status),
+                BildeSti = innmelding.BildeSti ?? null
             };
 
             ViewBag.Lokasjon = lokasjon;
-            Console.WriteLine($"Lokasjon: {lokasjon?.Latitude}, {lokasjon?.Longitude}, GeoJson: {lokasjon?.GeoJson}");
             return View(innmeldingModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EndreInnmelding(InnmeldingModel innmeldingModel, IFormFile bilde)
+        {
+            try 
+            {
+                _logger.LogInformation($"InnmeldingId: {innmeldingModel.InnmeldingId}");
+                _logger.LogInformation($"Beskrivelse: {innmeldingModel.Beskrivelse}");
+                
+                if (bilde != null)
+                {
+                    _logger.LogInformation($"Bilde info:");
+                    _logger.LogInformation($" - Navn: {bilde.FileName}");
+                    _logger.LogInformation($" - Størrelse: {bilde.Length} bytes");
+                    _logger.LogInformation($" - Content Type: {bilde.ContentType}");
+                }
+                else
+                {
+                    _logger.LogInformation("Ingen ny fil lastet opp");
+                }
+
+                LokasjonModel lokasjon = null;
+                if (Request.Form["geoJsonInput"].Count > 0 && 
+                    Request.Form["geometriType"].Count > 0 && 
+                    Request.Form["latitude"].Count > 0 && 
+                    Request.Form["longitude"].Count > 0 &&
+                    !string.IsNullOrWhiteSpace(Request.Form["latitude"]) &&
+                    !string.IsNullOrWhiteSpace(Request.Form["longitude"]))
+                {
+                    lokasjon = new LokasjonModel
+                    {
+                        GeoJson = Request.Form["geoJsonInput"],
+                        GeometriType = Request.Form["geometriType"],
+                        Latitude = double.Parse(Request.Form["latitude"]),
+                        Longitude = double.Parse(Request.Form["longitude"])
+                    };
+                    
+                    _logger.LogInformation($"Oppdaterer lokasjon:");
+                    _logger.LogInformation($" - GeoJson: {lokasjon.GeoJson}");
+                    _logger.LogInformation($" - GeometriType: {lokasjon.GeometriType}");
+                    _logger.LogInformation($" - Latitude: {lokasjon.Latitude}");
+                    _logger.LogInformation($" - Longitude: {lokasjon.Longitude}");
+                }
+                else
+                {
+                    _logger.LogInformation("Ingen endring i lokasjon");
+                }
+
+                await _innmeldingService.UpdateInnmeldingDetails(innmeldingModel, lokasjon, bilde);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av innmelding");
+                return RedirectToAction("Detaljer", new { id = innmeldingModel.InnmeldingId });
+            }
         }
 
         private string GetStatusClass(string status) => status switch

@@ -3,31 +3,44 @@ using KartverketGruppe5;
 using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Bind the API settings from appsettings.json
+// Kobler API-innstillingene fra appsettings.json
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
-// Register services and their interfaces
+// Registrer services og deres grensesnitt
 builder.Services.AddHttpClient<IKommuneInfoService, KommuneInfoService>();
 builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
 
-// Add this with your other service registrations
+// Legg til denne med dine andre service registreringer
+builder.Services.AddScoped<BildeService>();
 builder.Services.AddScoped<BrukerService>();
 builder.Services.AddScoped<GeoChangeService>();
 builder.Services.AddScoped<LokasjonService>();
 builder.Services.AddScoped<InnmeldingService>();
 builder.Services.AddScoped<KommunePopulateService>();
 builder.Services.AddScoped<KommuneService>();
+builder.Services.AddScoped<SaksbehandlerService>();
 
-// Add services to the container.
+// Legg til services til containeren.
 builder.Services.AddControllersWithViews();
 
-// Configure Entity Framework with MariaDB
+// Konfigurer Entity Framework med MariaDB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(10, 5, 9))));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+        mySqlOptions =>
+        {
+            mySqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 10,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null
+            );
+        }
+    ));
 
 // Add these lines after builder.Services.AddRazorPages();
 builder.Services.AddSession(options =>
@@ -47,9 +60,28 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
+    .SetApplicationName("KartverketGruppe5");
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
+
+// Konfigurer HTTP-forespørsler.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error"); 
