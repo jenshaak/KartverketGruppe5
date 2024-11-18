@@ -132,7 +132,7 @@ namespace KartverketGruppe5.Controllers
                 OpprettetDato = innmeldingModel.OpprettetDato
             };
 
-            await _innmeldingService.UpdateInnmelding(innmelding);
+            await _innmeldingService.UpdateInnmeldingStatus(innmelding.InnmeldingId, "Under behandling", currentUserId);
             return RedirectToAction("Index", "MineSaker");
         }
 

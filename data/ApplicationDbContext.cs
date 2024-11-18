@@ -126,6 +126,8 @@ namespace KartverketGruppe5.Data
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(e => e.OppdatertDato)
                     .ValueGeneratedOnUpdate();
+                entity.Property(e => e.BildeSti)
+                    .HasMaxLength(100);
 
                 // Relasjoner
                 entity.HasOne(e => e.Bruker)

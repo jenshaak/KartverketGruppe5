@@ -9,8 +9,11 @@ namespace KartverketGruppe5.Models
         public string Beskrivelse { get; set; }
         public string Status { get; set; }
         public DateTime OpprettetDato { get; set; }
+        public DateTime? OppdatertDato { get; set; }
         public string KommuneNavn { get; set; }
         public string StatusClass { get; set; } = "bg-gray-100 text-gray-800";
         public int? SaksbehandlerId { get; set; }
+        public IFormFile? Bilde { get; set; }
+        public string? BildeSti { get; set; }
     }
 } 

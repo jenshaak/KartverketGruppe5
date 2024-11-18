@@ -20,10 +20,10 @@ module.exports = {
   plugins: [],
   safelist: [
     {
-      pattern: /(bg|text|border|shadow)-.+/,
+      pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|justify)-.+/,
     },
     {
-      pattern: /(absolute|fixed|relative|hidden|h-screen|group|group-hover|cursor-pointer)/,
+      pattern: /(absolute|fixed|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden)/,
     },
     {
       pattern: /(top|right)-(0|4|8|12|16)/,

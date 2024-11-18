@@ -11,15 +11,18 @@ namespace KartverketGruppe5.Controllers
     {
         private readonly LokasjonService _lokasjonService;
         private readonly InnmeldingService _innmeldingService;
+        private readonly BildeService _bildeService;
         private readonly ILogger<MapChangeController> _logger;
 
         public MapChangeController(
             LokasjonService lokasjonService, 
             InnmeldingService innmeldingService,
+            BildeService bildeService,
             ILogger<MapChangeController> logger)
         {
             _lokasjonService = lokasjonService;
             _innmeldingService = innmeldingService;
+            _bildeService = bildeService;
             _logger = logger;
         }
 
@@ -29,7 +32,7 @@ namespace KartverketGruppe5.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(LokasjonModel model, string beskrivelse)
+        public async Task<IActionResult> Index(LokasjonModel model, string beskrivelse, IFormFile? bilde)
         {
             _logger.LogInformation("Starting Index POST method with Latitude: {Latitude}, Longitude: {Longitude}, GeoJson length: {GeoJsonLength}, Beskrivelse length: {BeskrivelseLength}, GeometriType: {GeometriType}",
                 model.Latitude, model.Longitude, 
@@ -93,7 +96,8 @@ namespace KartverketGruppe5.Controllers
                     brukerId: brukerId.Value,
                     kommuneId: kommuneId,
                     lokasjonId: lokasjonId,
-                    beskrivelse: beskrivelse
+                    beskrivelse: beskrivelse,
+                    bildeSti: null
                 );
                 _logger.LogInformation("Innmelding added with ID: {InnmeldingId}", innmeldingId);
 
@@ -101,6 +105,15 @@ namespace KartverketGruppe5.Controllers
                 {
                     _logger.LogError("Failed to save innmelding, returned ID: {InnmeldingId}", innmeldingId);
                     throw new Exception("Feil ved lagring av innmelding");
+                }
+
+                if (bilde != null)
+                {
+                    var bildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
+                    if (!string.IsNullOrEmpty(bildeSti))
+                    {
+                        await _innmeldingService.UpdateBildeSti(innmeldingId, bildeSti);
+                    }
                 }
 
                 _logger.LogInformation("Successfully saved both lokasjon and innmelding. Redirecting to MineInnmeldinger");

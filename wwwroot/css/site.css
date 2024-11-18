@@ -13,13 +13,30 @@ html {
   text-decoration: none;
   padding: 0.5rem 1rem;
   border: none;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-primary {
   background-color: #156630;
   color: white;
   &:hover {
-    background-color: #2ca713;
+    background-color: #14532d;
+  }
+}
+
+.btn-blue {
+  background-color: #3B82F6;
+  color: white;
+  &:hover {
+    background-color: #1d4ed8;
+  }
+}
+
+.btn-red {
+  background-color: #ef4444;
+  color: white;
+  &:hover {
+    background-color: #dc2626;
   }
 }
 
@@ -29,6 +46,18 @@ html {
   &:hover {
     background-color: #434343;
   }
+}
+
+.mapChange-width {
+  width: 600px;
+}
+
+.input {
+  @apply p-2 rounded-md w-full;
+}
+
+.form-group {
+  @apply flex flex-col gap-2;
 }
 
 .form-control {

@@ -9,24 +9,26 @@ namespace KartverketGruppe5.Services
         private readonly IConfiguration _configuration;
         private readonly string? _connectionString;
         private readonly ILogger<InnmeldingService> _logger;
+        private readonly BildeService _bildeService;
 
-        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger)
+        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, BildeService bildeService)
         {
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("DefaultConnection");
             _logger = logger;
+            _bildeService = bildeService;
         }
 
         private IDbConnection Connection => new MySqlConnection(_connectionString);
 
-        public int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse)
+        public int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string query = @"INSERT INTO Innmelding 
-                               (brukerId, kommuneId, lokasjonId, beskrivelse, status) 
+                               (brukerId, kommuneId, lokasjonId, beskrivelse, status, bildeSti) 
                                VALUES 
-                               (@BrukerId, @KommuneId, @LokasjonId, @Beskrivelse, 'Ny');
+                               (@BrukerId, @KommuneId, @LokasjonId, @Beskrivelse, 'Ny', @BildeSti);
                                SELECT LAST_INSERT_ID();";
 
                 return dbConnection.ExecuteScalar<int>(query, new
@@ -34,7 +36,8 @@ namespace KartverketGruppe5.Services
                     BrukerId = brukerId,
                     KommuneId = kommuneId,
                     LokasjonId = lokasjonId,
-                    Beskrivelse = beskrivelse
+                    Beskrivelse = beskrivelse,
+                    BildeSti = bildeSti
                 });
             }
         }
@@ -120,7 +123,8 @@ namespace KartverketGruppe5.Services
                     i.beskrivelse,
                     i.status,
                     i.opprettetDato,
-                    i.saksbehandlerId";
+                    i.saksbehandlerId,
+                    i.bildeSti";
 
             if (includeKommuneNavn)
             {
@@ -154,6 +158,89 @@ namespace KartverketGruppe5.Services
             }
 
             return innmelding;
+        }
+
+        public async Task UpdateInnmeldingDetails(InnmeldingModel innmelding, LokasjonModel? lokasjon = null, IFormFile? bilde = null)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            var oppdatertDato = DateTime.Now;
+
+            if (bilde != null)
+            {
+                innmelding.BildeSti = await _bildeService.LagreBilde(bilde, innmelding.InnmeldingId);
+            }
+
+            if (lokasjon != null)
+            {
+                await UpdateLokasjon(lokasjon, oppdatertDato);
+            }
+
+            string query = @"
+                UPDATE Innmelding SET 
+                    beskrivelse = @Beskrivelse,
+                    bildeSti = COALESCE(@BildeSti, bildeSti),
+                    oppdatertDato = @OppdatertDato
+                WHERE innmeldingId = @InnmeldingId";
+
+            await connection.ExecuteAsync(query, new { 
+                innmelding.Beskrivelse, 
+                innmelding.BildeSti,
+                OppdatertDato = oppdatertDato, 
+                innmelding.InnmeldingId 
+            });
+        }
+
+        public async Task UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId = null, string? kommentar = null)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            var oppdatertDato = DateTime.Now;
+
+            var updateFields = new List<string> { "status = @Status", "oppdatertDato = @OppdatertDato" };
+            var parameters = new DynamicParameters();
+            parameters.Add("Status", status);
+            parameters.Add("OppdatertDato", oppdatertDato);
+            parameters.Add("InnmeldingId", innmeldingId);
+
+            if (saksbehandlerId.HasValue)
+            {
+                updateFields.Add("saksbehandlerId = @SaksbehandlerId");
+                parameters.Add("SaksbehandlerId", saksbehandlerId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(kommentar))
+            {
+                updateFields.Add("kommentar = @Kommentar");
+                parameters.Add("Kommentar", kommentar);
+            }
+
+            string query = $@"
+                UPDATE Innmelding 
+                SET {string.Join(", ", updateFields)}
+                WHERE innmeldingId = @InnmeldingId";
+
+            await connection.ExecuteAsync(query, parameters);
+        }
+
+        private async Task UpdateLokasjon(LokasjonModel lokasjon, DateTime oppdatertDato)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            string updateLokasjonQuery = @"
+                UPDATE Lokasjon SET 
+                    geoJson = @GeoJson,
+                    geometriType = @GeometriType,
+                    latitude = @Latitude,
+                    longitude = @Longitude,
+                    oppdatertDato = @OppdatertDato
+                WHERE lokasjonId = @LokasjonId";
+
+            await connection.ExecuteAsync(updateLokasjonQuery, new { 
+                lokasjon.GeoJson, 
+                lokasjon.GeometriType, 
+                lokasjon.Latitude, 
+                lokasjon.Longitude, 
+                OppdatertDato = oppdatertDato, 
+                lokasjon.LokasjonId 
+            });
         }
 
         public void UpdateStatus(int innmeldingId, string status)
@@ -231,6 +318,15 @@ namespace KartverketGruppe5.Services
             {
                 _logger.LogError($"Error updating innmelding: {ex.Message}");
                 return false;
+            }
+        }
+
+        public async Task UpdateBildeSti(int innmeldingId, string bildeSti)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string query = "UPDATE Innmelding SET bildeSti = @BildeSti WHERE innmeldingId = @InnmeldingId";
+                await dbConnection.ExecuteAsync(query, new { InnmeldingId = innmeldingId, BildeSti = bildeSti });
             }
         }
 

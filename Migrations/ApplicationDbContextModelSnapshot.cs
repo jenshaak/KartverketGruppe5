@@ -88,7 +88,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "ole@gmail.com",
                             Etternavn = "Olsen",
                             Fornavn = "Ole",
-                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 504, DateTimeKind.Utc).AddTicks(653),
+                            OpprettetDato = new DateTime(2024, 11, 17, 10, 30, 22, 821, DateTimeKind.Utc).AddTicks(5746),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
@@ -133,6 +133,10 @@ namespace KartverketGruppe5.Migrations
                     b.Property<string>("Beskrivelse")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("BildeSti")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("BrukerId")
                         .HasColumnType("int");
@@ -289,7 +293,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "rune@kartverket.no",
                             Etternavn = "Bengtson",
                             Fornavn = "Rune",
-                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 505, DateTimeKind.Utc).AddTicks(7429),
+                            OpprettetDato = new DateTime(2024, 11, 17, 10, 30, 22, 824, DateTimeKind.Utc).AddTicks(9634),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         },
                         new
@@ -299,7 +303,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "lars@kartverket.no",
                             Etternavn = "Larsen",
                             Fornavn = "Lars",
-                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 505, DateTimeKind.Utc).AddTicks(7433),
+                            OpprettetDato = new DateTime(2024, 11, 17, 10, 30, 22, 824, DateTimeKind.Utc).AddTicks(9641),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });

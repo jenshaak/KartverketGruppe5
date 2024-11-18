@@ -5,47 +5,31 @@
     var saksbehandlere = ViewBag.Saksbehandlere as List<Saksbehandler>;
 }
 
-<div class="flex flex-col h-screen">
-    <div class="bg-white rounded-lg shadow-lg p-6">
-        <div class="mb-6">
-            <a asp-action="Index" class="text-blue-600 hover:text-blue-800">
-                ← Tilbake til oversikt
-            </a>
+<div class="flex flex-col bg-bg w-full p-12">
+        <a asp-action="Index" class="text-blue-600 hover:text-blue-800">
+            ← Tilbake til oversikt
+        </a>
+    <h1 class="text-2xl font-bold mb-6">Innmelding Detaljer</h1>
+
+    <div class="flex justify-between items-center w-full bg-white rounded-lg p-4">
+        <div class="font-medium text-gray-900">@Model.KommuneNavn</div>
+        <div class="text-sm text-gray-500">@Model.OpprettetDato.ToShortDateString()</div>
+        <div class="flex items-center gap-2">
+            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @Model.StatusClass">
+                @Model.Status
+            </span>
         </div>
-
-        <h1 class="text-2xl font-bold mb-6">Innmelding Detaljer</h1>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <h2 class="text-lg font-semibold mb-2">Kommune</h2>
-                <p class="text-gray-700">@Model.KommuneNavn</p>
-            </div>
-
-            <div>
-                <h2 class="text-lg font-semibold mb-2">Status</h2>
-                <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @Model.StatusClass">
-                    @Model.Status
-                </span>
-            </div>
-
-            <div class="md:col-span-2">
-                <h2 class="text-lg font-semibold mb-2">Beskrivelse</h2>
-                <p class="text-gray-700">@Model.Beskrivelse</p>
-            </div>
-
-            <div>
-                <h2 class="text-lg font-semibold mb-2">Opprettet</h2>
-                <p class="text-gray-700">@Model.OpprettetDato.ToString("dd.MM.yyyy HH:mm")</p>
-            </div>
-        </div>
-        <div class="bg-white rounded-lg shadow">
-            <div id="map" style="height: 400px; width: 100%;"></div>
+    </div>
+                      
+    <div class="flex justify-center items-center gap-4">
+            <div class="text-sm text-gray-500 w-full h-full bg-white rounded-md p-4">@Model.Beskrivelse</div>
+            <div id="map" style="height: 400px; width: 100%;" class="rounded-md"></div>
         </div>
         <!-- Handlinger -->
-        <div class="mt-8 flex flex-col gap-4">
+        <div class="mt-8 flex justify-evenly w-full">
             <form asp-action="Videresend" method="post" class="flex flex-col gap-4">
                 <input type="hidden" asp-for="InnmeldingId" />
-                <select name="saksbehandlerId" class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                <select name="saksbehandlerId" class="rounded-lg p-2 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                     <option value="">Velg saksbehandler</option>
                     @foreach (var saksbehandler in ViewBag.Saksbehandlere)
                     {
@@ -54,18 +38,17 @@
                         </option>
                     }
                 </select>
-                <button type="submit" class="bg-green-300 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                <button type="submit" class="btn btn-blue">
                     Videresendd
                 </button>
             </form>
             <form asp-action="Behandle" method="post">
                 <input type="hidden" name="id" value="@Model.InnmeldingId" />
-                <button type="submit" class="bg-green-300 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                <button type="submit" class="btn btn-primary">
                     Ta over saken
                 </button>
             </form>
         </div>
-    </div>
 </div>
 
 

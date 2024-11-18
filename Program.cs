@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Bind the API settings from appsettings.json
+// Kobler API-innstillingene fra appsettings.json
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
-// Register services and their interfaces
+// Registrer services og deres grensesnitt
 builder.Services.AddHttpClient<IKommuneInfoService, KommuneInfoService>();
 builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
 
-// Add this with your other service registrations
+// Legg til denne med dine andre service registreringer
+builder.Services.AddScoped<BildeService>();
 builder.Services.AddScoped<BrukerService>();
 builder.Services.AddScoped<GeoChangeService>();
 builder.Services.AddScoped<LokasjonService>();
@@ -23,10 +24,10 @@ builder.Services.AddScoped<KommunePopulateService>();
 builder.Services.AddScoped<KommuneService>();
 builder.Services.AddScoped<SaksbehandlerService>();
 
-// Add services to the container.
+// Legg til services til containeren.
 builder.Services.AddControllersWithViews();
 
-// Configure Entity Framework with MariaDB
+// Konfigurer Entity Framework med MariaDB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -59,14 +60,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
-// Legg til denne konfigurasjonen før andre services
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
     .SetApplicationName("KartverketGruppe5");
 
 var app = builder.Build();
 
-// Legg til dette rett etter builder.Build():
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -82,7 +81,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
+// Konfigurer HTTP-forespørsler.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error"); 

@@ -2,31 +2,37 @@
 @{
     ViewData["Title"] = "Map Change";
 }
-<h2 class="text-center text-4xl text-semibold">Register en endring</h2>
 
-<form asp-controller="MapChange" asp-action="Index" method="post" class="flex flex-col gap-4 m-8">
-    <div class="form-group">
-        <label for="latitude">Latitude</label>
-        <input type="text" id="latitude" asp-for="Latitude" class="form-control" readonly />
-    </div>
-    
-    <div class="form-group">
-        <label for="longitude">Longitude</label>
-        <input type="text" id="longitude" asp-for="Longitude" class="form-control" readonly />
-    </div>
-    
-    <div class="form-group">
-        <label for="beskrivelse">Beskrivelse</label>
-        <textarea id="beskrivelse" name="beskrivelse" class="form-control"></textarea>
-    </div>
+<div class="flex flex-col gap-12 items-center justify-center bg-bg rounded-xl p-8 mapChange-width">
+    <h2 class="text-center text-4xl text-semibold">Register en endring</h2>
 
-    <input type="hidden" id="geoJsonInput" asp-for="GeoJson" />
-    <input type="hidden" asp-for="GeometriType" />
-    
-    <button type="submit" class="btn btn-primary">Send inn</button>
-</form>
+    <form asp-controller="MapChange" asp-action="Index" method="post" class="flex flex-col gap-4 w-full" enctype="multipart/form-data">
+        <div id="map" style="height: 400px;"></div>
+        <div class="flex flex-col gap-2">
+            <label for="beskrivelse">Beskrivelse</label>
+            <textarea 
+                id="beskrivelse" 
+                name="beskrivelse" 
+                class="rounded-md w-full p-2 h-24" 
+                placeholder="Beskriv endringen du vil registrere"
+                required
+            ></textarea>
+        </div>
+        <input type="hidden" id="geoJsonInput" asp-for="GeoJson" />
+        <input type="hidden" asp-for="GeometriType" />
+        <input type="hidden" id="latitude" asp-for="Latitude" />
+        <input type="hidden" id="longitude" asp-for="Longitude" />
+        <div class="flex flex-col gap-2">
+            <label for="bilde">Last opp bilde</label>
+            <input type="file" id="bilde" name="bilde" accept="image/*" capture="environment" class="rounded-md w-full p-2" onchange="visForhandsvisning(this)" />
+            <div id="bildeForhandsvisning" class="mt-2" style="display: none;">
+                <img id="forhandsvisningImg" class="max-w-full h-auto rounded-lg" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Send inn</button>
+    </form>
+</div>
 
-<div id="map" style="height: 400px;"></div>
 
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -35,7 +41,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
     <script>
-        var map = L.map('map').setView([58.17000, 8.00000], 13);
+        var map = L.map('map');
+
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                map.setView([lat, lng], 12);
+            }, function(error) {
+                console.error('Error getting location:', error);
+                map.setView([65.00000, 13.00000], 4);
+            });
+        } else {
+            map.setView([65.00000, 13.00000], 4);
+        }
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -132,6 +151,24 @@
 
             marker.bindPopup("GeoJSON Data:<br>" + geoJsonString).openPopup();
         });
+
+        function visForhandsvisning(input) {
+            var forhandsvisningDiv = document.getElementById('bildeForhandsvisning');
+            var forhandsvisningImg = document.getElementById('forhandsvisningImg');
+            
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    forhandsvisningImg.src = e.target.result;
+                    forhandsvisningDiv.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                forhandsvisningDiv.style.display = 'none';
+            }
+        }
     </script>
 }
 

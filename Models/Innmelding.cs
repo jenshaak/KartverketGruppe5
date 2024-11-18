@@ -16,6 +16,7 @@ namespace KartverketGruppe5.Models
         public string Status { get; set; } = "Ny";
         public DateTime OpprettetDato { get; set; }
         public DateTime? OppdatertDato { get; set; }
+        public string? BildeSti { get; set; }
 
         public virtual Bruker? Bruker { get; set; }
         public virtual Kommune? Kommune { get; set; }

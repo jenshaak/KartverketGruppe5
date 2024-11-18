@@ -14,8 +14,12 @@ a[b-8rm302v0mp] {
 
 .btn-primary[b-8rm302v0mp] {
   color: #fff;
-  background-color: #1b6ec2;
+  background-color: #2ec21b;
   border-color: #1861ac;
+}
+
+.custom-green[b-8rm302v0mp] {
+  background-color: #22c55e;
 }
 
 .nav-pills .nav-link.active[b-8rm302v0mp], .nav-pills .show > .nav-link[b-8rm302v0mp] {
