@@ -13,28 +13,60 @@ namespace KartverketGruppe5.Controllers
         private readonly InnmeldingService _innmeldingService;
         private readonly LokasjonService _lokasjonService;
         private readonly KommuneService _kommuneService;
+        private readonly FylkeService _fylkeService;
         private readonly ILogger<SaksbehandlingController> _logger;
 
-        public SaksbehandlingController(SaksbehandlerService saksbehandlerService, InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService, ILogger<SaksbehandlingController> logger)
+        public SaksbehandlingController(SaksbehandlerService saksbehandlerService, InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService, FylkeService fylkeService, ILogger<SaksbehandlingController> logger)
         {
             _saksbehandlerService = saksbehandlerService;
             _innmeldingService = innmeldingService;
             _lokasjonService = lokasjonService;
             _kommuneService = kommuneService;
+            _fylkeService = fylkeService;
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder = "date_desc", 
+            string statusFilter = "",
+            string fylkeFilter = "",
+            int page = 1)
         {
             if (!User.IsInRole("Saksbehandler") && !User.IsInRole("Admin"))
             {
                 return Forbid();
             }
 
-            _logger.LogInformation("Henter alle innmeldinger");
-            var innmeldinger = await _innmeldingService.GetInnmeldinger(includeKommuneNavn: true);
-            _logger.LogInformation("Fant {AntallInnmeldinger} innmeldinger", innmeldinger.Count);
-            return View(innmeldinger);
+            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentStatus"] = statusFilter;
+            ViewData["CurrentFylke"] = fylkeFilter;
+            ViewData["Statuses"] = InnmeldingService.GetAllStatuses();
+
+            try 
+            {
+                ViewBag.Fylker = await _fylkeService.GetAllFylker();
+                
+                var result = await _innmeldingService.GetInnmeldinger(
+                    sortOrder: sortOrder,
+                    statusFilter: statusFilter,
+                    fylkeFilter: fylkeFilter,
+                    page: page);
+
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av innmeldinger");
+                return View(new PagedResult<InnmeldingModel>());
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchKommuner(string term)
+        {
+            var kommuner = await _kommuneService.SearchKommuner(term);
+            return Json(kommuner.Select(k => new { id = k.KommuneId, text = k.Navn }));
         }
 
         [HttpPost]

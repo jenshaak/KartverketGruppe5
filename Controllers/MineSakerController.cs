@@ -24,7 +24,7 @@ namespace KartverketGruppe5.Controllers
         public async Task<IActionResult> Index()
         {
             var saksbehandlerId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
-            var innmeldinger = await _innmeldingService.GetInnmeldinger(includeKommuneNavn: true, saksbehandlerId: saksbehandlerId);
+            var innmeldinger = await _innmeldingService.GetInnmeldinger(saksbehandlerId: saksbehandlerId);
             return View(innmeldinger);
         }
 

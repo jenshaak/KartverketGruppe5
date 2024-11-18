@@ -23,7 +23,7 @@ module.exports = {
       pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|justify)-.+/,
     },
     {
-      pattern: /(absolute|fixed|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden)/,
+      pattern: /(absolute|fixed|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden|max-sm:hidden|max-lg:hidden)/,
     },
     {
       pattern: /(top|right)-(0|4|8|12|16)/,

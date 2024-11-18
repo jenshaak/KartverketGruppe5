@@ -55,5 +55,12 @@ namespace KartverketGruppe5.Services
                 return new List<Kommune>();
             }
         }
+
+        public async Task<List<Kommune>> SearchKommuner(string searchTerm)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            var sql = "SELECT kommuneId, navn FROM Kommune WHERE navn LIKE @SearchTerm ORDER BY navn LIMIT 10";
+            return (await connection.QueryAsync<Kommune>(sql, new { SearchTerm = $"%{searchTerm}%" })).ToList();
+        }
     }
 } 

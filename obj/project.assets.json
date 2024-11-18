@@ -2631,11 +2631,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/sirijohansenthunestvedt/Desktop/kartverket/Test3/KartverketGruppe5/KartverketGruppe5.csproj",
+      "projectUniqueName": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
       "projectName": "KartverketGruppe5",
-      "projectPath": "/Users/sirijohansenthunestvedt/Desktop/kartverket/Test3/KartverketGruppe5/KartverketGruppe5.csproj",
-      "packagesPath": "/Users/sirijohansenthunestvedt/.nuget/packages/",
-      "outputPath": "/Users/sirijohansenthunestvedt/Desktop/kartverket/Test3/KartverketGruppe5/obj/",
+      "projectPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\KartverketGruppe5.csproj",
+      "packagesPath": "C:\\Users\\jensh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jensh\\AppData\\Roaming\\NuGet\\NuGet.Config",

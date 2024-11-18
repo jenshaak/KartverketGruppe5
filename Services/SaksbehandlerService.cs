@@ -49,18 +49,50 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<List<Saksbehandler>> GetAllSaksbehandlere()
+        public async Task<PagedResult<Saksbehandler>> GetAllSaksbehandlere(string sortOrder = "date_desc", int page = 1, int pageSize = 10)
         {
             try
             {
-                return await _context.Saksbehandlere
-                    .OrderByDescending(s => s.OpprettetDato)
+                var query = _context.Saksbehandlere.AsQueryable();
+
+                // Sortering
+                query = sortOrder switch
+                {
+                    "admin_desc" => query.OrderByDescending(s => s.Admin)
+                                        .ThenByDescending(s => s.OpprettetDato),
+                    "admin_asc" => query.OrderBy(s => s.Admin)
+                                       .ThenByDescending(s => s.OpprettetDato),
+                    "date_asc" => query.OrderBy(s => s.OpprettetDato),
+                    _ => query.OrderByDescending(s => s.OpprettetDato)
+                };
+
+                // Beregn total antall items før paginering
+                var totalItems = await query.CountAsync();
+
+                // Utfør paginering
+                var items = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToListAsync();
+
+                return new PagedResult<Saksbehandler>
+                {
+                    Items = items,
+                    TotalItems = totalItems,
+                    CurrentPage = page,
+                    PageSize = pageSize
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error getting all saksbehandlere: {ex.Message}");
-                return new List<Saksbehandler>();
+                return new PagedResult<Saksbehandler>
+                {
+                    Items = new List<Saksbehandler>(),
+                    TotalItems = 0,
+                    CurrentPage = page,
+                    PageSize = pageSize
+                };
             }
         }
 

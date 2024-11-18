@@ -42,14 +42,18 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<List<InnmeldingModel>> GetInnmeldinger(
-            bool includeKommuneNavn = false,
+        public async Task<PagedResult<InnmeldingModel>> GetInnmeldinger(
             int? saksbehandlerId = null,
-            int? innmelderBrukerId = null)
+            int? innmelderBrukerId = null,
+            string sortOrder = "date_desc",
+            string statusFilter = "",
+            string fylkeFilter = "",
+            int page = 1,
+            int pageSize = 10)
         {
             using var connection = new MySqlConnection(_connectionString);
             
-            string sql = @"
+            var sql = @"
                 SELECT 
                     i.innmeldingId,
                     i.brukerId,
@@ -58,19 +62,23 @@ namespace KartverketGruppe5.Services
                     i.beskrivelse,
                     i.status,
                     i.opprettetDato,
-                    i.saksbehandlerId";
-
-            if (includeKommuneNavn)
+                    i.saksbehandlerId,
+                    k.navn as kommuneNavn";
+                
+            if (!saksbehandlerId.HasValue && !innmelderBrukerId.HasValue)
             {
-                sql += ", k.navn as kommuneNavn";
+                sql += @",
+                    f.navn as fylkeNavn";
             }
 
-            sql += @" FROM Innmelding i";
+            sql += @" FROM Innmelding i
+                      INNER JOIN Kommune k ON i.kommuneId = k.kommuneId";
 
-            if (includeKommuneNavn)
+            if (!saksbehandlerId.HasValue && !innmelderBrukerId.HasValue)
             {
-                sql += " INNER JOIN Kommune k ON i.kommuneId = k.kommuneId";
+                sql += " INNER JOIN Fylke f ON k.fylkeId = f.fylkeId";
             }
+            _logger.LogInformation($"sql: {sql}");
 
             // Build WHERE clause
             var whereConditions = new List<string>();
@@ -82,20 +90,56 @@ namespace KartverketGruppe5.Services
             {
                 whereConditions.Add("i.brukerId = @InnmelderBrukerId");
             }
+            if (!string.IsNullOrEmpty(statusFilter))
+            {
+                whereConditions.Add("i.status = @Status");
+            }
+            if (!string.IsNullOrEmpty(fylkeFilter))
+            {
+                whereConditions.Add("f.navn = @FylkeFilter");
+            }
 
             if (whereConditions.Any())
             {
                 sql += " WHERE " + string.Join(" AND ", whereConditions);
             }
 
-            sql += " ORDER BY i.opprettetDato DESC";
+            // Count total before pagination
+            var countSql = $"SELECT COUNT(*) FROM ({sql}) AS CountQuery";
+            var totalItems = await connection.ExecuteScalarAsync<int>(countSql, new { 
+                SaksbehandlerId = saksbehandlerId,
+                InnmelderBrukerId = innmelderBrukerId,
+                Status = statusFilter,
+                FylkeFilter = fylkeFilter
+            });
+
+            // Add sorting
+            sql += sortOrder switch
+            {
+                "date_asc" => " ORDER BY i.opprettetDato ASC",
+                _ => " ORDER BY i.opprettetDato DESC"
+            };
+
+            // Add pagination
+            sql += " LIMIT @Skip, @Take";
 
             var innmeldinger = await connection.QueryAsync<InnmeldingModel>(sql, new { 
                 SaksbehandlerId = saksbehandlerId,
-                InnmelderBrukerId = innmelderBrukerId
+                InnmelderBrukerId = innmelderBrukerId,
+                Status = statusFilter,
+                FylkeFilter = fylkeFilter,
+                Skip = (page - 1) * pageSize,
+                Take = pageSize
             });
 
-            return innmeldinger.Select(i => new InnmeldingModel
+            // Debug: Sjekk første innmelding
+            var firstItem = innmeldinger.FirstOrDefault();
+            if (firstItem != null)
+            {
+                _logger.LogInformation($"Første innmelding: Kommune={firstItem.KommuneNavn}, Fylke={firstItem.FylkeNavn}");
+            }
+
+            var items = innmeldinger.Select(i => new InnmeldingModel
             {
                 InnmeldingId = i.InnmeldingId,
                 BrukerId = i.BrukerId,
@@ -105,9 +149,18 @@ namespace KartverketGruppe5.Services
                 Status = i.Status,
                 OpprettetDato = i.OpprettetDato,
                 KommuneNavn = i.KommuneNavn,
+                FylkeNavn = i.FylkeNavn,
                 SaksbehandlerId = i.SaksbehandlerId,
                 StatusClass = GetStatusClass(i.Status)
             }).ToList();
+
+            return new PagedResult<InnmeldingModel>
+            {
+                Items = items,
+                TotalItems = totalItems,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
         }
 
         public async Task<InnmeldingModel> GetInnmeldingById(int id, bool includeKommuneNavn = false, bool includeLokasjon = false)
@@ -334,9 +387,20 @@ namespace KartverketGruppe5.Services
         {
             "Ny" => "bg-blue-100 text-blue-800",
             "Under behandling" => "bg-yellow-100 text-yellow-800",
-            "Fullført" => "bg-green-100 text-green-800",
+            "Godkjent" => "bg-green-100 text-green-800",
             "Avvist" => "bg-red-100 text-red-800",
             _ => "bg-gray-100 text-gray-800"
         };
+
+        public static List<string> GetAllStatuses()
+        {
+            return new List<string> 
+            { 
+                "Ny",
+                "Under behandling",
+                "Godkjent",
+                "Avvist"
+            };
+        }
     }
 } 

@@ -54,10 +54,15 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder = "date_desc", int page = 1)
         {
-            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
-            return View(saksbehandlere);
+            ViewData["AdminSortParam"] = sortOrder == "admin_desc" ? "admin_asc" : "admin_desc";
+            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentPage"] = page;
+
+            var result = await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page);
+            return View(result);
         }
 
         [HttpPost]
