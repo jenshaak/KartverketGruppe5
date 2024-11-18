@@ -17,7 +17,6 @@ namespace KartverketGruppe5.Models
         public DateTime OpprettetDato { get; set; }
         public DateTime? OppdatertDato { get; set; }
 
-        // Navigation properties
         public virtual Bruker? Bruker { get; set; }
         public virtual Kommune? Kommune { get; set; }
         public virtual Lokasjon? Lokasjon { get; set; }

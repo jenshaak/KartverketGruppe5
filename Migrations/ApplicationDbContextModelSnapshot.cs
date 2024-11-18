@@ -88,7 +88,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "ole@gmail.com",
                             Etternavn = "Olsen",
                             Fornavn = "Ole",
-                            OpprettetDato = new DateTime(2024, 11, 15, 15, 31, 16, 165, DateTimeKind.Utc).AddTicks(2783),
+                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 504, DateTimeKind.Utc).AddTicks(653),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
@@ -289,7 +289,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "rune@kartverket.no",
                             Etternavn = "Bengtson",
                             Fornavn = "Rune",
-                            OpprettetDato = new DateTime(2024, 11, 15, 15, 31, 16, 166, DateTimeKind.Utc).AddTicks(7919),
+                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 505, DateTimeKind.Utc).AddTicks(7429),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         },
                         new
@@ -299,7 +299,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "lars@kartverket.no",
                             Etternavn = "Larsen",
                             Fornavn = "Lars",
-                            OpprettetDato = new DateTime(2024, 11, 15, 15, 31, 16, 166, DateTimeKind.Utc).AddTicks(7922),
+                            OpprettetDato = new DateTime(2024, 11, 15, 13, 46, 3, 505, DateTimeKind.Utc).AddTicks(7433),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });

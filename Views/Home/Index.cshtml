@@ -7,16 +7,19 @@
 
 <div class="text-center flex flex-col items-center gap-4">
     <h1 class="text-4xl">Velkommen til Kartverket</h1>
+    <div class="flex flex-col items-center gap-4 bg-bg rounded-xl p-4">
+
     @if (userType != "Saksbehandler")
     {
-        <a asp-controller="MapChange" asp-action="Index" class="text-black no-underline hover:text-black">
-            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+        <a asp-controller="MapChange" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
             duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
                 Meld inn endring
             </div>
         </a>
-        <a asp-controller="MineInnmeldinger" asp-action="Index" class="text-black no-underline hover:text-black">
-            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+        <div class="bg-white w-4/5 h-1 rounded-full"></div>
+        <a asp-controller="MineInnmeldinger" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
             duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
                 Mine innmeldinger
             </div>
@@ -24,28 +27,33 @@
     }
     else if (userType == "Saksbehandler")
     {
-        <a asp-controller="Saksbehandling" asp-action="Index" class="text-black no-underline hover:text-black">
-            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+        <a asp-controller="Saksbehandling" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
             duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
                 Saksbehandling
             </div>
         </a>
-        <a asp-controller="MineSaker" asp-action="Index" class="text-black no-underline hover:text-black">
-            <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+        <div class="bg-custom-gray w-full h-1 rounded-full"></div>
+
+        <a asp-controller="MineSaker" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
             duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
                 Mine saker
             </div>
         </a>
         @if (isAdmin)
         {
-            <a asp-controller="Admin" asp-action="Index" class="text-black no-underline hover:text-black">
-                <div class="bg-green-300 w-max hover:scale-105 transition-all ease-in-out 
+        <div class="bg-custom-gray w-full h-1 rounded-full"></div>
+
+            <a asp-controller="Admin" asp-action="Index" class="no-underline">
+                <div class="w-max hover:scale-105 transition-all ease-in-out 
                 duration-300 p-10 rounded-xl flex justify-center items-center text-xl font-bold">
                     Administrasjon
                 </div>
             </a>
         }
     }
+    </div>
 </div>
 
 
