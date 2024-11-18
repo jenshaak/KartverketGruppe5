@@ -1,3 +1,12 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --tw-green-500: #22c55e;
+    --tw-red-500: #ef4444;
+}
+
+h3 {
+    @apply text-xl font-semibold;
+}

@@ -54,13 +54,13 @@
                               required></textarea>
                 </div>
 
-                <div class="flex gap-4">
+                <div class="flex gap-4 text-white">
                     <button type="submit" name="action" value="godkjenn" 
-                            class="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
-                        Godkjenn og fullfør
+                            class="custom-green px-4 py-2 rounded-lg">
+                        Godkjenn
                     </button>
                     <button type="submit" name="action" value="avvis" 
-                            class="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                            class="bg-red-500 px-4 py-2 rounded-lg text-blue-900">
                         Avvis
                     </button>
                 </div>
@@ -72,9 +72,6 @@
 
 
 @section Scripts {
-    <script>
-        console.log('Lokasjon:', @Json.Serialize(lokasjon));
-    </script>
     <script>
         // Vent til dokumentet er lastet
         document.addEventListener('DOMContentLoaded', function() {

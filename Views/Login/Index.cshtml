@@ -3,36 +3,35 @@
     ViewData["Title"] = "Logg inn";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title text-center">Logg inn</h3>
-                    <form asp-action="HandleLogin" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        
-                        <div class="form-group mb-3">
-                            <label asp-for="Email">Email</label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="form-group mb-3">
-                            <label asp-for="Password">Passord</label>
-                            <input asp-for="Password" type="password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Logg inn</button>
-                            <a asp-action="Register" class="btn btn-link">Registrer ny bruker</a>
-                        </div>
-                    </form>
+<div class="flex flex-col items-center gap-8 p-4 rounded-xl bg-bg">
+    <h3 class="text-center">Logg inn</h3>
+    <form asp-action="HandleLogin" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-error"></div>
+        
+        <div class="flex flex-col gap-2">
+
+            <div class="form-group mb-3">
+                <div class="flex items-center bg-white rounded-md p-2 gap-2">
+                    <i class="ph ph-envelope"></i>
+                    <input asp-for="Email" type="email" class="rounded-md form-control" placeholder="Email" />
                 </div>
+                <span asp-validation-for="Email" class="text-error"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <div class="flex items-center bg-white rounded-md p-2 gap-2">
+                    <i class="ph ph-lock"></i>
+                    <input asp-for="Password" type="password" class="rounded-md form-control" placeholder="Passord" />
+                </div>
+                <span asp-validation-for="Password" class="text-error"></span>
             </div>
         </div>
-    </div>
+        
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Logg inn</button>
+            <a asp-action="Register" class="underline text-blue-500">Registrer ny bruker</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

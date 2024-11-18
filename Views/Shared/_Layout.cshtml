@@ -1,5 +1,6 @@
 ﻿@using KartverketGruppe5.Services
 @inject SaksbehandlerService SaksbehandlerService
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     var userType = Context.Session.GetString("UserType");
@@ -20,88 +21,122 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kartverket</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/KartverketGruppe5.styles.css" asp-append-version="true" />
+    <script src="https://unpkg.com/phosphor-icons"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kartverket Gruppe 5</a>
-                <ul class="flex gap-5">
-                    @if (!isHomePage)
-                    {
-                        <li class="nav-item">
-                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
-                               asp-area="" 
-                               asp-controller="Home" 
-                               asp-action="Index">Hjem</a>
-                        </li>
-                    }
-                    
-                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
-                    {
-                        <li class="nav-item">
-                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
-                            asp-controller="MineInnmeldinger" asp-action="Index">Mine Innmeldinger</a>
-                        </li>
-                    }
-
-                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
-                    {
-                        <li class="nav-item">
-                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
-                               asp-controller="Saksbehandling" asp-action="Index">Saksbehandling</a>
-                        </li>
-
-                        @if (isAdmin)
+    <header class="w-full shadow-lg">
+        <nav class="flex justify-between items-center w-full p-2 px-4">
+            <div class="relative flex items-center justify-between gap-4 w-full">
+                <a asp-controller="Home" asp-action="Index" class="text-xl font-bold">
+                    Kartverket Gruppe 5
+                </a>
+                <div class="flex flex-col gap-5 items-center">
+                    <button class="btn btn-custom-gray flex items-center justify-center" id="menuToggle">
+                        <i class="ph ph-list cursor-pointer text-xl"></i>
+                    </button>
+                    <ul class="fixed top-16 right-0 space-y-5 items-center hidden border border-custom-gray rounded-xl p-4" id="menuList">
+                        @if (!isHomePage)
                         {
-                            <li class="nav-item">
-                                <a class="px-4 py-2 rounded-md bg-blue-300 hover:scale-105 hover:text-black" 
-                                   asp-controller="Admin" asp-action="Index">Administrasjon</a>
+                            <li>
+                                <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                                   asp-area="" 
+                                   asp-controller="Home" 
+                                   asp-action="Index">Hjem</a>
                             </li>
                         }
-                    }
+                        
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
+                        {
+                            <li>
+                                <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                                asp-controller="MineInnmeldinger" asp-action="Index">Mine Innmeldinger</a>
+                            </li>
+                        }
 
-                    <li class="nav-item">
-                        @if (displayName == null)
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
                         {
-                            <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
-                            asp-controller="Login" asp-action="Index">Logg inn</a>
+                            <li>
+                                <a class="px-4 py-2 rounded-md btn-primary hover:scale-105" 
+                                   asp-controller="Saksbehandling" asp-action="Index">Saksbehandling</a>
+                            </li>
+
+                            @if (isAdmin)
+                            {
+                                <li>
+                                    <a class="px-4 py-2 rounded-md bg-blue-300 hover:scale-105 hover:text-black" 
+                                       asp-controller="Admin" asp-action="Index">Administrasjon</a>
+                                </li>
+                            }
                         }
-                        else
-                        {
-                            <div class="flex items-center gap-2">
-                                <span class="px-4 py-2">Hei, @displayName!</span>
-                                <a class="px-4 py-2 rounded-md bg-red-300 hover:scale-105 hover:text-black" 
-                                asp-controller="Login" asp-action="Logout">Logg ut</a>
+
+                        <li>
+                            @if (displayName == null)
+                            {
+                                <a class="px-4 py-2 rounded-md bg-primary hover:scale-105 hover:text-black" 
+                                asp-controller="Login" asp-action="Index">Logg inn</a>
+                            }
+                            else
+                            {
+                                <div class="flex items-center gap-2">
+                                    <a class="px-4 py-2 rounded-md bg-custom-gray hover:scale-105 no-underline btn" 
+                                    asp-controller="Login" asp-action="Logout">Logg ut</a>
+                                </div>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                @* <ul class="absolute right-0 top-0 p-4 h-screen bg-primary transition-all duration-300 ease-in-out group hover:w-56 w-14 flex flex-col items-center gap-2">
+                    <li
+                        className="w-full flex justify-center rounded-md text-white hover:bg-white hover:text-primary group-hover:justify-start"
+                    >
+                        <a
+                            asp-controller="Home" asp-action="Index"
+                            className="flex items-center gap-2 justify-center h-full w-full group-hover:justify-start py-2 group-hover:p-2"
+                        >
+                            <div className="w-5 flex justify-center">
+                                <i class="ph ph-list"></i>
                             </div>
-                        }
+                            <div className="transition-all duration-300 ease-in-out hidden group-hover:block w-0 group-hover:w-auto">
+                                Mine Innmeldinger
+                            </div>
+                        </a>
                     </li>
-                </ul>
+                </ul> *@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="min-h-screen w-full flex flex-col items-center justify-center">
             @RenderBody()
         </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top text-muted">
         <div class="container">
             &copy; 2024 - KartverketGruppe5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const menuList = document.getElementById('menuList');
+
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menuList.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!menuList.contains(e.target) && !menuToggle.contains(e.target)) {
+                menuList.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>

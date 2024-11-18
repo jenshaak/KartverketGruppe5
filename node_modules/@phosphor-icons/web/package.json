@@ -1,0 +1,55 @@
+{
+  "name": "@phosphor-icons/web",
+  "version": "2.1.1",
+  "description": "A clean and friendly icon family for web",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./regular": "./src/regular/style.css",
+    "./thin": "./src/thin/style.css",
+    "./light": "./src/light/style.css",
+    "./bold": "./src/bold/style.css",
+    "./fill": "./src/fill/style.css",
+    "./duotone": "./src/duotone/style.css",
+    "./*": "./src/*"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phosphor-icons/web.git"
+  },
+  "keywords": [
+    "icons",
+    "icon-pack",
+    "web",
+    "html",
+    "css",
+    "svg",
+    "svg-icons",
+    "icon-font"
+  ],
+  "author": "rektdeckard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phosphor-icons/web/issues"
+  },
+  "homepage": "https://phosphoricons.com",
+  "devDependencies": {
+    "@types/node": "18",
+    "chalk": "^4.1.0",
+    "prettier": "^3.1.1",
+    "svgson": "^5.2.1",
+    "tsx": "^4.7.0"
+  },
+  "scripts": {
+    "test": "npx http-server -o /test",
+    "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,vue}\"",
+    "transform": "tsx ./scripts/transform.ts",
+    "icomoon": "tsx ./scripts/icomoon.ts"
+  }
+}

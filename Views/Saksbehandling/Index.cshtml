@@ -20,7 +20,7 @@
     </div>
 
     <!-- Innmeldinger Tabell -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <div class="bg-white rounded-lg shadow">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
@@ -48,13 +48,18 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="font-medium text-gray-900">@innmelding.KommuneNavn</div>
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap line-clamp-2">
+                            <div class="text-sm text-gray-500">@innmelding.Beskrivelse</div>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-500">@innmelding.OpprettetDato.ToShortDateString()</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @innmelding.StatusClass">
-                                @innmelding.Status
-                            </span>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @innmelding.StatusClass">
+                                    @innmelding.Status
+                                </span>
+                            </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <a asp-action="Detaljer" 

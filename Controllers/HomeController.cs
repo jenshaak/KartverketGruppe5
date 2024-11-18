@@ -30,56 +30,6 @@ namespace KartverketGruppe5.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> KommuneInfo(string kommuneNr)
-        {
-            if (string.IsNullOrEmpty(kommuneNr))
-            {
-                ViewData["Error"] = "Please enter a valid Kommune Number.";
-                return View("Index");
-            }
-            var kommuneInfo = await _kommuneInfoService.GetKommuneInfoAsync(kommuneNr);
-            if (kommuneInfo != null) {
-                var viewModel = new KommuneInfoViewModel {
-                    Kommunenavn = kommuneInfo.Kommunenavn,
-                    Kommunenummer = kommuneInfo.Kommunenummer,
-                    Fylkesnavn = kommuneInfo.Fylkesnavn,
-                    SamiskForvaltningsomrade = kommuneInfo.SamiskForvaltningsomrade
-                };
-                return View("KommuneInfo", viewModel);
-            }
-            ViewData["Error"] = $"No results found for Kommune Number '{kommuneNr}'.";
-            return View("Index");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Stedsnavn(string searchTerm)
-        {
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                ViewData["Error"] = "Please enter a valid place name.";
-                return View("Index");
-            }
-            var stedsnavnResponse = await _stedsnavnService.GetStedsnavnAsync(searchTerm);
-            if (stedsnavnResponse?.Navn != null && stedsnavnResponse.Navn.Any()) {
-                var viewModel = stedsnavnResponse.Navn.Select(navn => new StedsnavnViewModel {
-                    Skrivemåte = navn.Skrivemåte,
-                    Navneobjekttype = navn.Navneobjekttype,
-                    Språk = navn.Språk,
-                    Navnestatus = navn.Navnestatus,
-                    Stedstatus = navn.Stedstatus
-                }).ToList();
-                return View("Stedsnavn", viewModel);
-            }
-            ViewData["Error"] = $"No results found for '{searchTerm}'.";
-            return View("Index");
-        }
-
-        [HttpGet]
-        public ViewResult RegistrationForm()
-        {
-            return View();
-        }
 
         public IActionResult Privacy()
         {

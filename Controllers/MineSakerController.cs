@@ -1,5 +1,3 @@
-
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Services;
@@ -11,11 +9,15 @@ namespace KartverketGruppe5.Controllers
     public class MineSakerController : Controller
     {
         private readonly InnmeldingService _innmeldingService;
+        private readonly LokasjonService _lokasjonService;
+        private readonly SaksbehandlerService _saksbehandlerService;
         private readonly ILogger<MineSakerController> _logger;
 
-        public MineSakerController(InnmeldingService innmeldingService, ILogger<MineSakerController> logger)
+        public MineSakerController(InnmeldingService innmeldingService, LokasjonService lokasjonService, SaksbehandlerService saksbehandlerService, ILogger<MineSakerController> logger)
         {
             _innmeldingService = innmeldingService;
+            _lokasjonService = lokasjonService;
+            _saksbehandlerService = saksbehandlerService;
             _logger = logger;
         }
 
@@ -29,6 +31,10 @@ namespace KartverketGruppe5.Controllers
         public async Task<IActionResult> Behandle(int id)
         {
             var innmelding = await _innmeldingService.GetInnmeldingById(id);
+            var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
+            ViewBag.Lokasjon = lokasjon;
+            ViewBag.Saksbehandlere = saksbehandlere;
             return View(innmelding);
         }
     }
