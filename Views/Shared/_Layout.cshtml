@@ -34,7 +34,7 @@
                 <a asp-controller="Home" asp-action="Index" class="text-xl font-bold">
                     <img src="~/bilder/kartverket-logo-large.svg" alt="Kartverket logo" class="w-auto h-12">
                 </a>
-                <button class="btn btn-primary flex items-center justify-center" id="sidebarToggle">
+                <button class="btn btn-custom-gray flex items-center justify-center" id="sidebarToggle">
                     <i class="ph ph-list cursor-pointer text-xl"></i>
                 </button>
                 <ul class="sidebar">
@@ -152,25 +152,12 @@
 
     @await RenderSectionAsync("Scripts", required: false)
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const menuList = document.getElementById('menuList');
-
-        menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            menuList.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!menuList.contains(e.target) && !menuToggle.contains(e.target)) {
-                menuList.classList.add('hidden');
-            }
-        });
-
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('sidebar-active');
         });
 
+        // Lukk sidebar når man klikker utenfor
         document.addEventListener('click', function(event) {
             const sidebar = document.querySelector('.sidebar');
             const sidebarToggle = document.getElementById('sidebarToggle');

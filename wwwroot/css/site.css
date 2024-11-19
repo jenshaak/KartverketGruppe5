@@ -206,11 +206,6 @@ h3 {
     height: 100vh;
     background-color: #2c2c2c;
     transition: all 0.5s cubic-bezier(1, 0, 0.2, 1);
-    /* cubic-bezier(x1, y1, x2, y2)
-       x1: Hvor raskt animasjonen starter (0-1, høyere = raskere start)
-       y1: Hvor langt over/under målet den kan gå i starten (-∞ to ∞)
-       x2: Hvor raskt animasjonen slutter (0-1, lavere = raskere slutt)
-       y2: Hvor langt over/under målet den kan gå på slutten (-∞ to ∞) */
     width: 14rem;
     display: flex;
     flex-direction: column;
