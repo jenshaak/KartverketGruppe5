@@ -41,7 +41,7 @@ namespace KartverketGruppe5.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentStatus"] = statusFilter;
             ViewData["CurrentFylke"] = fylkeFilter;
-            ViewData["Statuses"] = InnmeldingService.GetAllStatuses();
+            ViewData["Statuses"] = _innmeldingService.GetAllStatuses();
 
             try 
             {
@@ -116,6 +116,7 @@ namespace KartverketGruppe5.Controllers
                 LokasjonId = innmelding.LokasjonId,
                 Beskrivelse = innmelding.Beskrivelse,
                 Status = innmelding.Status,
+                BildeSti = innmelding.BildeSti,
                 OpprettetDato = innmelding.OpprettetDato,
                 KommuneNavn = kommune.Navn,
                 SaksbehandlerId = innmelding.SaksbehandlerId,

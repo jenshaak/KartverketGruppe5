@@ -5,12 +5,14 @@
     var lokasjon = ViewBag.Lokasjon as LokasjonModel;
 }
 
-<div class="flex flex-col gap-4 p-8 w-full">
-    <div class="mb-6">
-        <a asp-action="Index" class="text-blue-600 hover:underline">← Tilbake til mine innmeldinger</a>
-        <h1 class="text-3xl font-bold mt-4">Innmelding Detaljer</h1>
-    </div>
-    <div class="flex justify-between items-center w-full rounded-lg bg-white p-2 px-4">
+<div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">
+    <div class="w-4/5 flex flex-col gap-4 bg-bg/85 rounded-xl p-8">
+        <h1 class="text-3xl font-bold mt-4 text-center mb-6">Endre innmelding</h1>
+            <a asp-action="Index" class="btn btn-primary">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
+        </a>
+    <div class="flex justify-between items-center w-full rounded-lg bg-white px-6 py-4">
         <div>@Model.KommuneNavn</div>
         <div>@Model.OpprettetDato.ToShortDateString()</div>
         <div class="flex items-center justify-center px-3 py-1 rounded-full @Model.StatusClass">@Model.Status</div>
@@ -95,6 +97,7 @@
             Endre innmelding
         </button>
     </form>
+    </div>
 </div>
 
 @section Scripts {

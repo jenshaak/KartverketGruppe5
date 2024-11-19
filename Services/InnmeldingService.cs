@@ -63,22 +63,11 @@ namespace KartverketGruppe5.Services
                     i.status,
                     i.opprettetDato,
                     i.saksbehandlerId,
-                    k.navn as kommuneNavn";
-                
-            if (!saksbehandlerId.HasValue && !innmelderBrukerId.HasValue)
-            {
-                sql += @",
-                    f.navn as fylkeNavn";
-            }
-
-            sql += @" FROM Innmelding i
-                      INNER JOIN Kommune k ON i.kommuneId = k.kommuneId";
-
-            if (!saksbehandlerId.HasValue && !innmelderBrukerId.HasValue)
-            {
-                sql += " INNER JOIN Fylke f ON k.fylkeId = f.fylkeId";
-            }
-            _logger.LogInformation($"sql: {sql}");
+                    k.navn as kommuneNavn,
+                    f.navn as fylkeNavn
+                FROM Innmelding i
+                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
+                INNER JOIN Fylke f ON k.fylkeId = f.fylkeId";
 
             // Build WHERE clause
             var whereConditions = new List<string>();
@@ -444,7 +433,7 @@ namespace KartverketGruppe5.Services
             _ => "bg-gray-100 text-gray-800"
         };
 
-        public static List<string> GetAllStatuses()
+        public List<string> GetAllStatuses()
         {
             return new List<string> 
             { 

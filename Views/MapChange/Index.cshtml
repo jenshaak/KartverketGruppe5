@@ -3,7 +3,8 @@
     ViewData["Title"] = "Map Change";
 }
 
-<div class="flex flex-col gap-12 items-center justify-center bg-white rounded-xl p-8 mapChange-width">
+<div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">
+<div class="flex flex-col gap-12 items-center justify-center bg-bg/85 rounded-xl p-8 mapChange-width">
     <h2 class="text-center text-4xl text-semibold">Register en endring</h2>
 
     <form asp-controller="MapChange" asp-action="Index" method="post" class="flex flex-col gap-4 w-full" enctype="multipart/form-data">
@@ -43,8 +44,8 @@
         </div>
         <button type="submit" class="btn btn-wide btn-primary">Send inn</button>
     </form>
+    </div>
 </div>
-
 
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />

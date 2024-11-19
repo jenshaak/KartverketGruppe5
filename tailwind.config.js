@@ -20,7 +20,7 @@ module.exports = {
   plugins: [],
   safelist: [
     {
-      pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|justify|items|mt|rounded-t)-.+/,
+      pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|z|justify|items|mt|rounded-t|backdrop-blur)-.+/,
     },
     {
       pattern: /(absolute|fixed|sticky|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden|max-sm:hidden|max-lg:hidden|divider)/,

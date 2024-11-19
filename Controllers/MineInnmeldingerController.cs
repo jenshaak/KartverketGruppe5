@@ -11,26 +11,62 @@ namespace KartverketGruppe5.Controllers
     {
         private readonly InnmeldingService _innmeldingService;
         private readonly LokasjonService _lokasjonService;
-        private readonly KommuneService _kommuneService;    
+        private readonly KommuneService _kommuneService;        
+        private readonly FylkeService _fylkeService;
         private readonly ILogger<MineInnmeldingerController> _logger;
-        public MineInnmeldingerController(InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService, ILogger<MineInnmeldingerController> logger)
+        public MineInnmeldingerController(InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService, FylkeService fylkeService, ILogger<MineInnmeldingerController> logger)
         {
             _innmeldingService = innmeldingService;
             _lokasjonService = lokasjonService;
             _kommuneService = kommuneService;
+            _fylkeService = fylkeService;
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder = "date_desc", 
+            string statusFilter = "",
+            string fylkeFilter = "",
+            int page = 1)
         {
+            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentStatus"] = statusFilter;
+            ViewData["CurrentFylke"] = fylkeFilter;
+            ViewData["Statuses"] = new List<string> 
+            { 
+                "Ny",
+                "Under behandling",
+                "Godkjent",
+                "Avvist"
+            };
+
             var brukerId = HttpContext.Session.GetInt32("BrukerId");
             if (brukerId == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var innmeldinger = await _innmeldingService.GetInnmeldinger(innmelderBrukerId: brukerId.Value);
-            return View(innmeldinger);
+            try 
+            {
+                var fylker = await _fylkeService.GetAllFylker();
+                _logger.LogInformation($"Fylker: {fylker.Count}");
+                ViewBag.Fylker = fylker;
+                
+                var result = await _innmeldingService.GetInnmeldinger(
+                    innmelderBrukerId: brukerId,
+                    sortOrder: sortOrder,
+                    statusFilter: statusFilter,
+                    fylkeFilter: fylkeFilter,
+                    page: page);
+
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av innmeldinger");
+                return View(new PagedResult<InnmeldingModel> { Items = new List<InnmeldingModel>() });
+            }
         }
 
         public async Task<IActionResult> Detaljer(int id)

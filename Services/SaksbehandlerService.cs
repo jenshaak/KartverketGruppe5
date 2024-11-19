@@ -3,7 +3,7 @@ using Dapper;
 using KartverketGruppe5.Models;
 using System.Security.Cryptography;
 using System.Text;
-
+using KartverketGruppe5.Models.ViewModels;
 namespace KartverketGruppe5.Services
 {
     public class SaksbehandlerService
@@ -52,7 +52,7 @@ namespace KartverketGruppe5.Services
                 return null;
             }
         }
-        
+
         public async Task<PagedResult<Saksbehandler>> GetAllSaksbehandlere(
             string sortOrder = "date_desc", 
             int page = 1, 
@@ -132,7 +132,7 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<bool> UpdateSaksbehandler(Saksbehandler saksbehandler)
+        public async Task<bool> UpdateSaksbehandler(SaksbehandlerRegistrerViewModel saksbehandler)
         {
             try
             {

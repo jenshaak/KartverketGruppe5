@@ -3,8 +3,8 @@
     ViewData["Title"] = "Logg inn";
 }
 
-<div class="flex flex-col justify-center items-center h-screen">
-    <form asp-action="HandleLogin" method="post" class="form-element">
+<div class="flex flex-col justify-center items-center h-screen w-full bakgrunn-bilde-skog">
+    <form asp-action="HandleLogin" method="post" class="form-element bg-bg/80">
         <img src="~/bilder/kartverket-logo-large.svg" alt="Kartverket logo" class="w-auto h-12">
         <div asp-validation-summary="ModelOnly" class="text-error"></div>
         <div class="flex flex-col gap-4">

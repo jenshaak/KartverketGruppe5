@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
 
 namespace KartverketGruppe5.Controllers
@@ -90,35 +91,51 @@ namespace KartverketGruppe5.Controllers
             {
                 return NotFound();
             }
-            return View(saksbehandler);
+
+            // Konverter Saksbehandler til ViewModel
+            var viewModel = new SaksbehandlerRegistrerViewModel
+            {
+                SaksbehandlerId = saksbehandler.SaksbehandlerId,
+                Fornavn = saksbehandler.Fornavn,
+                Etternavn = saksbehandler.Etternavn,
+                Email = saksbehandler.Email,
+                Admin = saksbehandler.Admin,
+                OpprettetDato = saksbehandler.OpprettetDato
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Rediger(Saksbehandler saksbehandler)
+        public async Task<IActionResult> Rediger(SaksbehandlerRegistrerViewModel viewModel)
         {
+            if (string.IsNullOrEmpty(viewModel.Passord))
+            {
+                ModelState.Remove("Passord");
+            }
+
             if (!ModelState.IsValid)
             {
-                return View(saksbehandler);
+                return View(viewModel);
             }
 
             try
             {
-                var result = await _saksbehandlerService.UpdateSaksbehandler(saksbehandler);
+                var result = await _saksbehandlerService.UpdateSaksbehandler(viewModel);
                 if (result)
                 {
                     TempData["Success"] = "Saksbehandler oppdatert!";
-                    _logger.LogInformation("Saksbehandler oppdatert");
                     return RedirectToAction("Index");
                 }
                 
                 ModelState.AddModelError("", "Kunne ikke oppdatere saksbehandler");
-                return View(saksbehandler);
+                return View(viewModel);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error updating saksbehandler: {ex.Message}");
                 ModelState.AddModelError("", "En feil oppstod ved oppdatering");
-                return View(saksbehandler);
+                return View(viewModel);
             }
         }
     }

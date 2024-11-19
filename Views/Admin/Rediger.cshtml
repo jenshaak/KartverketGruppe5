@@ -1,44 +1,57 @@
-@model KartverketGruppe5.Models.Saksbehandler
+@model KartverketGruppe5.Models.ViewModels.SaksbehandlerRegistrerViewModel
+@{
+    ViewData["Title"] = "Rediger saksbehandler";
+}
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title text-center">Rediger saksbehandler</h3>
-                    <form asp-action="Rediger" method="post">
-                        <input type="hidden" asp-for="SaksbehandlerId" />
-                        <div class="mb-3">
-                            <label asp-for="Fornavn" class="form-label">Fornavn</label>
-                            <input asp-for="Fornavn" class="form-control" required>
-                            <span asp-validation-for="Fornavn" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Etternavn" class="form-label">Etternavn</label>
-                            <input asp-for="Etternavn" class="form-control" required>
-                            <span asp-validation-for="Etternavn" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label">Email</label>
-                            <input asp-for="Email" type="email" class="form-control" required>
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Passord" class="form-label">Passord</label>
-                            <input asp-for="Passord" type="password" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Admin" class="form-label">Admin</label>
-                            <input asp-for="Admin" type="checkbox" class="form-check-input">
-                            <span asp-validation-for="Admin" class="text-danger"></span>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Lagre endringer</button>
-                            <a asp-action="Index" class="btn btn-secondary">Avbryt</a>
-                        </div>
-                    </form>
+<div class="flex flex-col justify-center items-center h-screen w-full bakgrunn-bilde-skog p-12">
+    <form asp-action="Rediger" method="post" class="form-element form-element-less-gap bg-bg/80">
+        <img src="~/bilder/kartverket-logo-large.svg" alt="Kartverket logo" class="w-auto h-12">
+        <div asp-validation-summary="ModelOnly" class="text-error"></div>
+
+        <input type="hidden" asp-for="SaksbehandlerId" />
+        <input type="hidden" asp-for="OpprettetDato" />
+
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-1">
+                <div class="input-div">
+                    <i class="ph ph-user ph-lg"></i>
+                    <input asp-for="Fornavn" type="text" placeholder="Fornavn" />
+                </div>
+                <span asp-validation-for="Fornavn" class="text-error text-sm"></span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="input-div">
+                    <i class="ph ph-user ph-lg"></i>
+                    <input asp-for="Etternavn" type="text" placeholder="Etternavn" />
+                </div>
+                <span asp-validation-for="Etternavn" class="text-error text-sm"></span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="input-div">
+                    <i class="ph ph-envelope ph-lg"></i>
+                    <input asp-for="Email" type="email" placeholder="Email" />
+                </div>
+                <span asp-validation-for="Email" class="text-error text-sm"></span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="input-div">
+                    <i class="ph ph-lock ph-lg"></i>
+                    <input asp-for="Passord" type="password" placeholder="Nytt passord (valgfritt)" />
                 </div>
             </div>
+            <div class="flex items-center gap-2 w-full mt-2">
+                <input asp-for="Admin" type="checkbox" class="w-6 h-6 rounded-md" />
+                <label asp-for="Admin" class="text-text">Administrator</label>
+            </div>
         </div>
-    </div>
-</div> 
+        <div class="flex flex-col items-center gap-2 w-full">   
+            <button type="submit" class="btn btn-wide btn-primary">Lagre endringer</button>
+            <a asp-action="Index" class="btn btn-wide">Avbryt</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 
+} 

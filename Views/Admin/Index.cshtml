@@ -1,11 +1,32 @@
 @model PagedResult<KartverketGruppe5.Models.Saksbehandler>
 
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Saksbehandlere</h1>
-    <a asp-action="Register" class="btn btn-primary mb-6">Registrer ny saksbehandler</a>
+<div class="w-full flex justify-center py-12">
+    <div class="w-4/5 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold mb-6 text-center">Saksbehandlere</h1>
+    <div class="flex justify-between items-center mb-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
+        </a>
+        <div class="flex gap-4">
+            <a asp-action="Register" class="btn btn-primary">Registrer ny saksbehandler</a>
+            <form asp-action="PopulateFylkerOgKommuner" method="post" class="">
+                <button type="submit" class="btn btn-primary">Oppdater Fylker og Kommuner</button>
+            </form>
+        </div>
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success mt-4">@TempData["Message"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger mt-4">@TempData["Error"]</div>
+    }
 
     <div class="bg-white rounded-lg shadow">
-        <table class="min-w-full divide-y divide-gray-200">
+        <table class="min-w-full divide-y divide-gray-200 rounded-lg">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -119,17 +140,6 @@
         </nav>
     </div>
 
-    <form asp-action="PopulateFylkerOgKommuner" method="post" class="mt-6">
-        <button type="submit" class="btn btn-primary">Oppdater Fylker og Kommuner</button>
-    </form>
 
-    @if (TempData["Message"] != null)
-    {
-        <div class="alert alert-success mt-4">@TempData["Message"]</div>
-    }
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger mt-4">@TempData["Error"]</div>
-    }
+    </div>
 </div> 
