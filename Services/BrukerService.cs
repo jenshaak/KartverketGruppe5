@@ -12,7 +12,8 @@ namespace KartverketGruppe5.Services
 
         public BrukerService(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public async Task<Bruker> GetBrukerByEmail(string email)

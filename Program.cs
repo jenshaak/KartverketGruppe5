@@ -17,6 +17,7 @@ builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
 // Legg til denne med dine andre service registreringer
 builder.Services.AddScoped<BildeService>();
 builder.Services.AddScoped<BrukerService>();
+builder.Services.AddScoped<FylkeService>();
 builder.Services.AddScoped<GeoChangeService>();
 builder.Services.AddScoped<LokasjonService>();
 builder.Services.AddScoped<InnmeldingService>();

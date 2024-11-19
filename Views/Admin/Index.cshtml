@@ -1,4 +1,4 @@
-@model IEnumerable<KartverketGruppe5.Models.Saksbehandler>
+@model PagedResult<KartverketGruppe5.Models.Saksbehandler>
 
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-6">Saksbehandlere</h1>
@@ -15,10 +15,30 @@
                         Email
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Admin
+                        <a asp-action="Index" 
+                           asp-route-sortOrder="@ViewData["AdminSortParam"]"
+                           class="text-gray-500 hover:text-gray-700">
+                            Admin
+                            @if (ViewData["CurrentSort"].ToString().StartsWith("admin"))
+                            {
+                                <span class="ml-1">
+                                    @(ViewData["CurrentSort"].ToString() == "admin_desc" ? "↓" : "↑")
+                                </span>
+                            }
+                        </a>
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Opprettet
+                        <a asp-action="Index" 
+                           asp-route-sortOrder="@ViewData["DateSortParam"]"
+                           class="text-gray-500 hover:text-gray-700">
+                            Opprettet
+                            @if (ViewData["CurrentSort"].ToString().StartsWith("date"))
+                            {
+                                <span class="ml-1">
+                                    @(ViewData["CurrentSort"].ToString() == "date_desc" ? "↓" : "↑")
+                                </span>
+                            }
+                        </a>
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Handlinger
@@ -26,7 +46,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach (var saksbehandler in Model)
+                @foreach (var saksbehandler in Model.Items)
                 {
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -56,6 +76,46 @@
                 }
             </tbody>
         </table>
+    </div>
+
+    <div class="mt-4 flex justify-center">
+        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+            @if (Model.HasPreviousPage)
+            {
+                <a asp-action="Index" 
+                   asp-route-page="@(Model.CurrentPage - 1)"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">Forrige</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            }
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <a asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium @(i == Model.CurrentPage ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:bg-gray-50")">
+                    @i
+                </a>
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <a asp-action="Index"
+                   asp-route-page="@(Model.CurrentPage + 1)"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">Neste</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            }
+        </nav>
     </div>
 
     <form asp-action="PopulateFylkerOgKommuner" method="post" class="mt-6">

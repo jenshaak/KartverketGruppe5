@@ -29,7 +29,7 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var innmeldinger = await _innmeldingService.GetInnmeldinger(includeKommuneNavn: true, innmelderBrukerId: brukerId.Value);
+            var innmeldinger = await _innmeldingService.GetInnmeldinger(innmelderBrukerId: brukerId.Value);
             return View(innmeldinger);
         }
 
