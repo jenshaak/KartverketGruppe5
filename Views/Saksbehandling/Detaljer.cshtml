@@ -3,6 +3,8 @@
     ViewData["Title"] = "Innmelding Detaljer";
     var lokasjon = ViewBag.Lokasjon as LokasjonModel;
     var saksbehandlere = ViewBag.Saksbehandlere as List<Saksbehandler>;
+    var saksbehandlerId = Context.Session.GetInt32("SaksbehandlerId");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
 }
 
 <div class="flex flex-col bg-bg w-full p-12">
@@ -27,27 +29,37 @@
         </div>
         <!-- Handlinger -->
         <div class="mt-8 flex justify-evenly w-full">
-            <form asp-action="Videresend" method="post" class="flex flex-col gap-4">
-                <input type="hidden" asp-for="InnmeldingId" />
-                <select name="saksbehandlerId" class="rounded-lg p-2 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">Velg saksbehandler</option>
-                    @foreach (var saksbehandler in ViewBag.Saksbehandlere)
-                    {
-                        <option value="@saksbehandler.SaksbehandlerId">
-                            @($"{saksbehandler.Fornavn} {saksbehandler.Etternavn}")
-                        </option>
-                    }
-                </select>
-                <button type="submit" class="btn btn-blue">
-                    Videresendd
-                </button>
-            </form>
-            <form asp-action="Behandle" method="post">
-                <input type="hidden" name="id" value="@Model.InnmeldingId" />
-                <button type="submit" class="btn btn-primary">
-                    Ta over saken
-                </button>
-            </form>
+            @if (Model.SaksbehandlerId == null || Model.SaksbehandlerId == saksbehandlerId || isAdmin) {
+                <form asp-action="Videresend" method="post" class="flex flex-col gap-4">
+                    <input type="hidden" asp-for="InnmeldingId" />
+                    <select name="saksbehandlerId" class="rounded-lg p-2 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Velg saksbehandler</option>
+                        @foreach (var saksbehandler in ViewBag.Saksbehandlere)
+                        {
+                            <option value="@saksbehandler.SaksbehandlerId">
+                                @($"{saksbehandler.Fornavn} {saksbehandler.Etternavn}")
+                            </option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-blue">
+                        Gjør ansvarlig
+                    </button>
+                </form>
+                @if (Model.SaksbehandlerId != saksbehandlerId && !isAdmin) {
+                    <form asp-action="Behandle" method="post">
+                        <input type="hidden" name="id" value="@Model.InnmeldingId" />
+                        <button type="submit" class="btn btn-primary">
+                        Ta over saken
+                        </button>
+                    </form>
+                } else if (!isAdmin) {
+                    <p>Ansvarlig saksbehandler: Deg (@Model.SaksbehandlerNavn)</p>
+                } else {
+                    <p>Ansvarlig saksbehandler: @Model.SaksbehandlerNavn</p>
+                }
+            } else {
+                <p>Ansvarlig saksbehandler: @Model.SaksbehandlerNavn</p>
+            }
         </div>
 </div>
 

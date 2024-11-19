@@ -35,7 +35,7 @@ namespace KartverketGruppe5.Controllers
 
         public async Task<IActionResult> Detaljer(int id)
         {
-            var innmelding = await _innmeldingService.GetInnmeldingById(id, true, true);
+            var innmelding = await _innmeldingService.GetInnmeldingById(id);
             if (innmelding == null)
             {
                 return NotFound();

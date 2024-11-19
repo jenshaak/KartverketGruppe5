@@ -1,27 +1,14 @@
-@model List<KartverketGruppe5.Models.InnmeldingModel>
+@model PagedResult<KartverketGruppe5.Models.InnmeldingModel>
 @{
     ViewData["Title"] = "Mine Innmeldinger";
 }
 
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Mine Innmeldinger</h1>
-
-    <!-- Filter/Sortering -->
-    <div class="flex justify-between mb-6">
-        <select class="border rounded p-2">
-            <option>Filter etter kommune</option>
-        </select>
-        <select class="border rounded p-2">
-            <option>Sorter etter dato</option>
-        </select>
-        <select class="border rounded p-2">
-            <option>Filter etter status</option>
-        </select>
-    </div>
+<div class="">
+    <h1 class="text-3xl font-bold mb-6">Mine Saker</h1>
 
     <!-- Innmeldinger Liste -->
     <div class="space-y-4">
-        @foreach (var innmelding in Model)
+        @foreach (var innmelding in Model.Items)
         {
             <a asp-action="Behandle" asp-route-id="@innmelding.InnmeldingId" class="flex justify-between items-center p-4 bg-white rounded shadow">
                 <div>

@@ -120,25 +120,19 @@ namespace KartverketGruppe5.Services
                 _ => " ORDER BY i.opprettetDato DESC"
             };
 
-            // Add pagination
+            // Legg til pagination
             sql += " LIMIT @Skip, @Take";
 
-            var innmeldinger = await connection.QueryAsync<InnmeldingModel>(sql, new { 
+            var innmeldinger = (await connection.QueryAsync<InnmeldingModel>(sql, new { 
                 SaksbehandlerId = saksbehandlerId,
                 InnmelderBrukerId = innmelderBrukerId,
                 Status = statusFilter,
                 FylkeFilter = fylkeFilter,
                 Skip = (page - 1) * pageSize,
                 Take = pageSize
-            });
+            })).ToList();  // Konverterer til List<InnmeldingModel>
 
-            // Debug: Sjekk første innmelding
-            var firstItem = innmeldinger.FirstOrDefault();
-            if (firstItem != null)
-            {
-                _logger.LogInformation($"Første innmelding: Kommune={firstItem.KommuneNavn}, Fylke={firstItem.FylkeNavn}");
-            }
-
+            // Process the items
             var items = innmeldinger.Select(i => new InnmeldingModel
             {
                 InnmeldingId = i.InnmeldingId,
@@ -163,7 +157,7 @@ namespace KartverketGruppe5.Services
             };
         }
 
-        public async Task<InnmeldingModel> GetInnmeldingById(int id, bool includeKommuneNavn = false, bool includeLokasjon = false)
+        public async Task<InnmeldingModel> GetInnmeldingById(int id)
         {
             using var connection = new MySqlConnection(_connectionString);
             
@@ -177,31 +171,17 @@ namespace KartverketGruppe5.Services
                     i.status,
                     i.opprettetDato,
                     i.saksbehandlerId,
-                    i.bildeSti";
-
-            if (includeKommuneNavn)
-            {
-                sql += ", k.navn as kommuneNavn";
-            }
-
-            if (includeLokasjon)
-            {
-                sql += ", l.latitude, l.longitude, l.geoJson";
-            }
-
-            sql += " FROM Innmelding i";
-
-            if (includeKommuneNavn)
-            {
-                sql += " INNER JOIN Kommune k ON i.kommuneId = k.kommuneId";
-            }
-
-            if (includeLokasjon)
-            {
-                sql += " INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId";
-            }
-
-            sql += " WHERE i.innmeldingId = @Id";
+                    i.bildeSti,
+                    k.navn as kommuneNavn,
+                    l.latitude,
+                    l.longitude,
+                    l.geoJson,
+                    CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
+                FROM Innmelding i 
+                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
+                INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
+                LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
+                WHERE i.innmeldingId = @Id";
 
             var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingModel>(sql, new { Id = id });
 
@@ -210,7 +190,82 @@ namespace KartverketGruppe5.Services
                 innmelding.StatusClass = GetStatusClass(innmelding.Status);
             }
 
+            _logger.LogInformation($"Innmelding: {innmelding.SaksbehandlerId}");
+
             return innmelding;
+        }
+
+        public class InnmeldingUpdateModel
+        {
+            public int InnmeldingId { get; set; }
+            public string? Status { get; set; }
+            public int? SaksbehandlerId { get; set; }
+            public string? Beskrivelse { get; set; }
+            public string? Kommentar { get; set; }
+            public string? BildeSti { get; set; }
+            public DateTime? OppdatertDato { get; set; }
+        }
+
+        // Felles oppdateringsfunksjon
+        private async Task<bool> UpdateInnmeldingInternal(InnmeldingUpdateModel updateModel)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                var updateFields = new List<string>();
+                var parameters = new DynamicParameters();
+                
+                // Legg til felter som skal oppdateres
+                if (updateModel.Status != null)
+                {
+                    updateFields.Add("status = @Status");
+                    parameters.Add("Status", updateModel.Status);
+                }
+                
+                if (updateModel.SaksbehandlerId.HasValue)
+                {
+                    updateFields.Add("saksbehandlerId = @SaksbehandlerId");
+                    parameters.Add("SaksbehandlerId", updateModel.SaksbehandlerId.Value);
+                }
+                
+                if (updateModel.Beskrivelse != null)
+                {
+                    updateFields.Add("beskrivelse = @Beskrivelse");
+                    parameters.Add("Beskrivelse", updateModel.Beskrivelse);
+                }
+                
+                if (updateModel.Kommentar != null)
+                {
+                    updateFields.Add("kommentar = @Kommentar");
+                    parameters.Add("Kommentar", updateModel.Kommentar);
+                }
+                
+                if (updateModel.BildeSti != null)
+                {
+                    updateFields.Add("bildeSti = @BildeSti");
+                    parameters.Add("BildeSti", updateModel.BildeSti);
+                }
+
+                // Alltid oppdater oppdatertDato
+                updateFields.Add("oppdatertDato = @OppdatertDato");
+                parameters.Add("OppdatertDato", updateModel.OppdatertDato ?? DateTime.Now);
+                parameters.Add("InnmeldingId", updateModel.InnmeldingId);
+
+                if (!updateFields.Any()) return true; // Ingen endringer å gjøre
+
+                string sql = $@"
+                    UPDATE Innmelding 
+                    SET {string.Join(", ", updateFields)}
+                    WHERE innmeldingId = @InnmeldingId";
+
+                var rowsAffected = await connection.ExecuteAsync(sql, parameters);
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error updating innmelding: {ex.Message}");
+                return false;
+            }
         }
 
         public async Task UpdateInnmeldingDetails(InnmeldingModel innmelding, LokasjonModel? lokasjon = null, IFormFile? bilde = null)
@@ -243,35 +298,14 @@ namespace KartverketGruppe5.Services
             });
         }
 
-        public async Task UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId = null, string? kommentar = null)
+        public async Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId = null)
         {
-            using var connection = new MySqlConnection(_connectionString);
-            var oppdatertDato = DateTime.Now;
-
-            var updateFields = new List<string> { "status = @Status", "oppdatertDato = @OppdatertDato" };
-            var parameters = new DynamicParameters();
-            parameters.Add("Status", status);
-            parameters.Add("OppdatertDato", oppdatertDato);
-            parameters.Add("InnmeldingId", innmeldingId);
-
-            if (saksbehandlerId.HasValue)
+            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
             {
-                updateFields.Add("saksbehandlerId = @SaksbehandlerId");
-                parameters.Add("SaksbehandlerId", saksbehandlerId.Value);
-            }
-
-            if (!string.IsNullOrEmpty(kommentar))
-            {
-                updateFields.Add("kommentar = @Kommentar");
-                parameters.Add("Kommentar", kommentar);
-            }
-
-            string query = $@"
-                UPDATE Innmelding 
-                SET {string.Join(", ", updateFields)}
-                WHERE innmeldingId = @InnmeldingId";
-
-            await connection.ExecuteAsync(query, parameters);
+                InnmeldingId = innmeldingId,
+                Status = status,
+                SaksbehandlerId = saksbehandlerId
+            });
         }
 
         private async Task UpdateLokasjon(LokasjonModel lokasjon, DateTime oppdatertDato)
@@ -305,13 +339,23 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public void AddKommentar(int innmeldingId, string kommentar)
+        public async Task<bool> AddKommentar(int innmeldingId, string kommentar)
         {
-            using (IDbConnection dbConnection = Connection)
+            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
             {
-                string query = "UPDATE Innmelding SET kommentar = @Kommentar WHERE innmeldingId = @Id";
-                dbConnection.Execute(query, new { Id = innmeldingId, Kommentar = kommentar });
-            }
+                InnmeldingId = innmeldingId,
+                Kommentar = kommentar
+            });
+        }
+
+        public async Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId)
+        {
+            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
+            {
+                InnmeldingId = innmeldingId,
+                SaksbehandlerId = saksbehandlerId,
+                Status = "Under behandling"
+            });
         }
 
         public InnmeldingModel GetInnmeldingForLokasjon(int lokasjonId)

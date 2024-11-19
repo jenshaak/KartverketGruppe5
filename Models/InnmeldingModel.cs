@@ -14,6 +14,7 @@ namespace KartverketGruppe5.Models
         public string? FylkeNavn { get; set; }
         public string StatusClass { get; set; } = "bg-gray-100 text-gray-800";
         public int? SaksbehandlerId { get; set; }
+        public string? SaksbehandlerNavn { get; set; }
         public IFormFile? Bilde { get; set; }
         public string? BildeSti { get; set; }
     }

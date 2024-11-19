@@ -99,7 +99,7 @@ namespace KartverketGruppe5.Controllers
 
         public async Task<IActionResult> Detaljer(int id)
         {
-            var innmelding = await _innmeldingService.GetInnmeldingById(id, true, true);
+            var innmelding = await _innmeldingService.GetInnmeldingById(id);
             if (innmelding == null)
             {
                 return NotFound();
@@ -117,8 +117,8 @@ namespace KartverketGruppe5.Controllers
                 return NotFound();
             }
 
-            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
-            ViewBag.Saksbehandlere = saksbehandlere;
+            var saksbehandlerResult = await _saksbehandlerService.GetAllSaksbehandlere();
+            ViewBag.Saksbehandlere = saksbehandlerResult.Items.ToList();
 
             var innmeldingModel = new InnmeldingModel
             {
@@ -130,15 +130,20 @@ namespace KartverketGruppe5.Controllers
                 Status = innmelding.Status,
                 OpprettetDato = innmelding.OpprettetDato,
                 KommuneNavn = kommune.Navn,
+                SaksbehandlerId = innmelding.SaksbehandlerId,
+                SaksbehandlerNavn = innmelding.SaksbehandlerNavn,
                 StatusClass = GetStatusClass(innmelding.Status)
             };
 
             ViewBag.Lokasjon = lokasjon;
-            Console.WriteLine($"Lokasjon: {lokasjon?.Latitude}, {lokasjon?.Longitude}, GeoJson: {lokasjon?.GeoJson}");
             return View(innmeldingModel);
         }
 
-        
+        public async Task<IActionResult> Videresend(int innmeldingId, int saksbehandlerId)
+        {
+            await _innmeldingService.UpdateInnmeldingSaksbehandler(innmeldingId, saksbehandlerId);
+            return RedirectToAction("Index", "Saksbehandling");
+        }
 
         [HttpPost]
         public async Task<IActionResult> Behandle(int id)

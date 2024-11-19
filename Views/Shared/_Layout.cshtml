@@ -38,37 +38,59 @@
                     <button class="btn btn-custom-gray flex items-center justify-center" id="menuToggle">
                         <i class="ph ph-list cursor-pointer text-xl"></i>
                     </button>
-                    <ul class="fixed top-16 right-0 space-y-5 items-center hidden border border-custom-gray rounded-xl p-4" id="menuList">
+                    <ul class="fixed bg-custom-gray text-white z-50 top-16 right-0 space-y-2 items-center hidden border border-custom-gray rounded-xl p-4" id="menuList">
                         @if (!isHomePage)
                         {
-                            <li>
-                                <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
+                            <li class="w-full">
+                                <a class="menu-item" 
                                    asp-area="" 
                                    asp-controller="Home" 
-                                   asp-action="Index">Hjem</a>
+                                   asp-action="Index">
+                                   <i class="ph ph-house ph-lg"></i>
+                                   <p>Hjem</p>
+                                   </a>
                             </li>
                         }
                         
                         @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
                         {
                             <li>
-                                <a class="px-4 py-2 rounded-md bg-green-300 hover:scale-105 hover:text-black" 
-                                asp-controller="MineInnmeldinger" asp-action="Index">Mine Innmeldinger</a>
+                                <a class="menu-item" 
+                                asp-controller="MineInnmeldinger" 
+                                asp-action="Index">
+                                <i class="ph ph-envelope ph-lg"></i>
+                                <p>Mine Innmeldinger</p>
+                                </a>
                             </li>
                         }
 
                         @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
                         {
                             <li>
-                                <a class="px-4 py-2 rounded-md btn-primary hover:scale-105" 
-                                   asp-controller="Saksbehandling" asp-action="Index">Saksbehandling</a>
+                                <a class="menu-item" 
+                                   asp-controller="Saksbehandling" 
+                                   asp-action="Index">
+                                <i class="ph ph-list-checks ph-lg"></i>
+                                <p>Saksbehandling</p>
+                                </a>
                             </li>
-
+                            <li>
+                                <a class="menu-item" 
+                                   asp-controller="MineSaker" 
+                                   asp-action="Index">
+                                <i class="ph ph-folder-open ph-lg"></i>
+                                <p>Mine saker</p>
+                                </a>
+                            </li>
                             @if (isAdmin)
                             {
-                                <li>
-                                    <a class="px-4 py-2 rounded-md bg-blue-300 hover:scale-105 hover:text-black" 
-                                       asp-controller="Admin" asp-action="Index">Administrasjon</a>
+                                <li class="w-full">
+                                    <a class="menu-item" 
+                                       asp-controller="Admin" 
+                                       asp-action="Index">
+                                    <i class="ph ph-shield ph-lg"></i>
+                                    <p>Administrasjon</p>
+                                    </a>
                                 </li>
                             }
                         }
@@ -76,43 +98,130 @@
                         <li>
                             @if (displayName == null)
                             {
-                                <a class="px-4 py-2 rounded-md bg-primary hover:scale-105 hover:text-black" 
-                                asp-controller="Login" asp-action="Index">Logg inn</a>
+                                <a class="menu-item" 
+                                   asp-controller="Login" 
+                                   asp-action="Index">
+                                <i class="ph ph-sign-in ph-lg"></i>
+                                <p>Logg inn</p>
+                                </a>
                             }
                             else
                             {
                                 <div class="flex items-center gap-2">
-                                    <a class="px-4 py-2 rounded-md bg-custom-gray text-white hover:scale-105 no-underline btn" 
-                                    asp-controller="Login" asp-action="Logout">Logg ut</a>
+                                    <a class="menu-item" 
+                                       asp-controller="Login" 
+                                       asp-action="Logout">
+                                    <i class="ph ph-sign-out ph-lg"></i>
+                                    <p>Logg ut</p>
+                                    </a>
                                 </div>
                             }
                         </li>
                     </ul>
                 </div>
-                @* <ul class="absolute right-0 top-0 p-4 h-screen bg-primary transition-all duration-300 ease-in-out group hover:w-56 w-14 flex flex-col items-center gap-2">
-                    <li
-                        className="w-full flex justify-center rounded-md text-white hover:bg-white hover:text-primary group-hover:justify-start"
-                    >
-                        <a
-                            asp-controller="Home" asp-action="Index"
-                            className="flex items-center gap-2 justify-center h-full w-full group-hover:justify-start py-2 group-hover:p-2"
-                        >
-                            <div className="w-5 flex justify-center">
-                                <i class="ph ph-list"></i>
+                <ul class="sidebar">
+                    <li class="sidebar-item">
+                        <a asp-controller="Home" asp-action="Index" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="ph ph-house ph-lg"></i>
                             </div>
-                            <div className="transition-all duration-300 ease-in-out hidden group-hover:block w-0 group-hover:w-auto">
-                                Mine Innmeldinger
+                            <div class="sidebar-text">
+                                Hjem
                             </div>
                         </a>
                     </li>
-                </ul> *@
+                    @if (userType == "Bruker")
+                    {
+                        <li class="sidebar-item">
+                            <a asp-controller="MineInnmeldinger" asp-action="Index" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-envelope ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Mine Innmeldinger
+                                </div>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-controller="MapChange" asp-action="Index" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-map-pin ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Meld inn endring
+                                </div>
+                            </a>
+                        </li>
+                    }
+                    @if (userType == "Saksbehandler")
+                    {
+                        <li class="sidebar-item">
+                            <a asp-controller="Saksbehandling" asp-action="Index" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-list-checks ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Saksbehandling
+                                </div>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-controller="MineSaker" asp-action="Index" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-folder-open ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Mine saker
+                                </div>
+                            </a>
+                        </li>
+                        @if (isAdmin)
+                        {
+                            <li class="sidebar-item">
+                                <a asp-controller="Admin" asp-action="Index" class="sidebar-link">
+                                    <div class="sidebar-icon">
+                                        <i class="ph ph-shield ph-lg"></i>
+                                    </div>
+                                    <div class="sidebar-text">
+                                        Administrasjon
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    }
+                    @if (displayName == null)
+                    {
+                        <li class="sidebar-item">
+                            <a asp-controller="Login" asp-action="Index" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-sign-in ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Logg inn
+                                </div>
+                            </a>
+                        </li>
+                    } else {
+                        <li class="sidebar-item">
+                            <a asp-controller="Login" asp-action="Logout" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-sign-out ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Logg ut
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
-        <main role="main" class="min-h-screen w-full flex flex-col items-center justify-center">
+    <main role="main" class="min-h-screen w-full flex flex-col items-center bg-bg py-12">
+        <div class="w-4/5 flex flex-col">
             @RenderBody()
-        </main>
-
+        </div>
+    </main>
     <footer class="border-top text-muted">
         <div class="container">
             &copy; 2024 - KartverketGruppe5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

@@ -6,10 +6,10 @@
     var fylker = ViewBag.Fylker as List<Fylke> ?? new List<Fylke>();
 }
 
-<div class="container mx-auto px-4 py-8">
+<div class="py-8">
     <h1 class="text-3xl font-bold mb-6">Behandle Innmeldinger</h1>
 
-    <!-- Filters -->
+    <!-- Filtre -->
     <div class="mb-6 flex gap-4">
         <div class="w-64">
             <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
@@ -42,11 +42,12 @@
         </div>
     </div>
 
+    <!-- Innmelding-tabell -->
     <div class="bg-white rounded-lg shadow">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+        <table class="min-w-full divide-y divide-gray-200 rounded-lg">
+            <thead class="bg-gray-50 rounded-t-lg">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fylke</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase rounded-tl-lg">Fylke</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kommune</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         <a asp-action="Index" 
@@ -101,6 +102,11 @@
             </tbody>
         </table>
     </div>
+        @if(Model.Items.Count == 0)
+        {
+            <h3 class="text-xl text-center text-gray-500">Ingen innmeldinger funnet.</h3>
+        }
+    </div>
 
     <!-- Pagination -->
     <div class="mt-4 flex justify-center">
@@ -151,14 +157,12 @@
                 var status = $('#statusFilter').val();
                 var fylke = $('#fylkeFilter').val();
                 var currentSort = '@ViewData["CurrentSort"]';
-                var currentPage = '@Model.CurrentPage';
 
                 var params = new URLSearchParams();
                 
                 if (status) params.append('statusFilter', status);
                 if (fylke) params.append('fylkeFilter', fylke);
                 if (currentSort) params.append('sortOrder', currentSort);
-                if (currentPage) params.append('page', currentPage);
 
                 window.location.href = '@Url.Action("Index")' + '?' + params.toString();
             }

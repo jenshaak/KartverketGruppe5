@@ -20,7 +20,7 @@ module.exports = {
   plugins: [],
   safelist: [
     {
-      pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|justify)-.+/,
+      pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|justify|items|mt|rounded-t)-.+/,
     },
     {
       pattern: /(absolute|fixed|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden|max-sm:hidden|max-lg:hidden)/,
@@ -29,7 +29,16 @@ module.exports = {
       pattern: /(top|right)-(0|4|8|12|16)/,
     },
     {
+      pattern: /(space-y)-(0|2|4)/,
+    },
+    {
       pattern: /(line-clamp)-(0|1|2|3)/,
-    }
+    },
+    'group',
+    'group-hover:hidden',
+    'group-hover:block',
+    'group-hover:w-56',
+    'group-hover:justify-start',
+    'group-hover:p-2'
   ]
 }
