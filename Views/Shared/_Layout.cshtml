@@ -34,89 +34,9 @@
                 <a asp-controller="Home" asp-action="Index" class="text-xl font-bold">
                     <img src="~/bilder/kartverket-logo-large.svg" alt="Kartverket logo" class="w-auto h-12">
                 </a>
-                <button class="btn btn-custom-gray flex items-center justify-center" id="menuToggle">
+                <button class="btn btn-primary flex items-center justify-center" id="sidebarToggle">
                     <i class="ph ph-list cursor-pointer text-xl"></i>
                 </button>
-                <ul class="absolute bg-custom-gray text-white z-50 top-16 right-0 space-y-2 items-center hidden border border-custom-gray rounded-xl p-4" id="menuList">
-                    @if (!isHomePage)
-                    {
-                        <li class="w-full">
-                            <a class="menu-item" 
-                                asp-area="" 
-                                asp-controller="Home" 
-                                asp-action="Index">
-                                <i class="ph ph-house ph-lg"></i>
-                                <p>Hjem</p>
-                                </a>
-                        </li>
-                    }
-                    
-                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
-                    {
-                        <li>
-                            <a class="menu-item" 
-                            asp-controller="MineInnmeldinger" 
-                            asp-action="Index">
-                            <i class="ph ph-envelope ph-lg"></i>
-                            <p>Mine Innmeldinger</p>
-                            </a>
-                        </li>
-                    }
-
-                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
-                    {
-                        <li>
-                            <a class="menu-item" 
-                                asp-controller="Saksbehandling" 
-                                asp-action="Index">
-                            <i class="ph ph-list-checks ph-lg"></i>
-                            <p>Saksbehandling</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="menu-item" 
-                                asp-controller="MineSaker" 
-                                asp-action="Index">
-                            <i class="ph ph-folder-open ph-lg"></i>
-                            <p>Mine saker</p>
-                            </a>
-                        </li>
-                        @if (isAdmin)
-                        {
-                            <li class="w-full">
-                                <a class="menu-item" 
-                                    asp-controller="Admin" 
-                                    asp-action="Index">
-                                <i class="ph ph-shield ph-lg"></i>
-                                <p>Administrasjon</p>
-                                </a>
-                            </li>
-                        }
-                    }
-
-                    <li>
-                        @if (displayName == null)
-                        {
-                            <a class="menu-item" 
-                                asp-controller="Login" 
-                                asp-action="Index">
-                            <i class="ph ph-sign-in ph-lg"></i>
-                            <p>Logg inn</p>
-                            </a>
-                        }
-                        else
-                        {
-                            <div class="flex items-center gap-2">
-                                <a class="menu-item" 
-                                    asp-controller="Login" 
-                                    asp-action="Logout">
-                                <i class="ph ph-sign-out ph-lg"></i>
-                                <p>Logg ut</p>
-                                </a>
-                            </div>
-                        }
-                    </li>
-                </ul>
                 <ul class="sidebar">
                     <li class="sidebar-item">
                         <a asp-controller="Home" asp-action="Index" class="sidebar-link">
@@ -243,6 +163,20 @@
         document.addEventListener('click', function(e) {
             if (!menuList.contains(e.target) && !menuToggle.contains(e.target)) {
                 menuList.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('sidebar-active');
+        });
+
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                sidebar.classList.remove('sidebar-active');
             }
         });
     </script>
