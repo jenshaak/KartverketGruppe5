@@ -168,6 +168,7 @@ namespace KartverketGruppe5.Services
                     i.kommuneId,
                     i.lokasjonId,
                     i.beskrivelse,
+                    i.kommentar,
                     i.status,
                     i.opprettetDato,
                     i.saksbehandlerId,
@@ -188,9 +189,15 @@ namespace KartverketGruppe5.Services
             if (innmelding != null)
             {
                 innmelding.StatusClass = GetStatusClass(innmelding.Status);
+                _logger.LogInformation($"Hentet innmelding med ID {id}:");
+                _logger.LogInformation($"- Beskrivelse: {innmelding.Beskrivelse}");
+                _logger.LogInformation($"- Kommentar: {innmelding.Kommentar ?? "Ingen kommentar"}");
+                _logger.LogInformation($"- Status: {innmelding.Status}");
             }
-
-            _logger.LogInformation($"Innmelding: {innmelding.SaksbehandlerId}");
+            else
+            {
+                _logger.LogWarning($"Fant ingen innmelding med ID {id}");
+            }
 
             return innmelding;
         }
@@ -339,15 +346,6 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<bool> AddKommentar(int innmeldingId, string kommentar)
-        {
-            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
-            {
-                InnmeldingId = innmeldingId,
-                Kommentar = kommentar
-            });
-        }
-
         public async Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId)
         {
             return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
@@ -385,6 +383,16 @@ namespace KartverketGruppe5.Services
                 _logger.LogError($"Error getting innmelding for lokasjon {lokasjonId}: {ex.Message}");
                 return null;
             }
+        }
+
+        public async Task<bool> UpdateStatusAndKommentar(int innmeldingId, string kommentar, string? status = "under behandling")
+        {
+            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
+            {
+                InnmeldingId = innmeldingId,
+                Status = status,
+                Kommentar = kommentar
+            });
         }
 
         public async Task<bool> UpdateInnmelding(Innmelding innmelding)

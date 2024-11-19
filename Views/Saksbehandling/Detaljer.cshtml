@@ -8,31 +8,43 @@
 }
 
 <div class="flex flex-col bg-bg w-full p-12">
-        <a asp-action="Index" class="text-blue-600 hover:text-blue-800">
-            ← Tilbake til oversikt
+        <div class="mb-6">
+        <a asp-action="Index" class="btn btn-blue">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
         </a>
-    <h1 class="text-2xl font-bold mb-6">Innmelding Detaljer</h1>
-
-    <div class="flex justify-between items-center w-full bg-white rounded-lg p-4">
-        <div class="font-medium text-gray-900">@Model.KommuneNavn</div>
-        <div class="text-sm text-gray-500">@Model.OpprettetDato.ToShortDateString()</div>
-        <div class="flex items-center gap-2">
-            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @Model.StatusClass">
-                @Model.Status
-            </span>
-        </div>
+        <h1 class="text-3xl font-bold mt-4 text-center">Behandling av innmeldingen</h1>
     </div>
-                      
-    <div class="flex justify-center items-center gap-4">
-            <div class="text-sm text-gray-500 w-full h-full bg-white rounded-md p-4">@Model.Beskrivelse</div>
-            <div id="map" style="height: 400px; width: 100%;" class="rounded-md"></div>
-        </div>
+    <div class="flex justify-between items-center w-full rounded-lg bg-white p-4">
+        <div>@Model.KommuneNavn</div>
+        <div>@Model.OpprettetDato.ToShortDateString()</div>
+        <div class="flex items-center justify-center px-3 py-1 rounded-full @Model.StatusClass">@Model.Status</div>
+    </div>
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" style="min-height: 400px;" >
+        <div class="bg-white rounded-lg shadow p-6 flex gap-4">
+            <div class="w-2/3 flex flex-col gap-4">
+                <p class="font-medium">Beskrivelse:</p>
+                <div class="w-full h-full bg-slate-100 rounded-md p-2">@Model.Beskrivelse</div>
+            </div>
+            <div class="w-1/3 flex flex-col gap-4">
+                <p class="font-medium">Bilde:</p>
+                @if (!string.IsNullOrEmpty(Model.BildeSti))
+                {
+                    <img id="eksisterendeBilde" 
+                    src="@Url.Content("~/" + Model.BildeSti.TrimStart('/'))" 
+                    alt="Innmelding-bilde" 
+                        class="w-full h-auto rounded-md">
+                }
+            </div>  
+        </div>  
+        <div id="map" class="w-full h-full rounded-lg"></div>
+    </div>
         <!-- Handlinger -->
-        <div class="mt-8 flex justify-evenly w-full">
+        <div class="mt-12 flex justify-between items-center w-full rounded-lg bg-white p-4">
             @if (Model.SaksbehandlerId == null || Model.SaksbehandlerId == saksbehandlerId || isAdmin) {
-                <form asp-action="Videresend" method="post" class="flex flex-col gap-4">
+                <form asp-action="Videresend" method="post" class="flex border border-slate-300 rounded-lg">
                     <input type="hidden" asp-for="InnmeldingId" />
-                    <select name="saksbehandlerId" class="rounded-lg p-2 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                    <select name="saksbehandlerId" class="rounded-l-lg p-2 focus:border-blue-500 focus:ring-blue-500">
                         <option value="">Velg saksbehandler</option>
                         @foreach (var saksbehandler in ViewBag.Saksbehandlere)
                         {
@@ -41,7 +53,7 @@
                             </option>
                         }
                     </select>
-                    <button type="submit" class="btn btn-blue">
+                    <button type="submit" class="bg-blue-500 rounded-r-lg text-white p-2">
                         Gjør ansvarlig
                     </button>
                 </form>
@@ -55,7 +67,7 @@
                 } else if (!isAdmin) {
                     <p>Ansvarlig saksbehandler: Deg (@Model.SaksbehandlerNavn)</p>
                 } else {
-                    <p>Ansvarlig saksbehandler: @Model.SaksbehandlerNavn</p>
+                    <p>Ingen saksbehandler ansvarlig ennå</p>
                 }
             } else {
                 <p>Ansvarlig saksbehandler: @Model.SaksbehandlerNavn</p>

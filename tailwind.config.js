@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         'bg': '#d0ecd6',
         'primary': '#156630',
-        'secondary': '#156630',
+        'custom-blue': '#1d4ed8',
         'warning': '#ef4444',
         'error': '#ef4444',
         'custom-gray': '#2c2c2c',
@@ -23,7 +23,10 @@ module.exports = {
       pattern: /(bg|text|border|shadow|p|w|px|py|h|gap|min-h|justify|items|mt|rounded-t)-.+/,
     },
     {
-      pattern: /(absolute|fixed|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden|max-sm:hidden|max-lg:hidden)/,
+      pattern: /(absolute|fixed|sticky|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden|max-sm:hidden|max-lg:hidden|divider)/,
+    },
+    {
+      pattern: /(rounded-l-lg|rounded-r-lg)/,
     },
     {
       pattern: /(top|right)-(0|4|8|12|16)/,

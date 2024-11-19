@@ -3,17 +3,17 @@
     ViewData["Title"] = "Map Change";
 }
 
-<div class="flex flex-col gap-12 items-center justify-center bg-bg rounded-xl p-8 mapChange-width">
+<div class="flex flex-col gap-12 items-center justify-center bg-white rounded-xl p-8 mapChange-width">
     <h2 class="text-center text-4xl text-semibold">Register en endring</h2>
 
     <form asp-controller="MapChange" asp-action="Index" method="post" class="flex flex-col gap-4 w-full" enctype="multipart/form-data">
-        <div id="map" style="height: 400px;"></div>
+        <div id="map" style="height: 400px;" class="rounded-md"></div>
         <div class="flex flex-col gap-2">
             <label for="beskrivelse">Beskrivelse</label>
             <textarea 
                 id="beskrivelse" 
                 name="beskrivelse" 
-                class="rounded-md w-full p-2 h-24" 
+                class="textarea" 
                 placeholder="Beskriv endringen du vil registrere"
                 required
             ></textarea>
@@ -23,13 +23,25 @@
         <input type="hidden" id="latitude" asp-for="Latitude" />
         <input type="hidden" id="longitude" asp-for="Longitude" />
         <div class="flex flex-col gap-2">
-            <label for="bilde">Last opp bilde</label>
-            <input type="file" id="bilde" name="bilde" accept="image/*" capture="environment" class="rounded-md w-full p-2" onchange="visForhandsvisning(this)" />
-            <div id="bildeForhandsvisning" class="mt-2" style="display: none;">
-                <img id="forhandsvisningImg" class="max-w-full h-auto rounded-lg" />
+            <p class="font-medium">Bilde:</p>
+            <div id="bildeSeksjon" class="flex flex-col gap-2">
+                <input type="file" 
+                    id="bilde" 
+                    name="bilde" 
+                    accept="image/*" 
+                    capture="environment" 
+                    class="hidden" 
+                    onchange="visForhandsvisning(this)" />
+                <label for="bilde" class="btn btn-blue cursor-pointer" id="bildeLabel">
+                    <i class="ph ph-camera ph-lg"></i>
+                    <span id="bildeLabelText">Legg til bilde</span>
+                </label>
+                <div id="bildeForhandsvisning" class="mt-2" style="display: none;">
+                    <img id="forhandsvisningImg" class="w-full h-auto rounded-lg" />
+                </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Send inn</button>
+        <button type="submit" class="btn btn-wide btn-primary">Send inn</button>
     </form>
 </div>
 
@@ -153,20 +165,20 @@
         });
 
         function visForhandsvisning(input) {
-            var forhandsvisningDiv = document.getElementById('bildeForhandsvisning');
-            var forhandsvisningImg = document.getElementById('forhandsvisningImg');
-            
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 
                 reader.onload = function(e) {
+                    var forhandsvisningDiv = document.getElementById('bildeForhandsvisning');
+                    var forhandsvisningImg = document.getElementById('forhandsvisningImg');
+                    var bildeLabelText = document.getElementById('bildeLabelText');
+                    
                     forhandsvisningImg.src = e.target.result;
                     forhandsvisningDiv.style.display = 'block';
+                    bildeLabelText.textContent = 'Erstatt bildet';
                 }
                 
                 reader.readAsDataURL(input.files[0]);
-            } else {
-                forhandsvisningDiv.style.display = 'none';
             }
         }
     </script>

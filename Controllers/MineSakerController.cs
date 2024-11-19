@@ -31,11 +31,25 @@ namespace KartverketGruppe5.Controllers
         public async Task<IActionResult> Behandle(int id)
         {
             var innmelding = await _innmeldingService.GetInnmeldingById(id);
+            if (innmelding == null)
+            {
+                return NotFound();
+            }
+
             var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
-            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
             ViewBag.Lokasjon = lokasjon;
+
+            var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
             ViewBag.Saksbehandlere = saksbehandlere;
+
             return View(innmelding);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FullforBehandling(int innmeldingId, string kommentar, string status)
+        {
+            await _innmeldingService.UpdateStatusAndKommentar(innmeldingId, kommentar, status);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -36,17 +36,5 @@ namespace KartverketGruppe5.Controllers
             }
             return View(bruker);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> EndreRolle(int brukerId, string nyRolle)
-        {
-            var success = await _brukerService.OppdaterBrukerRolle(brukerId, nyRolle);
-            if (!success)
-            {
-                _logger.LogError("Kunne ikke oppdatere rolle til {NyRolle} for bruker med ID: {BrukerId}", nyRolle, brukerId);
-                return BadRequest("Kunne ikke oppdatere brukerrolle");
-            }
-            return RedirectToAction("Index", "Admin");
-        }
     }
 }

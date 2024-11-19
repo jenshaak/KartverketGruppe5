@@ -62,6 +62,7 @@ namespace KartverketGruppe5.Controllers
                 KommuneId = innmelding.KommuneId,
                 LokasjonId = innmelding.LokasjonId,
                 Beskrivelse = innmelding.Beskrivelse,
+                Kommentar = innmelding.Kommentar,
                 Status = innmelding.Status,
                 OpprettetDato = innmelding.OpprettetDato,
                 KommuneNavn = kommune.Navn,
@@ -70,6 +71,8 @@ namespace KartverketGruppe5.Controllers
             };
 
             ViewBag.Lokasjon = lokasjon;
+
+            _logger.LogInformation($"Kommentar: {innmeldingModel.Kommentar}");
             return View(innmeldingModel);
         }
 

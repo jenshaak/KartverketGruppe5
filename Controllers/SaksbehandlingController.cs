@@ -58,7 +58,7 @@ namespace KartverketGruppe5.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av innmeldinger");
-                return View(new PagedResult<InnmeldingModel>());
+                return View(new PagedResult<InnmeldingModel> { Items = new List<InnmeldingModel>() });
             }
         }
 
@@ -83,18 +83,6 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(saksbehandler);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EndreRolle(int saksbehandlerId, string nyRolle)
-        {
-            var success = await _saksbehandlerService.UpdateSaksbehandlerRolle(saksbehandlerId, nyRolle);
-            if (!success)
-            {
-                _logger.LogError("Kunne ikke oppdatere rolle til {NyRolle} for bruker med ID: {SaksbehandlerId}", nyRolle, saksbehandlerId);
-                return BadRequest("Kunne ikke oppdatere brukerrolle");
-            }
-            return RedirectToAction("Index", "Admin");
         }
 
         public async Task<IActionResult> Detaljer(int id)

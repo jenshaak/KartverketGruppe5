@@ -5,7 +5,7 @@
     var lokasjon = ViewBag.Lokasjon as LokasjonModel;
 }
 
-<div class="flex flex-col gap-4 bg-green-200 p-8 w-full">
+<div class="flex flex-col gap-4 p-8 w-full">
     <div class="mb-6">
         <a asp-action="Index" class="text-blue-600 hover:underline">← Tilbake til mine innmeldinger</a>
         <h1 class="text-3xl font-bold mt-4">Innmelding Detaljer</h1>
@@ -15,13 +15,20 @@
         <div>@Model.OpprettetDato.ToShortDateString()</div>
         <div class="flex items-center justify-center px-3 py-1 rounded-full @Model.StatusClass">@Model.Status</div>
     </div>
+    @if (Model.Kommentar != null)
+    {
+        <div class="bg-white rounded-lg shadow p-6 flex gap-4">
+            <p class="font-medium">Kommentar:</p>
+            <p>@Model.Kommentar</p>
+        </div>
+    }
     <form asp-action="EndreInnmelding" 
           method="post" 
           enctype="multipart/form-data" 
           class="flex flex-col gap-4">
         <input type="hidden" asp-for="InnmeldingId" />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8" style="min-height: 400px;" >
-            <div class="bg-white rounded-lg shadow p-6 flex gap-2">
+            <div class="bg-white rounded-lg shadow p-6 flex gap-4">
                 <div class="w-2/3 flex flex-col gap-4">
                     <p class="font-medium">Beskrivelse:</p>
                     <textarea asp-for="Beskrivelse" class="w-full h-auto bg-slate-100 rounded-md p-2">@Model.Beskrivelse</textarea>
@@ -34,21 +41,23 @@
                              src="@Url.Content("~/" + Model.BildeSti.TrimStart('/'))" 
                              alt="Innmelding-bilde" 
                              class="w-full h-auto rounded-md">
-                        <div class="flex gap-2">
-                            <div class="flex flex-col gap-2">
-                                <input type="file" 
-                                    asp-for="Bilde"
-                                    id="bilde" 
-                                    name="bilde" 
-                                    accept="image/*" 
-                                    capture="environment" 
-                                    class="hidden" 
-                                    onchange="visForhandsvisning(this)" />
-                                <label for="bilde" class="btn btn-blue cursor-pointer inline-block text-center">
-                                    Erstatt bildet
-                                </label>
-                            </div>
-                            <button type="button" onclick="fjernBilde(event)" class="btn btn-red">Fjern bildet</button>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" 
+                                asp-for="Bilde"
+                                id="bilde" 
+                                name="bilde" 
+                                accept="image/*" 
+                                capture="environment" 
+                                class="hidden" 
+                                onchange="visForhandsvisning(this)" />
+                            <label for="bilde" class="btn btn-wide btn-blue cursor-pointer inline-block text-center">
+                                <i class="ph ph-camera ph-lg"></i>
+                                Erstatt bildet
+                            </label>
+                            <button type="button" onclick="fjernBilde(event)" class="btn btn-wide btn-red">
+                                <i class="ph ph-trash ph-lg"></i>
+                                Fjern bildet
+                            </button>
                         </div>
                     }
                     else
@@ -62,7 +71,8 @@
                                 capture="environment" 
                                 class="hidden" 
                                 onchange="visForhandsvisning(this)" />
-                            <label for="bilde" class="btn btn-blue cursor-pointer inline-block text-center">
+                            <label for="bilde" class="btn btn-blue cursor-pointer">
+                                <i class="ph ph-camera ph-lg"></i>
                                 Legg til bilde
                             </label>
                             <div id="bildeForhandsvisning" class="mt-2" style="display: none;">
@@ -80,7 +90,10 @@
                 <input type="hidden" name="longitude" id="longitude" />
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Endre innmelding</button>
+        <button type="submit" class="btn btn-wide btn-primary">
+            <i class="ph ph-pencil ph-lg"></i>
+            Endre innmelding
+        </button>
     </form>
 </div>
 

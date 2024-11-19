@@ -7,6 +7,7 @@ namespace KartverketGruppe5.Models
         public int KommuneId { get; set; }
         public int LokasjonId { get; set; }
         public string Beskrivelse { get; set; }
+        public string? Kommentar { get; set; }
         public string Status { get; set; }
         public DateTime OpprettetDato { get; set; }
         public DateTime? OppdatertDato { get; set; }

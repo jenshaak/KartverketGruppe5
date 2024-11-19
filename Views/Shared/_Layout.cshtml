@@ -27,98 +27,96 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     @RenderSection("Styles", required: false)
 </head>
-<body>
+<body class="bg-bg">
     <header class="w-full shadow-lg">
-        <nav class="flex justify-between items-center w-full p-2 px-4">
+        <nav class="flex justify-between items-center w-full p-2 px-4 bg-white">
             <div class="relative flex items-center justify-between gap-4 w-full">
                 <a asp-controller="Home" asp-action="Index" class="text-xl font-bold">
-                    Kartverket Gruppe 5
+                    <img src="~/bilder/kartverket-logo-large.svg" alt="Kartverket logo" class="w-auto h-12">
                 </a>
-                <div class="flex flex-col gap-5 items-center">
-                    <button class="btn btn-custom-gray flex items-center justify-center" id="menuToggle">
-                        <i class="ph ph-list cursor-pointer text-xl"></i>
-                    </button>
-                    <ul class="fixed bg-custom-gray text-white z-50 top-16 right-0 space-y-2 items-center hidden border border-custom-gray rounded-xl p-4" id="menuList">
-                        @if (!isHomePage)
+                <button class="btn btn-custom-gray flex items-center justify-center" id="menuToggle">
+                    <i class="ph ph-list cursor-pointer text-xl"></i>
+                </button>
+                <ul class="absolute bg-custom-gray text-white z-50 top-16 right-0 space-y-2 items-center hidden border border-custom-gray rounded-xl p-4" id="menuList">
+                    @if (!isHomePage)
+                    {
+                        <li class="w-full">
+                            <a class="menu-item" 
+                                asp-area="" 
+                                asp-controller="Home" 
+                                asp-action="Index">
+                                <i class="ph ph-house ph-lg"></i>
+                                <p>Hjem</p>
+                                </a>
+                        </li>
+                    }
+                    
+                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
+                    {
+                        <li>
+                            <a class="menu-item" 
+                            asp-controller="MineInnmeldinger" 
+                            asp-action="Index">
+                            <i class="ph ph-envelope ph-lg"></i>
+                            <p>Mine Innmeldinger</p>
+                            </a>
+                        </li>
+                    }
+
+                    @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
+                    {
+                        <li>
+                            <a class="menu-item" 
+                                asp-controller="Saksbehandling" 
+                                asp-action="Index">
+                            <i class="ph ph-list-checks ph-lg"></i>
+                            <p>Saksbehandling</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-item" 
+                                asp-controller="MineSaker" 
+                                asp-action="Index">
+                            <i class="ph ph-folder-open ph-lg"></i>
+                            <p>Mine saker</p>
+                            </a>
+                        </li>
+                        @if (isAdmin)
                         {
                             <li class="w-full">
                                 <a class="menu-item" 
-                                   asp-area="" 
-                                   asp-controller="Home" 
-                                   asp-action="Index">
-                                   <i class="ph ph-house ph-lg"></i>
-                                   <p>Hjem</p>
-                                   </a>
+                                    asp-controller="Admin" 
+                                    asp-action="Index">
+                                <i class="ph ph-shield ph-lg"></i>
+                                <p>Administrasjon</p>
+                                </a>
                             </li>
                         }
-                        
-                        @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Bruker")
+                    }
+
+                    <li>
+                        @if (displayName == null)
                         {
-                            <li>
-                                <a class="menu-item" 
-                                asp-controller="MineInnmeldinger" 
+                            <a class="menu-item" 
+                                asp-controller="Login" 
                                 asp-action="Index">
-                                <i class="ph ph-envelope ph-lg"></i>
-                                <p>Mine Innmeldinger</p>
-                                </a>
-                            </li>
+                            <i class="ph ph-sign-in ph-lg"></i>
+                            <p>Logg inn</p>
+                            </a>
                         }
-
-                        @if (User?.Identity != null && User.Identity.IsAuthenticated && userType == "Saksbehandler")
+                        else
                         {
-                            <li>
+                            <div class="flex items-center gap-2">
                                 <a class="menu-item" 
-                                   asp-controller="Saksbehandling" 
-                                   asp-action="Index">
-                                <i class="ph ph-list-checks ph-lg"></i>
-                                <p>Saksbehandling</p>
+                                    asp-controller="Login" 
+                                    asp-action="Logout">
+                                <i class="ph ph-sign-out ph-lg"></i>
+                                <p>Logg ut</p>
                                 </a>
-                            </li>
-                            <li>
-                                <a class="menu-item" 
-                                   asp-controller="MineSaker" 
-                                   asp-action="Index">
-                                <i class="ph ph-folder-open ph-lg"></i>
-                                <p>Mine saker</p>
-                                </a>
-                            </li>
-                            @if (isAdmin)
-                            {
-                                <li class="w-full">
-                                    <a class="menu-item" 
-                                       asp-controller="Admin" 
-                                       asp-action="Index">
-                                    <i class="ph ph-shield ph-lg"></i>
-                                    <p>Administrasjon</p>
-                                    </a>
-                                </li>
-                            }
+                            </div>
                         }
-
-                        <li>
-                            @if (displayName == null)
-                            {
-                                <a class="menu-item" 
-                                   asp-controller="Login" 
-                                   asp-action="Index">
-                                <i class="ph ph-sign-in ph-lg"></i>
-                                <p>Logg inn</p>
-                                </a>
-                            }
-                            else
-                            {
-                                <div class="flex items-center gap-2">
-                                    <a class="menu-item" 
-                                       asp-controller="Login" 
-                                       asp-action="Logout">
-                                    <i class="ph ph-sign-out ph-lg"></i>
-                                    <p>Logg ut</p>
-                                    </a>
-                                </div>
-                            }
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                </ul>
                 <ul class="sidebar">
                     <li class="sidebar-item">
                         <a asp-controller="Home" asp-action="Index" class="sidebar-link">
@@ -180,7 +178,7 @@
                             <li class="sidebar-item">
                                 <a asp-controller="Admin" asp-action="Index" class="sidebar-link">
                                     <div class="sidebar-icon">
-                                        <i class="ph ph-shield ph-lg"></i>
+                                        <i class="ph ph-address-book ph-lg"></i>
                                     </div>
                                     <div class="sidebar-text">
                                         Administrasjon
@@ -217,15 +215,18 @@
             </div>
         </nav>
     </header>
-    <main role="main" class="min-h-screen w-full flex flex-col items-center bg-bg py-12">
-        <div class="w-4/5 flex flex-col">
+    <main role="main" class="min-h-screen w-full flex flex-col items-center py-8">
+        <div class="w-4/5 flex flex-col items-center">
             @RenderBody()
         </div>
     </main>
-    <footer class="border-top text-muted">
-        <div class="container">
-            &copy; 2024 - KartverketGruppe5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="mt-12 border-t-4 border-primary">
+        <div class="w-full">
+            <img src="~/bilder/www.kartverket.no_.png" alt="Kartverket footer" class="w-full h-auto">
         </div>
+            @* <div class="container">
+                &copy; 2024 - KartverketGruppe5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div> *@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

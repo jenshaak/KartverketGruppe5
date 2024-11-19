@@ -3,33 +3,30 @@
     ViewData["Title"] = "Logg inn";
 }
 
-<div class="flex flex-col items-center gap-8 p-4 rounded-xl bg-bg">
-    <h3 class="text-center">Logg inn</h3>
-    <form asp-action="HandleLogin" method="post">
+<div class="flex flex-col justify-center items-center h-screen">
+    <form asp-action="HandleLogin" method="post" class="form-element">
+        <img src="~/bilder/kartverket-logo-large.svg" alt="Kartverket logo" class="w-auto h-12">
         <div asp-validation-summary="ModelOnly" class="text-error"></div>
-        
-        <div class="flex flex-col gap-2">
-
-            <div class="form-group mb-3">
-                <div class="flex items-center bg-white rounded-md p-2 gap-2">
-                    <i class="ph ph-envelope"></i>
-                    <input asp-for="Email" type="email" class="rounded-md form-control" placeholder="Email" />
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1">
+                <div class="input-div">
+                    <i class="ph ph-envelope ph-lg"></i>
+                    <input asp-for="Email" type="email" placeholder="Email" />
                 </div>
-                <span asp-validation-for="Email" class="text-error"></span>
+                <span asp-validation-for="Email" class="text-error text-sm"></span>
             </div>
-            
-            <div class="form-group mb-3">
-                <div class="flex items-center bg-white rounded-md p-2 gap-2">
-                    <i class="ph ph-lock"></i>
-                    <input asp-for="Password" type="password" class="rounded-md form-control" placeholder="Passord" />
+            <div class="flex flex-col gap-1">
+                <div class="input-div">
+                    <i class="ph ph-lock ph-lg"></i>
+                    <input asp-for="Password" type="password"placeholder="Passord" />
                 </div>
-                <span asp-validation-for="Password" class="text-error"></span>
+                <span asp-validation-for="Password" class="text-error text-sm"></span>
             </div>
         </div>
-        
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Logg inn</button>
-            <a asp-action="Register" class="underline text-blue-500">Registrer ny bruker</a>
+        <div class="flex flex-col items-center gap-2 w-full">   
+            <button type="submit" class="btn btn-wide btn-primary">Logg inn</button>
+            <div class="text-base">Eller</div>
+            <a asp-action="Register" class="underline text-blue-600 text-base">Registrer ny bruker</a>
         </div>
     </form>
 </div>

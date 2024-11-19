@@ -5,67 +5,83 @@
     var saksbehandlere = ViewBag.Saksbehandlere as List<Saksbehandler>;
 }
 
-<div class="flex flex-col items-center bg-bg w-full py-12">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-4/5">
-        <div class="mb-6">
-            <a asp-action="Index" class="text-blue-600 hover:text-blue-800">
-                ← Tilbake til oversikt
-            </a>
-        </div>
+@if (Model == null)
+{
+    <div class="alert alert-danger">
+        Fant ikke innmeldingen
+    </div>
+    return;
+}
 
-        <h1 class="text-2xl font-bold mb-6">Innmelding Detaljer</h1>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <h2 class="text-lg font-semibold mb-2">Kommune</h2>
-                <p class="text-gray-700">@Model.KommuneNavn</p>
+<div class="flex flex-col gap-4 w-full">
+    <div class="mb-6">
+        <a asp-action="Index" class="btn btn-blue">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
+        </a>
+        <h1 class="text-3xl font-bold mt-4 text-center">Behandling av innmeldingen</h1>
+    </div>
+    <div class="flex justify-between items-center w-full rounded-lg bg-white p-4">
+        <div>@Model.KommuneNavn</div>
+        <div>@Model.OpprettetDato.ToShortDateString()</div>
+        <div class="flex items-center justify-center px-3 py-1 rounded-full @Model.StatusClass">@Model.Status</div>
+    </div>
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" style="min-height: 400px;" >
+        <div class="bg-white rounded-lg shadow p-6 flex gap-4">
+            <div class="w-2/3 flex flex-col gap-4">
+                <p class="font-medium">Beskrivelse:</p>
+                <div class="w-full h-full bg-slate-100 rounded-md p-2">@Model.Beskrivelse</div>
             </div>
+            <div class="w-1/3 flex flex-col gap-4">
+                <p class="font-medium">Bilde:</p>
+                @if (!string.IsNullOrEmpty(Model.BildeSti))
+                {
+                    <img id="eksisterendeBilde" 
+                    src="@Url.Content("~/" + Model.BildeSti.TrimStart('/'))" 
+                    alt="Innmelding-bilde" 
+                        class="w-full h-auto rounded-md">
+                }
+            </div>  
+        </div>  
+        <div id="map" class="w-full h-full rounded-lg"></div>
+    </div>
 
-            <div>
-                <h2 class="text-lg font-semibold mb-2">Status</h2>
-                <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @Model.StatusClass">
-                    @Model.Status
-                </span>
-            </div>
-
-            <div class="md:col-span-2">
-                <h2 class="text-lg font-semibold mb-2">Beskrivelse</h2>
-                <p class="text-gray-700">@Model.Beskrivelse</p>
-            </div>
-
-            <div>
-                <h2 class="text-lg font-semibold mb-2">Opprettet</h2>
-                <p class="text-gray-700">@Model.OpprettetDato.ToString("dd.MM.yyyy HH:mm")</p>
-            </div>
-        </div>
-        <div class="bg-white rounded-lg shadow">
-            <div id="map" style="height: 400px; width: 100%;"></div>
-        </div>
         <!-- Handlinger -->
-        <div class="mt-8 flex flex-col gap-4">
+        <div class="mt-8 flex flex-col gap-4 w-full">
             <form asp-action="FullforBehandling" method="post" class="flex flex-col gap-4">
-                <input type="hidden" asp-for="InnmeldingId" />
-                <input type="hidden" asp-for="SaksbehandlerId" />
+                <input type="hidden" asp-for="InnmeldingId" value="@Model.InnmeldingId" />
+                <input type="hidden" asp-for="SaksbehandlerId" value="@Model.SaksbehandlerId" />
                 
+                @if (Model.Status != "Godkjent" && Model.Status != "Avvist")
+                {
                 <div class="flex flex-col gap-2">
                     <label for="kommentar" class="font-semibold">Kommentar</label>
                     <textarea name="kommentar" id="kommentar" rows="4" 
-                              class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                              class="bg-white shadow-lg rounded-md p-2 w-full h-24"
+                              placeholder="Skriv inn kommentar"
                               required></textarea>
-                </div>
-
-                <div class="flex gap-4 text-white">
-                    <button type="submit" name="action" value="godkjenn" 
-                            class="btn btn-primary">
-                        Godkjenn
-                    </button>
-                    <button type="submit" name="action" value="avvis" 
-                            class="btn btn-red">
-                        Avvis
-                    </button>
-                </div>
-            </form>
-        </div>
+                    </div>
+                    <div class="w-full flex justify-evenly gap-4 text-white">
+                        <button type="submit" name="status" value="Avvist" 
+                                class="btn btn-red">
+                            <i class="ph ph-x ph-lg"></i>
+                            Avvis
+                        </button>
+                        <button type="submit" name="status" value="Godkjent" 
+                                class="btn btn-primary">
+                            <i class="ph ph-check ph-lg"></i>
+                            Godkjenn
+                        </button>
+                    </div>
+                } else {
+                    <div class="flex gap-4 text-white">
+                        <button type="submit" name="status" value="Under behandling" 
+                                class="btn btn-primary">
+                            Ta opp saken igjen
+                        </button>
+                    </div>
+                }
+        </form>
     </div>
 </div>
 

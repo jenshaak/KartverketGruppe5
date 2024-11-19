@@ -1,4 +1,4 @@
-@model List<KartverketGruppe5.Models.InnmeldingModel>
+@model PagedResult<KartverketGruppe5.Models.InnmeldingModel>
 @{
     ViewData["Title"] = "Mine Innmeldinger";
 }
@@ -21,7 +21,7 @@
 
     <!-- Innmeldinger Liste -->
     <div class="space-y-4">
-        @foreach (var innmelding in Model)
+        @foreach (var innmelding in Model.Items)
         {
             <a asp-action="Detaljer" asp-route-id="@innmelding.InnmeldingId" class="flex justify-between items-center p-4 bg-white rounded shadow">
                 <div>
