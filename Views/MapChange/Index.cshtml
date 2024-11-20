@@ -132,9 +132,7 @@
             }
 
             var popupContent = `
-                <strong>Type:</strong> ${type}<br>
-                <strong>GeoJSON:</strong><br>
-                <pre style="max-height: 100px; overflow: auto;">${JSON.stringify(geoJsonData, null, 2)}</pre>
+                <strong>Område registrert</strong>
             `;
             layer.bindPopup(popupContent).openPopup();
         });
@@ -162,7 +160,7 @@
             var geoJsonString = JSON.stringify(geoJsonPoint);
             document.getElementById('geoJsonInput').value = geoJsonString;
 
-            marker.bindPopup("GeoJSON Data:<br>" + geoJsonString).openPopup();
+            @* marker.bindPopup("GeoJSON Data:<br>" + geoJsonString).openPopup(); *@
         });
 
         function visForhandsvisning(input) {
