@@ -9,7 +9,7 @@
 <div class="w-full flex justify-center py-12">
     <div class="w-4/5 flex flex-col gap-4">
 
-    <h1 class="text-3xl font-bold mb-6">Behandle Innmeldinger</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center">Mine saker</h1>
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
         <i class="ph ph-arrow-left ph-lg"></i>
         Tilbake
@@ -61,7 +61,7 @@
             <div class="divide-y divide-gray-200 space-y-4">
                 @foreach (var innmelding in Model.Items)
                 {
-                    <a asp-action="Detaljer" 
+                    <a asp-action="Behandle" 
                        asp-route-id="@innmelding.InnmeldingId" 
                        class="hover:bg-gray-50  bg-white flex justify-between items-center rounded-lg px-6 py-4">
                         <div class="whitespace-nowrap w-16">

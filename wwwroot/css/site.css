@@ -214,6 +214,7 @@ h3 {
     overflow: hidden;
     visibility: hidden;
     opacity: 0;
+    z-index: 50;
 }
 
 .sidebar-item {
