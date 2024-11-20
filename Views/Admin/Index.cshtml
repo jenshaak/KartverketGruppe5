@@ -2,7 +2,7 @@
 
 <div class="w-full flex justify-center py-12">
     <div class="w-4/5 flex flex-col gap-4">
-    <h1 class="text-3xl font-bold mb-6 text-center">Saksbehandlere</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center">Administrer saksbehandlere, fylker og kommuner</h1>
     <div class="flex justify-between items-center mb-4">
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
             <i class="ph ph-arrow-left ph-lg"></i>
@@ -27,9 +27,9 @@
 
     <div class="bg-white rounded-lg shadow">
         <table class="min-w-full divide-y divide-gray-200 rounded-lg">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-50 rounded-t-lg">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-left rounded-tl-lg text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Navn
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -61,12 +61,12 @@
                             }
                         </a>
                     </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" class="px-6 py-3 text-left rounded-tr-lg text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Handlinger
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-white divide-y divide-gray-200 rounded-b-lg">
                 @foreach (var saksbehandler in Model.Items)
                 {
                     <tr class="hover:bg-gray-50 transition-colors">

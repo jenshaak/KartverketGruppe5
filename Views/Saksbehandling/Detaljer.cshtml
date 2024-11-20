@@ -71,6 +71,12 @@
                     @if (Model.SaksbehandlerId == null)
                     {
                         <p>Ingen saksbehandler har tatt saken ennå</p>
+                        <form asp-action="Behandle" method="post">
+                            <input type="hidden" name="id" value="@Model.InnmeldingId" />
+                                <button type="submit" class="btn btn-primary">
+                                Ta over saken
+                                </button>
+                        </form>
                     }
                     else
                     {

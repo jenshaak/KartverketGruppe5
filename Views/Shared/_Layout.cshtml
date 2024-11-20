@@ -51,22 +51,22 @@
                     @if (userType == "Bruker")
                     {
                         <li class="sidebar-item">
-                            <a asp-controller="MineInnmeldinger" asp-action="Index" class="sidebar-link">
-                                <div class="sidebar-icon">
-                                    <i class="ph ph-envelope ph-lg"></i>
-                                </div>
-                                <div class="sidebar-text">
-                                    Mine Innmeldinger
-                                </div>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a asp-controller="MapChange" asp-action="Index" class="sidebar-link">
                                 <div class="sidebar-icon">
                                     <i class="ph ph-map-pin ph-lg"></i>
                                 </div>
                                 <div class="sidebar-text">
                                     Meld inn endring
+                                </div>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-controller="MineInnmeldinger" asp-action="Index" class="sidebar-link">
+                                <div class="sidebar-icon">
+                                    <i class="ph ph-archive ph-lg"></i>
+                                </div>
+                                <div class="sidebar-text">
+                                    Mine Innmeldinger
                                 </div>
                             </a>
                         </li>
