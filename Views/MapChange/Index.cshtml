@@ -4,46 +4,49 @@
 }
 
 <div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">
-<div class="flex flex-col gap-12 items-center justify-center bg-bg/85 rounded-xl p-8 mapChange-width">
-    <h2 class="text-center text-4xl text-semibold">Register en endring</h2>
-
-    <form asp-controller="MapChange" asp-action="Index" method="post" class="flex flex-col gap-4 w-full" enctype="multipart/form-data">
-        <div id="map" style="height: 400px;" class="rounded-md"></div>
-        <div class="flex flex-col gap-2">
-            <label for="beskrivelse">Beskrivelse</label>
-            <textarea 
-                id="beskrivelse" 
-                name="beskrivelse" 
-                class="textarea" 
-                placeholder="Beskriv endringen du vil registrere"
-                required
-            ></textarea>
-        </div>
-        <input type="hidden" id="geoJsonInput" asp-for="GeoJson" />
-        <input type="hidden" asp-for="GeometriType" />
-        <input type="hidden" id="latitude" asp-for="Latitude" />
-        <input type="hidden" id="longitude" asp-for="Longitude" />
-        <div class="flex flex-col gap-2">
-            <p class="font-medium">Bilde:</p>
-            <div id="bildeSeksjon" class="flex flex-col gap-2">
-                <input type="file" 
-                    id="bilde" 
-                    name="bilde" 
-                    accept="image/*" 
-                    capture="environment" 
-                    class="hidden" 
-                    onchange="visForhandsvisning(this)" />
-                <label for="bilde" class="btn btn-blue cursor-pointer" id="bildeLabel">
-                    <i class="ph ph-camera ph-lg"></i>
-                    <span id="bildeLabelText">Legg til bilde</span>
-                </label>
-                <div id="bildeForhandsvisning" class="mt-2" style="display: none;">
-                    <img id="forhandsvisningImg" class="w-full h-auto rounded-lg" />
+    <div class="relative flex flex-col gap-12 items-center justify-center bg-bg/85 rounded-xl p-8 mapChange-width">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
+        </a>
+        <h1 class="text-center text-4xl text-semibold">Register en endring</h1>
+        <form asp-controller="MapChange" asp-action="Index" method="post" class="flex flex-col gap-4 w-full" enctype="multipart/form-data">
+            <div id="map" style="height: 400px;" class="rounded-md"></div>
+            <div class="flex flex-col gap-2">
+                <label for="beskrivelse">Beskrivelse</label>
+                <textarea 
+                    id="beskrivelse" 
+                    name="beskrivelse" 
+                    class="textarea" 
+                    placeholder="Beskriv endringen du vil registrere"
+                    required
+                ></textarea>
+            </div>
+            <input type="hidden" id="geoJsonInput" asp-for="GeoJson" />
+            <input type="hidden" asp-for="GeometriType" />
+            <input type="hidden" id="latitude" asp-for="Latitude" />
+            <input type="hidden" id="longitude" asp-for="Longitude" />
+            <div class="flex flex-col gap-2">
+                <p class="font-medium">Bilde:</p>
+                <div id="bildeSeksjon" class="flex flex-col gap-2">
+                    <input type="file" 
+                        id="bilde" 
+                        name="bilde" 
+                        accept="image/*" 
+                        capture="environment" 
+                        class="hidden" 
+                        onchange="visForhandsvisning(this)" />
+                    <label for="bilde" class="btn btn-blue cursor-pointer" id="bildeLabel">
+                        <i class="ph ph-camera ph-lg"></i>
+                        <span id="bildeLabelText">Legg til bilde</span>
+                    </label>
+                    <div id="bildeForhandsvisning" class="mt-2" style="display: none;">
+                        <img id="forhandsvisningImg" class="w-full h-auto rounded-lg" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-wide btn-primary">Send inn</button>
-    </form>
+            <button type="submit" class="btn btn-wide btn-primary">Send inn</button>
+        </form>
     </div>
 </div>
 
@@ -54,156 +57,156 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
     <script>
-        var map = L.map('map');
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('map');
+            var drawnItems = new L.FeatureGroup();
+            map.addLayer(drawnItems);
 
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var lat = position.coords.latitude;
-                var lng = position.coords.longitude;
-                map.setView([lat, lng], 13);
-            }, function(error) {
-                console.error('Error getting location:', error);
+            // Geolocation
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    map.setView([lat, lng], 13);
+                }, function(error) {
+                    console.error('Error getting location:', error);
+                    map.setView([65.00000, 13.00000], 4);
+                });
+            } else {
                 map.setView([65.00000, 13.00000], 4);
+            }
+
+            // Kartlag
+            var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             });
-        } else {
-            map.setView([65.00000, 13.00000], 4);
-        }
 
-        var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        });
+            var topoLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', {
+                attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
+            });
 
-        var topoLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', {
-            attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
-        });
+            var grayLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png', {
+                attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
+            });
 
-        var grayLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png', {
-            attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
-        });
+            var esriFlyfotoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
+            });
 
-        var esriFlyfotoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
-        });
+            // Standard kartlag
+            topoLayer.addTo(map);
 
-        // Legg til topografisk kart som standard
-        topoLayer.addTo(map);
-
-        // Legg til lagkontroll for å bytte mellom kartlagene
-        var baseMaps = {
-            "Topografisk kart": topoLayer,
-            "Grått kart": grayLayer,
-            "Open Streetmap": openstreetmap,
-            "Fly Foto": esriFlyfotoLayer
-        };
-
-        L.control.layers(baseMaps).addTo(map);
-
-        var drawnItems = new L.FeatureGroup();
-    
-        map.addLayer(drawnItems);
-
-        var drawControl = new L.Control.Draw({
-            draw: {
-                polygon: true,
-                polyline: true,
-                marker: true,
-                circle: false,
-                rectangle: true
-            },
-            edit: {
-                featureGroup: drawnItems
-            }
-        });
-        map.addControl(drawControl);
-
-        map.on(L.Draw.Event.CREATED, function (e) {
-            var type = e.layerType,
-                layer = e.layer;
-
-            drawnItems.addLayer(layer);
-
-            var geoJsonData = layer.toGeoJSON();
-            var geoJsonString = JSON.stringify(geoJsonData);
-            document.getElementById('geoJsonInput').value = geoJsonString;
-            document.getElementById('GeometriType').value = type;
-
-            switch (type) {
-                case 'marker':
-                    var lat = layer.getLatLng().lat;
-                    var lng = layer.getLatLng().lng;
-                    document.getElementById('latitude').value = lat;
-                    document.getElementById('longitude').value = lng;
-                    break;
-                    
-                case 'polygon':
-                    var coordinates = layer.getLatLngs()[0];
-                    var centerPoint = layer.getBounds().getCenter();
-                    document.getElementById('latitude').value = centerPoint.lat;
-                    document.getElementById('longitude').value = centerPoint.lng;
-                    break;
-                    
-                case 'polyline':
-                    var coordinates = layer.getLatLngs();
-                    var centerPoint = layer.getBounds().getCenter();
-                    document.getElementById('latitude').value = centerPoint.lat;
-                    document.getElementById('longitude').value = centerPoint.lng;
-                    break;
-                    
-                case 'rectangle':
-                    var bounds = layer.getBounds();
-                    var centerPoint = bounds.getCenter();
-                    document.getElementById('latitude').value = centerPoint.lat;
-                    document.getElementById('longitude').value = centerPoint.lng;
-                    break;
-            }
-
-            var popupContent = `
-                <strong>Område registrert</strong>
-            `;
-            layer.bindPopup(popupContent).openPopup();
-        });
-
-        map.on('click', function (e) {
-            var lat = e.latlng.lat;
-            var lng = e.latlng.lng;
-
-            document.getElementById('latitude').value = lat;
-            document.getElementById('longitude').value = lng;
-            document.getElementById('GeometriType').value = 'Point';
-
-            var marker = L.marker([lat, lng]).addTo(map);
-
-            var geoJsonPoint = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [lng, lat]
-                },
-                "properties": {
-                    "description": "User clicked location"
-                }
+             // Konroll for å endringen på kartlag
+            var baseMaps = {
+                "Topografisk kart": topoLayer,
+                "Grått kart": grayLayer,
+                "Open Streetmap": openstreetmap,
+                "Fly Foto": esriFlyfotoLayer
             };
-            var geoJsonString = JSON.stringify(geoJsonPoint);
-            document.getElementById('geoJsonInput').value = geoJsonString;
+            L.control.layers(baseMaps).addTo(map);
 
-            @* marker.bindPopup("GeoJSON Data:<br>" + geoJsonString).openPopup(); *@
+            // Draw controls
+            var drawControl = new L.Control.Draw({
+                draw: {
+                    polygon: true,
+                    polyline: true,
+                    rectangle: true,
+                    circle: false,
+                    circlemarker: false,
+                    marker: true
+                },
+                edit: {
+                    featureGroup: drawnItems,
+                    remove: true
+                }
+            });
+            map.addControl(drawControl);
+
+            // Håndter nye tegninger
+            map.on(L.Draw.Event.CREATED, function (e) {
+                try {
+                    var type = e.layerType,
+                        layer = e.layer;
+
+                    drawnItems.clearLayers();
+                    drawnItems.addLayer(layer);
+
+                    var geoJsonData = layer.toGeoJSON();
+                    var geoJsonString = JSON.stringify(geoJsonData);
+                    
+                    // Valider GeoJSON
+                    JSON.parse(geoJsonString);
+                    
+                    document.getElementById('geoJsonInput').value = geoJsonString;
+                    document.getElementById('GeometriType').value = type;
+
+                    // Koordinater
+                    switch (type) {
+                        case 'marker':
+                            var lat = layer.getLatLng().lat;
+                            var lng = layer.getLatLng().lng;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                            break;
+                            
+                        case 'polygon':
+                        case 'polyline':
+                        case 'rectangle':
+                            var centerPoint = layer.getBounds().getCenter();
+                            document.getElementById('latitude').value = centerPoint.lat;
+                            document.getElementById('longitude').value = centerPoint.lng;
+                            break;
+                    }
+
+                    layer.bindPopup('<strong>Område registrert</strong>').openPopup();
+                } catch (error) {
+                    console.error('Feil ved tegning:', error);
+                    alert('Det oppstod en feil ved registrering av område');
+                }
+            });
         });
 
         function visForhandsvisning(input) {
             if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Valider filtype
+                if (!file.type.match('image.*')) {
+                    alert('Vennligst velg et gyldig bildeformat');
+                    return;
+                }
+                
+                // Valider filstørrelse (maks 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('Bildet er for stort. Maksimal størrelse er 10MB');
+                    return;
+                }
+
                 var reader = new FileReader();
                 
                 reader.onload = function(e) {
-                    var forhandsvisningDiv = document.getElementById('bildeForhandsvisning');
-                    var forhandsvisningImg = document.getElementById('forhandsvisningImg');
-                    var bildeLabelText = document.getElementById('bildeLabelText');
-                    
-                    forhandsvisningImg.src = e.target.result;
-                    forhandsvisningDiv.style.display = 'block';
-                    bildeLabelText.textContent = 'Erstatt bildet';
+                    try {
+                        var forhandsvisningDiv = document.getElementById('bildeForhandsvisning');
+                        var forhandsvisningImg = document.getElementById('forhandsvisningImg');
+                        var bildeLabelText = document.getElementById('bildeLabelText');
+                        
+                        if (forhandsvisningDiv && forhandsvisningImg && bildeLabelText) {
+                            forhandsvisningImg.src = e.target.result;
+                            forhandsvisningDiv.style.display = 'block';
+                            bildeLabelText.textContent = 'Erstatt bildet';
+                        }
+                    } catch (error) {
+                        console.error('Feil ved lasting av bilde:', error);
+                        alert('Kunne ikke laste bildet');
+                    }
                 }
                 
-                reader.readAsDataURL(input.files[0]);
+                reader.onerror = function() {
+                    console.error('Feil ved lesing av fil');
+                    alert('Kunne ikke lese filen');
+                };
+                
+                reader.readAsDataURL(file);
             }
         }
     </script>

@@ -7,14 +7,14 @@
 }
 
 <div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">
-    <div class="w-4/5 flex flex-col gap-4 bg-bg/85 rounded-xl p-8">
-        <h1 class="text-3xl font-bold mb-6 text-center">Mine Innmeldinger</h1>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+    <div class="relative w-4/5 flex flex-col gap-6 bg-bg/85 rounded-xl p-8">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
+        <h1 class="text-3xl font-bold mb-6 text-center">Mine Innmeldinger</h1>
         <!-- Filtre -->
-        <div class="mb-6 flex gap-4">
+        <div class="mb-4 flex gap-4">
         <div class="w-64">
             <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
             <select id="statusFilter" 

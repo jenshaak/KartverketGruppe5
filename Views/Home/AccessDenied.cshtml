@@ -2,10 +2,11 @@
     ViewData["Title"] = "Ingen tilgang";
 }
 
-<div class="container mt-5">
-    <div class="alert alert-danger">
-        <h4>Ingen tilgang</h4>
+<div class=" w-full flex flex-col items-center justify-center h-screen">
+        <h1>Ingen tilgang</h1>
         <p>Du har ikke tilgang til denne siden. Kontakt administrator hvis du mener dette er feil.</p>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Tilbake til forsiden</a>
-    </div>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">
+            <i class="ph ph-arrow-left"></i>
+            Tilbake til forsiden
+        </a>
 </div> 

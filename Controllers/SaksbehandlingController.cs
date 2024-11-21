@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Saksbehandler,Admin")] 
     public class SaksbehandlingController : Controller
     {
         private readonly SaksbehandlerService _saksbehandlerService;
@@ -32,10 +32,6 @@ namespace KartverketGruppe5.Controllers
             string fylkeFilter = "",
             int page = 1)
         {
-            if (!User.IsInRole("Saksbehandler") && !User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
 
             ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
             ViewData["CurrentSort"] = sortOrder;
@@ -69,6 +65,7 @@ namespace KartverketGruppe5.Controllers
             return Json(kommuner.Select(k => new { id = k.KommuneId, text = k.Navn }));
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(Saksbehandler saksbehandler)
         {
@@ -134,6 +131,7 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index", "Saksbehandling");
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Behandle(int id)
         {

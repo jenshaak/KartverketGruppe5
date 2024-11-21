@@ -1,3 +1,4 @@
+@using System.Text.Encodings.Web
 @model KartverketGruppe5.Models.InnmeldingModel
 @{
     ViewData["Title"] = "Innmelding Detaljer";
@@ -8,12 +9,12 @@
 }
 
 <div class="flex flex-col bg-bg w-full items-center p-12">
-        <div class="w-4/5 flex flex-col gap-4">
-        <h1 class="text-3xl font-bold mt-4 text-center">Behandling av innmeldingen</h1>
-        <a asp-action="Index" class="btn btn-primary mb-4">
+        <div class="relative w-4/5 flex flex-col gap-4 p-8">
+        <a asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
+        <h1 class="text-3xl font-bold text-center">Behandling av innmeldingen</h1>
     <div class="flex justify-between items-center w-full rounded-lg bg-white px-6 py-4">
         <div>@Model.KommuneNavn</div>
         <div>@Model.OpprettetDato.ToShortDateString()</div>
@@ -94,43 +95,40 @@
 
 @section Scripts {
     <script>
-        console.log('Lokasjon:', @Json.Serialize(lokasjon));
-    </script>
-    <script>
         // Vent til dokumentet er lastet
         document.addEventListener('DOMContentLoaded', function() {
             // Initialiser kartet
             var map = L.map('map');
 
-            // Legg til kartlaget
-           var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        });
+            // Legger til kartlag
+            var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            });
 
-        var topoLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', {
-            attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
-        });
+            var topoLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', {
+                attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
+            });
 
-        var grayLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png', {
-            attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
-        });
+            var grayLayer = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png', {
+                attribution: '&copy; <a href="http://www.kartverket.no/">Kartverket</a>'
+            });
 
-        var esriFlyfotoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
-        });
+            var esriFlyfotoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
+            });
 
-        // Hvilket kart som error standard
-        topoLayer.addTo(map);
+            // Default kartlag
+            topoLayer.addTo(map);
 
-        // Konroll for å endringen på kartlag
-        var baseMaps = {
-            "Topografisk kart": topoLayer,
-            "Grått kart": grayLayer,
-            "Open Streetmap": openstreetmap,
-            "Fly Foto": esriFlyfotoLayer
-        };
+            // Konroll for å endringen på kartlag
+            var baseMaps = {
+                "Topografisk kart": topoLayer,
+                "Grått kart": grayLayer,
+                "Open Streetmap": openstreetmap,
+                "Flyfoto": esriFlyfotoLayer
+            };
 
-        L.control.layers(baseMaps).addTo(map);
+            L.control.layers(baseMaps).addTo(map);
 
             @if (lokasjon != null)
             {
@@ -140,22 +138,30 @@
 
                 // Legg til markør
                 var marker = L.marker([@lokasjon.Latitude, @lokasjon.Longitude]).addTo(map);
-                marker.bindPopup('@Model.Beskrivelse').openPopup();
+                
+                // Escaper beskrivelsen for å unngå XSS
+                marker.bindPopup('@JavaScriptEncoder.Default.Encode(Model.Beskrivelse)').openPopup();
 
                 @if (!string.IsNullOrEmpty(lokasjon.GeoJson))
                 {
                     <text>
-                    // Legg til GeoJSON hvis det finnes
-                    var geoJsonLayer = L.geoJSON(@Html.Raw(lokasjon.GeoJson), {
-                        style: function(feature) {
-                            return {
-                                color: "#ff7800",
-                                weight: 3,
-                                opacity: 0.65
-                            };
-                        }
-                    }).addTo(map);
-                    map.fitBounds(geoJsonLayer.getBounds());
+                    try {
+                        // Valider at GeoJSON er gyldig JSON før bruk
+                        var geoJsonData = @Json.Serialize(lokasjon.GeoJson);
+                        // Legger til GeoJSON
+                        var geoJsonLayer = L.geoJSON(JSON.parse(geoJsonData), {
+                            style: function(feature) {
+                                return {
+                                    color: "#ff7800",
+                                    weight: 3,
+                                    opacity: 0.65
+                                };
+                            }
+                        }).addTo(map);
+                        map.fitBounds(geoJsonLayer.getBounds());
+                    } catch (e) {
+                        console.error('Ugyldig GeoJSON-data');
+                    }
                     </text>
                 }
                 </text>
