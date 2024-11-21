@@ -1,0 +1,28 @@
+﻿@model KartverketGruppe5.Models.MinProfil
+
+<div class="max-w-3xl mx-auto p-6 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-semibold text-gray-800">Min Profil</h1>
+    <div class="mt-4">
+        <dl class="divide-y divide-gray-200">
+            <div class="py-3 flex justify-between">
+                <dt class="font-medium text-gray-600">Fornavn</dt>
+                <dd class="text-gray-800">@Model.Fornavn</dd>
+            </div>
+            <div class="py-3 flex justify-between">
+                <dt class="font-medium text-gray-600">Etternavn</dt>
+                <dd class="text-gray-800">@Model.Etternavn</dd>
+            </div>
+            <div class="py-3 flex justify-between">
+                <dt class="font-medium text-gray-600">Email</dt>
+                <dd class="text-gray-800">@Model.Email</dd>
+            </div>
+            <div class="py-3 flex justify-between">
+                <dt class="font-medium text-gray-600">Opprettet Dato</dt>
+                <dd class="text-gray-800">@Model.OpprettetDato.ToString("dd.MM.yyyy")</dd>
+            </div>
+        </dl>
+    </div>
+    <a href="/RedigerProfil" class="mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        Rediger Profil
+    </a>
+</div>
