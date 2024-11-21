@@ -1,7 +1,7 @@
 using System.Data;
 using Dapper;
 using MySqlConnector;
-using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
@@ -20,7 +20,7 @@ namespace KartverketGruppe5.Services
             _logger = logger;
         }
 
-        public List<LokasjonModel> GetAllLokasjoner()
+        public List<LokasjonViewModel> GetAllLokasjoner()
         {
             try
             {
@@ -34,12 +34,12 @@ namespace KartverketGruppe5.Services
                         geometriType
                     FROM Lokasjon";
 
-                return connection.Query<LokasjonModel>(sql).ToList();
+                return connection.Query<LokasjonViewModel>(sql).ToList();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error getting all lokasjoner: {ex.Message}");
-                return new List<LokasjonModel>();
+                return new List<LokasjonViewModel>();
             }
         }
 
@@ -68,7 +68,7 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public LokasjonModel GetLokasjonById(int id)
+        public LokasjonViewModel GetLokasjonById(int id)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace KartverketGruppe5.Services
                     FROM Lokasjon 
                     WHERE lokasjonId = @Id";
 
-                return connection.QueryFirstOrDefault<LokasjonModel>(sql, new { Id = id });
+                return connection.QueryFirstOrDefault<LokasjonViewModel>(sql, new { Id = id });
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Services;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
@@ -65,7 +66,7 @@ namespace KartverketGruppe5.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av innmeldinger");
-                return View(new PagedResult<InnmeldingModel> { Items = new List<InnmeldingModel>() });
+                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
             }
         }
 
@@ -91,7 +92,7 @@ namespace KartverketGruppe5.Controllers
 
             _logger.LogInformation($"Bildestien: {innmelding.BildeSti}");
 
-            var innmeldingModel = new InnmeldingModel
+            var innmeldingViewModel = new InnmeldingViewModel
             {
                 InnmeldingId = innmelding.InnmeldingId,
                 BrukerId = innmelding.BrukerId,
@@ -108,13 +109,13 @@ namespace KartverketGruppe5.Controllers
 
             ViewBag.Lokasjon = lokasjon;
 
-            _logger.LogInformation($"Kommentar: {innmeldingModel.Kommentar}");
-            return View(innmeldingModel);
+            _logger.LogInformation($"Kommentar: {innmeldingViewModel.Kommentar}");
+            return View(innmeldingViewModel);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> EndreInnmelding(InnmeldingModel innmeldingModel, IFormFile bilde)
+        public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile bilde)
         {
             try 
             {
@@ -133,7 +134,7 @@ namespace KartverketGruppe5.Controllers
                     _logger.LogInformation("Ingen ny fil lastet opp");
                 }
 
-                LokasjonModel lokasjon = null;
+                LokasjonViewModel lokasjon = null;
                 if (Request.Form["geoJsonInput"].Count > 0 && 
                     Request.Form["geometriType"].Count > 0 && 
                     Request.Form["latitude"].Count > 0 && 
@@ -141,7 +142,7 @@ namespace KartverketGruppe5.Controllers
                     !string.IsNullOrWhiteSpace(Request.Form["latitude"]) &&
                     !string.IsNullOrWhiteSpace(Request.Form["longitude"]))
                 {
-                    lokasjon = new LokasjonModel
+                    lokasjon = new LokasjonViewModel
                     {
                         GeoJson = Request.Form["geoJsonInput"],
                         GeometriType = Request.Form["geometriType"],

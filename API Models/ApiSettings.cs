@@ -1,8 +1,7 @@
-namespace KartverketGruppe5
+namespace KartverketGruppe5.API_Models
 {
     public class ApiSettings
     {
-        public string KommuneInfoApiBaseUrl { get; set; }
-        public string StedsnavnApiBaseUrl { get; set; }
+        public string KommuneInfoApiBaseUrl { get; set; } = "https://api.kartverket.no/kommuneinfo/v1";
     }
 }

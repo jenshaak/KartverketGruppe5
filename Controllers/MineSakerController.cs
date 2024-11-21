@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Services;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Controllers
@@ -59,7 +60,7 @@ namespace KartverketGruppe5.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av innmeldinger");
-                return View(new PagedResult<InnmeldingModel> { Items = new List<InnmeldingModel>() });
+                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
             }
         }
 

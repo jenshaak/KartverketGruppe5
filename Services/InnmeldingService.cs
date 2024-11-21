@@ -2,6 +2,7 @@ using Dapper;
 using MySqlConnector;
 using System.Data;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 namespace KartverketGruppe5.Services
 {
     public class InnmeldingService
@@ -42,7 +43,7 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<PagedResult<InnmeldingModel>> GetInnmeldinger(
+        public async Task<PagedResult<InnmeldingViewModel>> GetInnmeldinger(
             int? saksbehandlerId = null,
             int? innmelderBrukerId = null,
             string sortOrder = "date_desc",
@@ -112,17 +113,17 @@ namespace KartverketGruppe5.Services
             // Legg til pagination
             sql += " LIMIT @Skip, @Take";
 
-            var innmeldinger = (await connection.QueryAsync<InnmeldingModel>(sql, new { 
+            var innmeldinger = (await connection.QueryAsync<InnmeldingViewModel>(sql, new { 
                 SaksbehandlerId = saksbehandlerId,
                 InnmelderBrukerId = innmelderBrukerId,
                 Status = statusFilter,
                 FylkeFilter = fylkeFilter,
                 Skip = (page - 1) * pageSize,
                 Take = pageSize
-            })).ToList();  // Konverterer til List<InnmeldingModel>
+            })).ToList();  // Konverterer til List<InnmeldingViewModel>
 
             // Process the items
-            var items = innmeldinger.Select(i => new InnmeldingModel
+            var items = innmeldinger.Select(i => new InnmeldingViewModel
             {
                 InnmeldingId = i.InnmeldingId,
                 BrukerId = i.BrukerId,
@@ -137,7 +138,7 @@ namespace KartverketGruppe5.Services
                 StatusClass = GetStatusClass(i.Status)
             }).ToList();
 
-            return new PagedResult<InnmeldingModel>
+            return new PagedResult<InnmeldingViewModel>
             {
                 Items = items,
                 TotalItems = totalItems,
@@ -146,7 +147,7 @@ namespace KartverketGruppe5.Services
             };
         }
 
-        public async Task<InnmeldingModel> GetInnmeldingById(int id)
+        public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
         {
             using var connection = new MySqlConnection(_connectionString);
             
@@ -173,7 +174,7 @@ namespace KartverketGruppe5.Services
                 LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
                 WHERE i.innmeldingId = @Id";
 
-            var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingModel>(sql, new { Id = id });
+            var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
 
             if (innmelding != null)
             {
@@ -264,7 +265,7 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task UpdateInnmeldingDetails(InnmeldingModel innmelding, LokasjonModel? lokasjon = null, IFormFile? bilde = null)
+        public async Task UpdateInnmeldingDetails(InnmeldingViewModel innmelding, LokasjonViewModel? lokasjon = null, IFormFile? bilde = null)
         {
             using var connection = new MySqlConnection(_connectionString);
             var oppdatertDato = DateTime.Now;
@@ -304,7 +305,7 @@ namespace KartverketGruppe5.Services
             });
         }
 
-        private async Task UpdateLokasjon(LokasjonModel lokasjon, DateTime oppdatertDato)
+        private async Task UpdateLokasjon(LokasjonViewModel lokasjon, DateTime oppdatertDato)
         {
             using var connection = new MySqlConnection(_connectionString);
             string updateLokasjonQuery = @"
@@ -345,7 +346,7 @@ namespace KartverketGruppe5.Services
             });
         }
 
-        public InnmeldingModel GetInnmeldingForLokasjon(int lokasjonId)
+        public InnmeldingViewModel GetInnmeldingForLokasjon(int lokasjonId)
         {
             try
             {
@@ -364,7 +365,7 @@ namespace KartverketGruppe5.Services
                         ORDER BY opprettetDato DESC
                         LIMIT 1";
 
-                    return db.QueryFirstOrDefault<InnmeldingModel>(sql, new { LokasjonId = lokasjonId });
+                    return db.QueryFirstOrDefault<InnmeldingViewModel>(sql, new { LokasjonId = lokasjonId });
                 }
             }
             catch (Exception ex)

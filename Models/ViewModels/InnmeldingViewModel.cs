@@ -1,6 +1,6 @@
-namespace KartverketGruppe5.Models
+namespace KartverketGruppe5.Models.ViewModels
 {
-    public class InnmeldingModel
+    public class InnmeldingViewModel
     {
         public int InnmeldingId { get; set; }
         public int BrukerId { get; set; }

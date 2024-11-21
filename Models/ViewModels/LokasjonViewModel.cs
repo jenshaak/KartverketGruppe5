@@ -1,6 +1,6 @@
-namespace KartverketGruppe5.Models
+namespace KartverketGruppe5.Models.ViewModels
 {
-    public class LokasjonModel
+    public class LokasjonViewModel
     {
         public int LokasjonId { get; set; }
         public string? GeoJson { get; set; }

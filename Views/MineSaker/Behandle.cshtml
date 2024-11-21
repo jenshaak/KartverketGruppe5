@@ -1,8 +1,9 @@
 @using System.Text.Encodings.Web
-@model KartverketGruppe5.Models.InnmeldingModel
+@using KartverketGruppe5.Models.ViewModels
+@model InnmeldingViewModel
 @{
     ViewData["Title"] = "Innmelding Detaljer";
-    var lokasjon = ViewBag.Lokasjon as LokasjonModel;
+    var lokasjon = ViewBag.Lokasjon as LokasjonViewModel;
     var saksbehandlere = ViewBag.Saksbehandlere as List<Saksbehandler>;
 }
 

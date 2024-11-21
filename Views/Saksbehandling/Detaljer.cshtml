@@ -1,8 +1,8 @@
 @using System.Text.Encodings.Web
-@model KartverketGruppe5.Models.InnmeldingModel
+@model InnmeldingViewModel
 @{
     ViewData["Title"] = "Innmelding Detaljer";
-    var lokasjon = ViewBag.Lokasjon as LokasjonModel;
+    var lokasjon = ViewBag.Lokasjon as LokasjonViewModel;
     var saksbehandlere = ViewBag.Saksbehandlere as List<Saksbehandler>;
     var saksbehandlerId = Context.Session.GetInt32("SaksbehandlerId");
     var isAdmin = Context.Session.GetString("IsAdmin") == "True";

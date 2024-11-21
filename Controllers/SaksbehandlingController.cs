@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
@@ -54,7 +55,7 @@ namespace KartverketGruppe5.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av innmeldinger");
-                return View(new PagedResult<InnmeldingModel> { Items = new List<InnmeldingModel>() });
+                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
             }
         }
 
@@ -105,7 +106,7 @@ namespace KartverketGruppe5.Controllers
             var saksbehandlerResult = await _saksbehandlerService.GetAllSaksbehandlere();
             ViewBag.Saksbehandlere = saksbehandlerResult.Items.ToList();
 
-            var innmeldingModel = new InnmeldingModel
+            var innmeldingViewModel = new InnmeldingViewModel
             {
                 InnmeldingId = innmelding.InnmeldingId,
                 BrukerId = innmelding.BrukerId,
@@ -122,7 +123,7 @@ namespace KartverketGruppe5.Controllers
             };
 
             ViewBag.Lokasjon = lokasjon;
-            return View(innmeldingModel);
+            return View(innmeldingViewModel);
         }
 
         public async Task<IActionResult> Videresend(int innmeldingId, int saksbehandlerId)
@@ -135,8 +136,8 @@ namespace KartverketGruppe5.Controllers
         [HttpPost]
         public async Task<IActionResult> Behandle(int id)
         {
-            var innmeldingModel = await _innmeldingService.GetInnmeldingById(id);
-            if (innmeldingModel == null)
+            var innmeldingViewModel = await _innmeldingService.GetInnmeldingById(id);
+            if (innmeldingViewModel == null)
             {
                 return NotFound();
             }
@@ -146,14 +147,14 @@ namespace KartverketGruppe5.Controllers
             // Konverter til Innmelding
             var innmelding = new Innmelding
             {
-                InnmeldingId = innmeldingModel.InnmeldingId,
-                BrukerId = innmeldingModel.BrukerId,
-                KommuneId = innmeldingModel.KommuneId,
-                LokasjonId = innmeldingModel.LokasjonId,
-                Beskrivelse = innmeldingModel.Beskrivelse,
+                InnmeldingId = innmeldingViewModel.InnmeldingId,
+                BrukerId = innmeldingViewModel.BrukerId,
+                KommuneId = innmeldingViewModel.KommuneId,
+                LokasjonId = innmeldingViewModel.LokasjonId,
+                Beskrivelse = innmeldingViewModel.Beskrivelse,
                 Status = "Under behandling",
                 SaksbehandlerId = currentUserId,
-                OpprettetDato = innmeldingModel.OpprettetDato
+                OpprettetDato = innmeldingViewModel.OpprettetDato
             };
 
             await _innmeldingService.UpdateInnmeldingStatus(innmelding.InnmeldingId, "Under behandling", currentUserId);
