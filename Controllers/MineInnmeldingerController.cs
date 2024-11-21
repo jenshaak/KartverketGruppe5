@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace KartverketGruppe5.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Bruker")]
     public class MineInnmeldingerController : Controller
     {
         private readonly InnmeldingService _innmeldingService;
@@ -112,6 +112,7 @@ namespace KartverketGruppe5.Controllers
             return View(innmeldingModel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> EndreInnmelding(InnmeldingModel innmeldingModel, IFormFile bilde)
         {

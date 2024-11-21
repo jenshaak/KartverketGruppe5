@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Bruker")]
     public class MapChangeController : Controller
     {
         private readonly LokasjonService _lokasjonService;
@@ -31,6 +31,7 @@ namespace KartverketGruppe5.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Index(LokasjonModel model, string beskrivelse, IFormFile? bilde)
         {

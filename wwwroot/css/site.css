@@ -12,7 +12,7 @@ html {
 h1 {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 h2 {
@@ -76,11 +76,27 @@ h3 {
   width: 100%;
 }
 
+.btn-back {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+}
+
 .btn-primary {
   background-color: #156630;
   color: white;
   &:hover {
     background-color: #14532d;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #2c2c2c;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  &:focus.ring-green {
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #156630;
   }
 }
 
@@ -90,6 +106,16 @@ h3 {
   &:hover {
     background-color: #1d4ed8;
   }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #3B82F6;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  &:focus.ring-blue {
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #3B82F6;
+  }
 }
 
 .btn-red {
@@ -97,6 +123,16 @@ h3 {
   color: white;
   &:hover {
     background-color: #dc2626;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #ef4444;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  &:focus.ring-red {
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #ef4444;
   }
 }
 
@@ -106,14 +142,17 @@ h3 {
   &:hover {
     background-color: #434343;
   }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #2c2c2c;
+    transition: box-shadow 0.2s ease-in-out;
+  }
 }
 
 .mapChange-width {
-  width: 600px;
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #000000;
+  width: 800px;
+  max-width: 100%;
 }
 
 .menu-item {
@@ -154,8 +193,10 @@ h3 {
   border-radius: 0.375rem;
   border: 2px solid #f0f0f0;
   &:focus {
-    outline: 2px solid #156630;
-    box-shadow: 0 0 0 2px rgba(21, 102, 48, 0.2);
+    outline: none;
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px #2c2c2c;
+    transition: box-shadow 0.2s ease-in-out;
   }
 }
 
@@ -172,8 +213,10 @@ h3 {
 
 /* Når input inni div'en er i fokus, stil parent div'en */
 .input-div:focus-within {
-  outline: 2px solid #156630;
-  box-shadow: 0 0 0 2px rgba(21, 102, 48, 0.2);
+  outline: none;
+  box-shadow: 0 0 0 2px white,
+              0 0 0 4px #2c2c2c;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .input-div input {

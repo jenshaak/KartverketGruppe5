@@ -7,56 +7,55 @@
 }
 
 <div class="w-full flex justify-center py-12">
-    <div class="w-4/5 flex flex-col gap-4">
+    <div class="relative w-4/5 flex flex-col gap-4 p-8">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
+        </a>
+        <h1 class="text-3xl font-bold mb-6 text-center">Behandle Innmeldinger</h1>
 
-    <h1 class="text-3xl font-bold mb-6 text-center">Behandle Innmeldinger</h1>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mb-4">
-        <i class="ph ph-arrow-left ph-lg"></i>
-        Tilbake
-    </a>
-
-    <!-- Filtre -->
-    <div class="mb-6 flex gap-4">
-        <div class="w-64">
-            <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
-            <select id="statusFilter" 
-                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                <option value="">Alle statuser</option>
-                @if(statuses != null)
-                {
-                    @foreach (var status in statuses)
+        <!-- Filtre -->
+        <div class="mb-6 flex gap-4">
+            <div class="w-64">
+                <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
+                <select id="statusFilter" 
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                    <option value="">Alle statuser</option>
+                    @if(statuses != null)
                     {
-                    <option value="@status" selected="@(status == ViewData["CurrentStatus"]?.ToString())">
-                        @status
+                        @foreach (var status in statuses)
+                        {
+                        <option value="@status" selected="@(status == ViewData["CurrentStatus"]?.ToString())">
+                            @status
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="w-64">
+                <label for="fylkeFilter" class="block text-sm font-medium text-gray-700">Fylke</label>
+                <select id="fylkeFilter" name="fylkeFilter"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                    <option value="">Alle fylker</option>
+                    @foreach (var fylke in ViewBag.Fylker)
+                    {
+                        <option value="@fylke.Navn" selected="@(fylke.Navn == ViewData["CurrentFylke"]?.ToString())">
+                            @fylke.Navn
                         </option>
                     }
-                }
-            </select>
+                </select>
+            </div>
+            <div class="w-64">
+                <label for="dateSort" class="block text-sm font-medium text-gray-700">Dato</label>
+                <select id="dateSort" 
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                    <option value="date_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_desc")">Nyeste først</option>
+                    <option value="date_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_asc")">Eldste først</option>
+                </select>
+            </div>
         </div>
-        <div class="w-64">
-            <label for="fylkeFilter" class="block text-sm font-medium text-gray-700">Fylke</label>
-            <select id="fylkeFilter" name="fylkeFilter"
-                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                <option value="">Alle fylker</option>
-                @foreach (var fylke in ViewBag.Fylker)
-                {
-                    <option value="@fylke.Navn" selected="@(fylke.Navn == ViewData["CurrentFylke"]?.ToString())">
-                        @fylke.Navn
-                    </option>
-                }
-            </select>
-        </div>
-        <div class="w-64">
-            <label for="dateSort" class="block text-sm font-medium text-gray-700">Dato</label>
-            <select id="dateSort" 
-                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                <option value="date_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_desc")">Nyeste først</option>
-                <option value="date_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_asc")">Eldste først</option>
-            </select>
-        </div>
-    </div>
 
-    <!-- Innmelding-tabell -->
+        <!-- Innmelding-tabell -->
         <div class="min-w-full divide-y divide-gray-200 rounded-lg [border-spacing:0_0.75rem] border-separate">
             <div class="divide-y divide-gray-200 space-y-4">
                 @foreach (var innmelding in Model.Items)

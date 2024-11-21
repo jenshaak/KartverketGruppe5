@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Saksbehandler,Admin")]
     public class MineSakerController : Controller
     {
         private readonly InnmeldingService _innmeldingService;
@@ -80,6 +80,7 @@ namespace KartverketGruppe5.Controllers
             return View(innmelding);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> FullforBehandling(int innmeldingId, string kommentar, string status)
         {

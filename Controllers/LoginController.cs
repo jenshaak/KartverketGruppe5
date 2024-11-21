@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         private readonly BrukerService _brukerService;

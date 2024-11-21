@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly SaksbehandlerService _saksbehandlerService;
@@ -21,11 +23,17 @@ namespace KartverketGruppe5.Controllers
             _logger = logger;
         }
 
+        [ValidateAntiForgeryToken]
         public IActionResult Register()
         {
+            if (!User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(Saksbehandler saksbehandler)
         {
@@ -57,15 +65,30 @@ namespace KartverketGruppe5.Controllers
 
         public async Task<IActionResult> Index(string sortOrder = "date_desc", int page = 1)
         {
-            ViewData["AdminSortParam"] = sortOrder == "admin_desc" ? "admin_asc" : "admin_desc";
-            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["CurrentPage"] = page;
+            if (!User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
 
-            var result = await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page);
-            return View(result);
+            try 
+            {
+                ViewData["AdminSortParam"] = sortOrder == "admin_desc" ? "admin_asc" : "admin_desc";
+                ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["CurrentPage"] = page;
+
+                var result = await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page);
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Feil ved henting av saksbehandlere: {ex.Message}");
+                TempData["Error"] = "Det oppstod en feil ved henting av saksbehandlere.";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> PopulateFylkerOgKommuner()
         {
@@ -83,29 +106,44 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index");
         }
 
+        [ValidateAntiForgeryToken]
         [HttpGet]
         public async Task<IActionResult> Rediger(int id)
         {
-            var saksbehandler = await _saksbehandlerService.GetSaksbehandlerById(id);
-            if (saksbehandler == null)
+            if (!User.IsInRole("Admin"))
             {
-                return NotFound();
+                return Forbid();
             }
 
-            // Konverter Saksbehandler til ViewModel
-            var viewModel = new SaksbehandlerRegistrerViewModel
+            try
             {
-                SaksbehandlerId = saksbehandler.SaksbehandlerId,
-                Fornavn = saksbehandler.Fornavn,
-                Etternavn = saksbehandler.Etternavn,
-                Email = saksbehandler.Email,
-                Admin = saksbehandler.Admin,
-                OpprettetDato = saksbehandler.OpprettetDato
-            };
+                var saksbehandler = await _saksbehandlerService.GetSaksbehandlerById(id);
+                if (saksbehandler == null)
+                {
+                    return NotFound();
+                }
 
-            return View(viewModel);
+                var viewModel = new SaksbehandlerRegistrerViewModel
+                {
+                    SaksbehandlerId = saksbehandler.SaksbehandlerId,
+                    Fornavn = saksbehandler.Fornavn,
+                    Etternavn = saksbehandler.Etternavn,
+                    Email = saksbehandler.Email,
+                    Admin = saksbehandler.Admin,
+                    OpprettetDato = saksbehandler.OpprettetDato
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Feil ved henting av saksbehandler: {ex.Message}");
+                TempData["Error"] = "Det oppstod en feil ved henting av saksbehandler.";
+                return RedirectToAction("Index");
+            }
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Rediger(SaksbehandlerRegistrerViewModel viewModel)
         {

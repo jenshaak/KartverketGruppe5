@@ -14,7 +14,7 @@ builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSet
 builder.Services.AddHttpClient<IKommuneInfoService, KommuneInfoService>();
 builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
 
-// Legg til denne med dine andre service registreringer
+// Legger service-filene til containeren.
 builder.Services.AddScoped<BildeService>();
 builder.Services.AddScoped<BrukerService>();
 builder.Services.AddScoped<FylkeService>();
@@ -58,12 +58,26 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Home/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromHours(24);
     });
+// builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//     .AddCookie();
 
+// builder.Services.ConfigureApplicationCookie(options =>
+// {
+//     // Når man ikke har tilgang til en side, sendes man til accessdenied-siden.
+//     options.AccessDeniedPath = "/Home/AccessDenied";
+//     // Når man ikke er logget inn, sendes man til login-siden.
+//     options.LoginPath = "/Login";
+//     // Sørger for at man ikke blir logget ut etter 24 timer.
+//     options.ExpireTimeSpan = TimeSpan.FromHours(24);
+// });
+
+// Legger til autorisering for å sikre at kun autoriserte brukere kan få tilgang til bestemte sider.
 builder.Services.AddAuthorization();
 
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
     .SetApplicationName("KartverketGruppe5");
+
 
 var app = builder.Build();
 
@@ -85,7 +99,7 @@ using (var scope = app.Services.CreateScope())
 // Konfigurer HTTP-forespørsler.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error"); 
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
