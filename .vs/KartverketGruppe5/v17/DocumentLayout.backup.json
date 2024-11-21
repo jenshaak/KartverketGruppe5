@@ -1,26 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Repo\\gruppe5-nettside\\",
+  "WorkspaceRootPath": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\gruppe5-nettside\\views\\home\\correctmap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:views\\home\\correctmap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\views\\minprofil\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:views\\minprofil\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\gruppe5-nettside\\views\\home\\correctionoverview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:views\\home\\correctionoverview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\views\\mineinnmeldinger\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:views\\mineinnmeldinger\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\gruppe5-nettside\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\gruppe5-nettside\\models\\positionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:models\\positionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\views\\mineinnmeldinger\\detaljer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:views\\mineinnmeldinger\\detaljer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\gruppe5-nettside\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\controllers\\minprofilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:controllers\\minprofilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\services\\minprofilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:services\\minprofilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\models\\bruker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:models\\bruker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|c:\\repo\\kaertverketgruppe5\\kartverketgruppe5\\models\\innmelding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{45B65B8F-9BF7-4F97-8A1F-9902ADFD9609}|KartverketGruppe5.csproj|solutionrelative:models\\innmelding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +42,110 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-21T17:00:41.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CorrectMap.cshtml",
-              "DocumentMoniker": "C:\\Repo\\gruppe5-nettside\\Views\\Home\\CorrectMap.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\CorrectMap.cshtml",
-              "ToolTip": "C:\\Repo\\gruppe5-nettside\\Views\\Home\\CorrectMap.cshtml",
-              "RelativeToolTip": "Views\\Home\\CorrectMap.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAANB+wDcAAAAgAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Views\\MinProfil\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\MinProfil\\Index.cshtml",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Views\\MinProfil\\Index.cshtml",
+              "RelativeToolTip": "Views\\MinProfil\\Index.cshtml",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAAB8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-22T09:50:41.306Z",
+              "WhenOpened": "2024-11-21T14:16:09.049Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CorrectionOverview.cshtml",
-              "DocumentMoniker": "C:\\Repo\\gruppe5-nettside\\Views\\Home\\CorrectionOverview.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\CorrectionOverview.cshtml",
-              "ToolTip": "C:\\Repo\\gruppe5-nettside\\Views\\Home\\CorrectionOverview.cshtml",
-              "RelativeToolTip": "Views\\Home\\CorrectionOverview.cshtml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAuAAAAAAAAAA==",
+              "Title": "index.cshtml",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Views\\MineInnmeldinger\\index.cshtml",
+              "RelativeDocumentMoniker": "Views\\MineInnmeldinger\\index.cshtml",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Views\\MineInnmeldinger\\index.cshtml",
+              "RelativeToolTip": "Views\\MineInnmeldinger\\index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-13T11:32:24.507Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Repo\\gruppe5-nettside\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Repo\\gruppe5-nettside\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-13T11:22:15.756Z",
+              "WhenOpened": "2024-11-21T16:35:10.706Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "PositionModel.cs",
-              "DocumentMoniker": "C:\\Repo\\gruppe5-nettside\\Models\\PositionModel.cs",
-              "RelativeDocumentMoniker": "Models\\PositionModel.cs",
-              "ToolTip": "C:\\Repo\\gruppe5-nettside\\Models\\PositionModel.cs",
-              "RelativeToolTip": "Models\\PositionModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T15:40:34.625Z",
+              "Title": "Detaljer.cshtml",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Views\\MineInnmeldinger\\Detaljer.cshtml",
+              "RelativeDocumentMoniker": "Views\\MineInnmeldinger\\Detaljer.cshtml",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Views\\MineInnmeldinger\\Detaljer.cshtml",
+              "RelativeToolTip": "Views\\MineInnmeldinger\\Detaljer.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-21T16:34:28.081Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Repo\\gruppe5-nettside\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Repo\\gruppe5-nettside\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABRAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "Innmelding.cs",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Models\\Innmelding.cs",
+              "RelativeDocumentMoniker": "Models\\Innmelding.cs",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Models\\Innmelding.cs",
+              "RelativeToolTip": "Models\\Innmelding.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T11:12:21.609Z",
+              "WhenOpened": "2024-11-21T16:18:41.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Bruker.cs",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Models\\Bruker.cs",
+              "RelativeDocumentMoniker": "Models\\Bruker.cs",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Models\\Bruker.cs",
+              "RelativeToolTip": "Models\\Bruker.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T16:18:10.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MinProfilService.cs",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Services\\MinProfilService.cs",
+              "RelativeDocumentMoniker": "Services\\MinProfilService.cs",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Services\\MinProfilService.cs",
+              "RelativeToolTip": "Services\\MinProfilService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T14:16:35.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MinProfilController.cs",
+              "DocumentMoniker": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Controllers\\MinProfilController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MinProfilController.cs",
+              "ToolTip": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\Controllers\\MinProfilController.cs",
+              "RelativeToolTip": "Controllers\\MinProfilController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T14:16:18.796Z",
               "EditorCaption": ""
             }
           ]
