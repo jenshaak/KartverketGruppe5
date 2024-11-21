@@ -9,15 +9,13 @@ namespace KartverketGruppe5.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IKommuneInfoService _kommuneInfoService;
-        private readonly IStedsnavnService _stedsnavnService;
 
         private static List<LokasjonModel> positions = new List<LokasjonModel>();   
 
-        public HomeController(ILogger<HomeController> logger, IKommuneInfoService kommuneInfoService, IStedsnavnService stedsnavnService)
+        public HomeController(ILogger<HomeController> logger, IKommuneInfoService kommuneInfoService)
         {
             _logger = logger;
             _kommuneInfoService = kommuneInfoService;
-            _stedsnavnService = stedsnavnService;
         }
 
         public IActionResult Index()
