@@ -1,24 +1,21 @@
 using KartverketGruppe5.Services;
+using KartverketGruppe5.API_Models;
 using KartverketGruppe5;
 using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Kobler API-innstillingene fra appsettings.json
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
-// Registrer services og deres grensesnitt
-builder.Services.AddHttpClient<IKommuneInfoService, KommuneInfoService>();
-builder.Services.AddHttpClient<IStedsnavnService, StedsnavnService>();
-
 // Legger service-filene til containeren.
 builder.Services.AddScoped<BildeService>();
 builder.Services.AddScoped<BrukerService>();
 builder.Services.AddScoped<FylkeService>();
-builder.Services.AddScoped<GeoChangeService>();
 builder.Services.AddScoped<LokasjonService>();
 builder.Services.AddScoped<InnmeldingService>();
 builder.Services.AddScoped<KommunePopulateService>();
@@ -78,6 +75,11 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
     .SetApplicationName("KartverketGruppe5");
 
+// Legg til HttpClient som en service
+builder.Services.AddHttpClient();
+
+// Alternativt, hvis du trenger en spesifikk HttpClient for KommunePopulateService
+// builder.Services.AddHttpClient<KommunePopulateService>();
 
 var app = builder.Build();
 

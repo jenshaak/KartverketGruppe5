@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
@@ -33,7 +33,7 @@ namespace KartverketGruppe5.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Index(LokasjonModel model, string beskrivelse, IFormFile? bilde)
+        public async Task<IActionResult> Index(LokasjonViewModel model, string beskrivelse, IFormFile? bilde)
         {
             _logger.LogInformation("Starting Index POST method with Latitude: {Latitude}, Longitude: {Longitude}, GeoJson length: {GeoJsonLength}, Beskrivelse length: {BeskrivelseLength}, GeometriType: {GeometriType}",
                 model.Latitude, model.Longitude, 

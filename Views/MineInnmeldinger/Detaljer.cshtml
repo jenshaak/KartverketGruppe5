@@ -1,10 +1,10 @@
-@using KartverketGruppe5.Models
+@using KartverketGruppe5.Models.ViewModels
 @using System.Text.Encodings.Web
 @using System.Text.Json
-@model InnmeldingModel
+@model InnmeldingViewModel
 @{
     ViewData["Title"] = "Innmelding Detaljer";
-    var lokasjon = ViewBag.Lokasjon as LokasjonModel;
+    var lokasjon = ViewBag.Lokasjon as LokasjonViewModel;
 }
 
 <div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">

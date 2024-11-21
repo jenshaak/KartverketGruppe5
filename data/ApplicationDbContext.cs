@@ -10,7 +10,6 @@ namespace KartverketGruppe5.Data
         {
         }
 
-        public DbSet<GeoChange> GeoChanges { get; set; }
         public DbSet<Saksbehandler> Saksbehandlere { get; set; }
         public DbSet<Bruker> Brukere { get; set; }
         public DbSet<Fylke> Fylker { get; set; }

@@ -1,4 +1,5 @@
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,29 +11,14 @@ namespace KartverketGruppe5.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IKommuneInfoService _kommuneInfoService;
 
-        private static List<LokasjonModel> positions = new List<LokasjonModel>();   
-
-        public HomeController(ILogger<HomeController> logger, IKommuneInfoService kommuneInfoService)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _kommuneInfoService = kommuneInfoService;
         }
 
         public IActionResult Index()
-        {
-            var viewModel = new HomeViewModel
-            {
-                UserName = HttpContext.Session.GetString("UserName")
-            };
-            
-            return View(viewModel);
-        }
-
-
-        public IActionResult Privacy()
-        {
+        {   
             return View();
         }
 
