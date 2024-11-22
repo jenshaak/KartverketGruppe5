@@ -10,12 +10,12 @@ namespace KartverketGruppe5.Data
         {
         }
 
-        public DbSet<Saksbehandler> Saksbehandlere { get; set; }
-        public DbSet<Bruker> Brukere { get; set; }
-        public DbSet<Fylke> Fylker { get; set; }
-        public DbSet<Kommune> Kommuner { get; set; }
-        public DbSet<Lokasjon> Lokasjoner { get; set; }
-        public DbSet<Innmelding> Innmeldinger { get; set; }
+        public required DbSet<Saksbehandler> Saksbehandlere { get; set; }
+        public required DbSet<Bruker> Brukere { get; set; }
+        public required DbSet<Fylke> Fylker { get; set; }
+        public required DbSet<Kommune> Kommuner { get; set; }
+        public required DbSet<Lokasjon> Lokasjoner { get; set; }
+        public required DbSet<Innmelding> Innmeldinger { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -15,13 +15,13 @@
     return;
 }
 
-<div class="w-full flex flex-col items-center py-12">
-    <div class="relative w-4/5 flex flex-col gap-4">
+<div class="page-container">
+    <div class="content-container">
         <a asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
-        <h1 class="text-3xl font-bold mt-4 text-center">Behandling av innmeldingen</h1>
+        <h1>Behandling av innmeldingen</h1>
         <div class="flex justify-between items-center w-full rounded-lg bg-white p-4">
             <div>@Model.KommuneNavn</div>
             <div>@Model.OpprettetDato.ToShortDateString()</div>

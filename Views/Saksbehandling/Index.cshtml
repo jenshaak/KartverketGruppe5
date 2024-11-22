@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Saksbehandling";
     ViewData["ActionName"] = "Detaljer";
-    var statuses = (List<string>)ViewData["Statuses"];
+    var statuses = ViewData["Statuses"] as List<string> ?? new List<string>();
     var fylker = ViewBag.Fylker as List<Fylke> ?? new List<Fylke>();
 }
 

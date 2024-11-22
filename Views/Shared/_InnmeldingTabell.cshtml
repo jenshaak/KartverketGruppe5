@@ -1,7 +1,10 @@
 @model PagedResult<InnmeldingViewModel>
 @{
-    var actionName = ViewData["ActionName"]?.ToString() ?? "Detaljer";
-    var statuses = (List<string>)ViewData["Statuses"];
+    var currentSort = (ViewData["CurrentSort"]?.ToString()) ?? "date_desc";
+    var currentStatus = (ViewData["CurrentStatus"]?.ToString()) ?? "";
+    var currentFylke = (ViewData["CurrentFylke"]?.ToString()) ?? "";
+    var actionName = (ViewData["ActionName"]?.ToString()) ?? "Detaljer";
+    var statuses = ViewData["Statuses"] as List<string> ?? new List<string>();
     var fylker = ViewBag.Fylker as List<Fylke> ?? new List<Fylke>();
 }
 

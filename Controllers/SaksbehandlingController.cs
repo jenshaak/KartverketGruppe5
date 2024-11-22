@@ -18,14 +18,20 @@ namespace KartverketGruppe5.Controllers
         private readonly FylkeService _fylkeService;
         private readonly ILogger<SaksbehandlingController> _logger;
 
-        public SaksbehandlingController(SaksbehandlerService saksbehandlerService, InnmeldingService innmeldingService, LokasjonService lokasjonService, KommuneService kommuneService, FylkeService fylkeService, ILogger<SaksbehandlingController> logger)
+        public SaksbehandlingController(
+            SaksbehandlerService saksbehandlerService, 
+            InnmeldingService innmeldingService, 
+            LokasjonService lokasjonService, 
+            KommuneService kommuneService, 
+            FylkeService fylkeService, 
+            ILogger<SaksbehandlingController> logger)
         {
-            _saksbehandlerService = saksbehandlerService;
-            _innmeldingService = innmeldingService;
-            _lokasjonService = lokasjonService;
-            _kommuneService = kommuneService;
-            _fylkeService = fylkeService;
-            _logger = logger;
+            _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));
+            _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
+            _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
+            _kommuneService = kommuneService ?? throw new ArgumentNullException(nameof(kommuneService));
+            _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<IActionResult> Index(
@@ -34,10 +40,9 @@ namespace KartverketGruppe5.Controllers
             string fylkeFilter = "",
             int page = 1)
         {
-            SetupViewData(sortOrder, statusFilter, fylkeFilter);
-
             try 
             {
+                SetupViewData(sortOrder, statusFilter, fylkeFilter);
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
                 
                 var request = new InnmeldingRequest
@@ -69,8 +74,16 @@ namespace KartverketGruppe5.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchKommuner(string term)
         {
-            var kommuner = await _kommuneService.SearchKommuner(term);
-            return Json(kommuner.Select(k => new { id = k.KommuneId, text = k.Navn }));
+            try
+            {
+                var kommuner = await _kommuneService.SearchKommuner(term);
+                return Json(kommuner.Select(k => new { id = k.KommuneId, text = k.Navn }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved søk etter kommuner");
+                return Json(new List<object>());
+            }
         }
 
         [ValidateAntiForgeryToken]
@@ -92,51 +105,62 @@ namespace KartverketGruppe5.Controllers
 
         public async Task<IActionResult> Detaljer(int id)
         {
-            var innmelding = await _innmeldingService.GetInnmeldingById(id);
-            if (innmelding == null)
+            try
             {
-                return NotFound();
+                var innmelding = await _innmeldingService.GetInnmeldingById(id);
+                if (innmelding == null)
+                {
+                    return NotFound();
+                }
+
+                var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+                var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
+                if (lokasjon == null || kommune == null)
+                {
+                    return NotFound();
+                }
+
+                var saksbehandlerResult = await _saksbehandlerService.GetAllSaksbehandlere();
+                ViewBag.Saksbehandlere = saksbehandlerResult.Items.ToList();
+                ViewBag.Lokasjon = lokasjon;
+
+                var viewModel = new InnmeldingViewModel
+                {
+                    InnmeldingId = innmelding.InnmeldingId,
+                    BrukerId = innmelding.BrukerId,
+                    KommuneId = innmelding.KommuneId,
+                    LokasjonId = innmelding.LokasjonId,
+                    Beskrivelse = innmelding.Beskrivelse,
+                    Status = innmelding.Status,
+                    BildeSti = innmelding.BildeSti,
+                    OpprettetDato = innmelding.OpprettetDato,
+                    KommuneNavn = kommune.Navn,
+                    SaksbehandlerId = innmelding.SaksbehandlerId,
+                    SaksbehandlerNavn = innmelding.SaksbehandlerNavn,
+                    StatusClass = GetStatusClass(innmelding.Status)
+                };
+
+                return View(viewModel);
             }
-
-            var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
-            if (lokasjon == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex, "Feil ved henting av detaljer for innmelding {id}", id);
+                return RedirectToAction("Index");
             }
-
-            var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
-            if (kommune == null)
-            {
-                return NotFound();
-            }
-
-            var saksbehandlerResult = await _saksbehandlerService.GetAllSaksbehandlere();
-            ViewBag.Saksbehandlere = saksbehandlerResult.Items.ToList();
-
-            var innmeldingViewModel = new InnmeldingViewModel
-            {
-                InnmeldingId = innmelding.InnmeldingId,
-                BrukerId = innmelding.BrukerId,
-                KommuneId = innmelding.KommuneId,
-                LokasjonId = innmelding.LokasjonId,
-                Beskrivelse = innmelding.Beskrivelse,
-                Status = innmelding.Status,
-                BildeSti = innmelding.BildeSti,
-                OpprettetDato = innmelding.OpprettetDato,
-                KommuneNavn = kommune.Navn,
-                SaksbehandlerId = innmelding.SaksbehandlerId,
-                SaksbehandlerNavn = innmelding.SaksbehandlerNavn,
-                StatusClass = GetStatusClass(innmelding.Status)
-            };
-
-            ViewBag.Lokasjon = lokasjon;
-            return View(innmeldingViewModel);
         }
 
         public async Task<IActionResult> Videresend(int innmeldingId, int saksbehandlerId)
         {
-            await _innmeldingService.UpdateInnmeldingSaksbehandler(innmeldingId, saksbehandlerId);
-            return RedirectToAction("Index", "Saksbehandling");
+            try
+            {
+                await _innmeldingService.UpdateInnmeldingSaksbehandler(innmeldingId, saksbehandlerId);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved videresending av innmelding {innmeldingId}", innmeldingId);
+                return RedirectToAction("Index");
+            }
         }
 
         [ValidateAntiForgeryToken]
@@ -146,30 +170,28 @@ namespace KartverketGruppe5.Controllers
             try 
             {
                 var innmelding = await _innmeldingService.GetInnmeldingById(id);
-                var currentUserId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
-                
-                var innmeldingModel = new Innmelding
+                if (innmelding == null)
                 {
-                    InnmeldingId = innmelding.InnmeldingId,
-                    BrukerId = innmelding.BrukerId,
-                    KommuneId = innmelding.KommuneId,
-                    LokasjonId = innmelding.LokasjonId,
-                    Beskrivelse = innmelding.Beskrivelse,
-                    Status = "Under behandling",
-                    SaksbehandlerId = currentUserId,
-                    OpprettetDato = innmelding.OpprettetDato
-                };
+                    return NotFound();
+                }
 
-                await _innmeldingService.UpdateInnmeldingStatus(innmeldingModel.InnmeldingId, "Under behandling", currentUserId);
+                var currentUserId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
+                if (currentUserId == 0)
+                {
+                    return Forbid();
+                }
+
+                await _innmeldingService.UpdateInnmeldingStatus(id, "Under behandling", currentUserId);
                 return RedirectToAction("Index", "MineSaker");
             }
-            catch (KeyNotFoundException)
+            catch (Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex, "Feil ved behandling av innmelding {id}", id);
+                return RedirectToAction("Index");
             }
         }
 
-        private string GetStatusClass(string status) => status switch
+        private static string GetStatusClass(string status) => status switch
         {
             "Ny" => "bg-blue-100 text-blue-800",
             "Under behandling" => "bg-yellow-100 text-yellow-800",
