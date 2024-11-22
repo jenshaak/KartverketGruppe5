@@ -20,10 +20,10 @@ namespace KartverketGruppe5.Controllers
             BildeService bildeService,
             ILogger<MapChangeController> logger)
         {
-            _lokasjonService = lokasjonService;
-            _innmeldingService = innmeldingService;
-            _bildeService = bildeService;
-            _logger = logger;
+            _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
+            _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
+            _bildeService = bildeService ?? throw new ArgumentNullException(nameof(bildeService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public IActionResult Index()
@@ -36,8 +36,8 @@ namespace KartverketGruppe5.Controllers
             return View();
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(LokasjonViewModel model, string beskrivelse, IFormFile? bilde)
         {
             _logger.LogInformation("Starting Index POST method with Latitude: {Latitude}, Longitude: {Longitude}, GeoJson length: {GeoJsonLength}, Beskrivelse length: {BeskrivelseLength}, GeometriType: {GeometriType}",

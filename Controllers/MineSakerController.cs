@@ -26,17 +26,30 @@ namespace KartverketGruppe5.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index(string sortOrder = "date_desc", 
-            string statusFilter = "", string fylkeFilter = "", int page = 1)
+        public async Task<IActionResult> Index(
+            string sortOrder = "date_desc", 
+            string statusFilter = "", 
+            string fylkeFilter = "", 
+            int page = 1)
         {
-            SetupViewData(sortOrder, statusFilter, fylkeFilter);
-            ViewData["ActionName"] = "Behandle";
-
             try 
             {
+                _logger.LogInformation(
+                    "Henter saker med sortOrder: {SortOrder}, statusFilter: {StatusFilter}, fylkeFilter: {FylkeFilter}, page: {Page}", 
+                    sortOrder, statusFilter, fylkeFilter, page);
+
+                SetupViewData(sortOrder, statusFilter, fylkeFilter);
+                ViewData["ActionName"] = "Behandle";
+
+                var saksbehandlerId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
+                if (saksbehandlerId == 0)
+                {
+                    _logger.LogWarning("Ingen gyldig SaksbehandlerId funnet i claims");
+                    return RedirectToAction("Index", "Login");
+                }
+
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
                 
-                var saksbehandlerId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
                 var request = new InnmeldingRequest
                 {
                     SaksbehandlerId = saksbehandlerId,
@@ -46,11 +59,14 @@ namespace KartverketGruppe5.Controllers
                     Page = page
                 };
 
-                return View(await _innmeldingService.GetInnmeldinger(request));
+                _logger.LogInformation("Henter innmeldinger for saksbehandler {SaksbehandlerId}", saksbehandlerId);
+                var result = await _innmeldingService.GetInnmeldinger(request);
+                
+                return View(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved henting av innmeldinger");
+                _logger.LogError(ex, "Feil ved henting av saker for saksbehandler");
                 return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
             }
         }
@@ -68,35 +84,28 @@ namespace KartverketGruppe5.Controllers
         {
             try
             {
-                _logger.LogInformation($"Henter innmelding med ID {id}");
                 var innmelding = await _innmeldingService.GetInnmeldingById(id);
-                _logger.LogInformation($"Hentet innmelding med ID {id}: {innmelding.Beskrivelse}");
+                if (innmelding == null)
+                {
+                    return NotFound();
+                }
+
                 var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
                 if (lokasjon == null)
                 {
-                    _logger.LogError($"Fant ikke lokasjon med ID {innmelding.LokasjonId} for innmelding {id}");
                     return NotFound();
                 }
 
                 var saksbehandlere = await _saksbehandlerService.GetAllSaksbehandlere();
-                if (!saksbehandlere.Items.Any())
-                {
-                    _logger.LogWarning("Ingen saksbehandlere funnet");
-                }
 
                 ViewBag.Lokasjon = lokasjon;
                 ViewBag.Saksbehandlere = saksbehandlere;
 
                 return View(innmelding);
             }
-            catch (KeyNotFoundException)
-            {
-                _logger.LogWarning($"Fant ikke innmelding med ID {id}");
-                return NotFound();
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Feil ved henting av innmelding {id}");
+                _logger.LogError(ex, "Feil ved henting av innmelding {id}", id);
                 return StatusCode(500);
             }
         }
@@ -112,12 +121,11 @@ namespace KartverketGruppe5.Controllers
             }
             catch (KeyNotFoundException)
             {
-                _logger.LogWarning($"Fant ikke innmelding med ID {innmeldingId}");
                 return NotFound();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Feil ved oppdatering av innmelding {innmeldingId}");
+                _logger.LogError(ex, "Feil ved oppdatering av innmelding {innmeldingId}", innmeldingId);
                 TempData["Error"] = "Det oppstod en feil ved behandling av saken.";
                 return RedirectToAction("Index");
             }

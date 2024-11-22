@@ -55,18 +55,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Home/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromHours(24);
     });
-// builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//     .AddCookie();
-
-// builder.Services.ConfigureApplicationCookie(options =>
-// {
-//     // Når man ikke har tilgang til en side, sendes man til accessdenied-siden.
-//     options.AccessDeniedPath = "/Home/AccessDenied";
-//     // Når man ikke er logget inn, sendes man til login-siden.
-//     options.LoginPath = "/Login";
-//     // Sørger for at man ikke blir logget ut etter 24 timer.
-//     options.ExpireTimeSpan = TimeSpan.FromHours(24);
-// });
 
 // Legger til autorisering for å sikre at kun autoriserte brukere kan få tilgang til bestemte sider.
 builder.Services.AddAuthorization();
