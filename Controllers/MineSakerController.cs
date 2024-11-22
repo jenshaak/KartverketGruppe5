@@ -71,7 +71,7 @@ namespace KartverketGruppe5.Controllers
                 _logger.LogInformation($"Henter innmelding med ID {id}");
                 var innmelding = await _innmeldingService.GetInnmeldingById(id);
                 _logger.LogInformation($"Hentet innmelding med ID {id}: {innmelding.Beskrivelse}");
-                var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+                var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
                 if (lokasjon == null)
                 {
                     _logger.LogError($"Fant ikke lokasjon med ID {innmelding.LokasjonId} for innmelding {id}");

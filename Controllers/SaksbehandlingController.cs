@@ -98,7 +98,7 @@ namespace KartverketGruppe5.Controllers
                 return NotFound();
             }
 
-            var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
             if (lokasjon == null)
             {
                 return NotFound();

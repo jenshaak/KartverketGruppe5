@@ -91,6 +91,8 @@ namespace KartverketGruppe5.Services
                 }
 
                 innmelding.StatusClass = GetStatusClass(innmelding.Status);
+
+                _logger.LogInformation($"Status: {innmelding.LokasjonId}");
                 return innmelding;
             }
             catch (MySqlException ex)
