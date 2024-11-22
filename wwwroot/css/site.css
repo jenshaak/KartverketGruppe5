@@ -302,3 +302,30 @@ h3 {
     visibility: visible;
     opacity: 1;
 }
+
+/* Admin */
+.rounded-tl {
+  border-top-left-radius: 1rem;
+}
+
+.rounded-tr {
+  border-top-right-radius: 1rem;
+}
+
+/* Admin Table Rounding */
+.rounded-bl {
+  border-bottom-left-radius: 1rem;
+}
+
+.rounded-br {
+  border-bottom-right-radius: 1rem;
+}
+
+/* For å sikre at siste rad i tabellen får avrundede hjørner */
+.table-rounded tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 1rem;
+}
+
+.table-rounded tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 1rem;
+}
