@@ -98,13 +98,13 @@ namespace KartverketGruppe5.Controllers
                 return NotFound();
             }
 
-            var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
             if (lokasjon == null)
             {
                 return NotFound();
             }
 
-            var kommune = _kommuneService.GetKommuneById(innmelding.KommuneId);
+            var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
             if (kommune == null)
             {
                 return NotFound();

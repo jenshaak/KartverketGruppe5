@@ -66,7 +66,12 @@ namespace KartverketGruppe5.Services
                 var json = await response.Content.ReadAsStringAsync();
                 
                 var alleKommuner = JsonSerializer.Deserialize<List<KommuneInfo>>(json);
-                _logger.LogInformation($"Hentet {alleKommuner?.Count ?? 0} kommuner fra API");
+                if (alleKommuner == null)
+                {
+                    throw new InvalidOperationException("Kunne ikke deserialisere kommunedata fra API");
+                }
+                
+                _logger.LogInformation($"Hentet {alleKommuner.Count} kommuner fra API");
 
                 var kommuneNumreFraApi = alleKommuner.Select(k => k.Kommunenummer).OrderBy(n => n).ToList();
 
@@ -89,7 +94,7 @@ namespace KartverketGruppe5.Services
                             .Select(k => new {
                                 Nummer = k.Kommunenummer,
                                 Navn = k.KommunenavnNorsk,
-                                FylkeNummer = k.Kommunenummer.Substring(0, 2)
+                                FylkeNummer = (k.Kommunenummer ?? throw new ArgumentNullException(nameof(k.Kommunenummer))).Substring(0, 2)
                             })
                             .ToList();
 
@@ -120,7 +125,7 @@ namespace KartverketGruppe5.Services
                             var fylkesGrupper = alleKommuner
                                 .Select(k => new {
                                     Kommune = k,
-                                    FylkeNummer = k.Kommunenummer.Substring(0, 2),
+                                    FylkeNummer = (k.Kommunenummer ?? throw new ArgumentNullException(nameof(k.Kommunenummer))).Substring(0, 2),
                                     Fylkesnavn = GetFylkesnavnFromKommunenummer(k.Kommunenummer)
                                 })
                                 .GroupBy(x => x.FylkeNummer)
@@ -176,6 +181,10 @@ namespace KartverketGruppe5.Services
                                         WHERE kommuneNummer = @KommuneNummer 
                                         AND navn = @Navn 
                                         AND fylkeId = @FylkeId";
+
+                                    if (kommune.KommunenavnNorsk == null) {
+                                        throw new ArgumentNullException(nameof(kommune.KommunenavnNorsk), "KommunenavnNorsk kan ikke være null");
+                                    }
 
                                     var kommuneEksisterer = db.ExecuteScalar<int>(checkKommune, new { 
                                         KommuneNummer = kommune.Kommunenummer,

@@ -23,16 +23,8 @@ namespace KartverketGruppe5.Controllers
             _logger = logger;
         }
 
-        [ValidateAntiForgeryToken]
-        public IActionResult Register()
-        {
-            if (!User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
-            return View();
-        }
 
+        [HttpGet]
         public async Task<IActionResult> Index(
             string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
             int page = PagedResult<Saksbehandler>.DefaultPage)
@@ -59,8 +51,18 @@ namespace KartverketGruppe5.Controllers
             ViewData["CurrentPage"] = page;
         }
 
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
+            return View();
+        }
+        
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Saksbehandler saksbehandler)
         {
             if (!ModelState.IsValid)
@@ -70,7 +72,6 @@ namespace KartverketGruppe5.Controllers
 
             try
             {
-                // TODO: Hash passord før lagring
                 var result = await _saksbehandlerService.CreateSaksbehandler(saksbehandler);
                 if (result)
                 {
@@ -90,8 +91,8 @@ namespace KartverketGruppe5.Controllers
         }
 
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PopulateFylkerOgKommuner()
         {
             try
@@ -108,7 +109,6 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index");
         }
 
-        [ValidateAntiForgeryToken]
         [HttpGet]
         public async Task<IActionResult> Rediger(int id)
         {
@@ -145,8 +145,8 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Rediger(SaksbehandlerRegistrerViewModel viewModel)
         {
             if (string.IsNullOrEmpty(viewModel.Passord))

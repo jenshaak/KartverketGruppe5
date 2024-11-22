@@ -81,18 +81,21 @@ namespace KartverketGruppe5.Controllers
             var innmelding = await _innmeldingService.GetInnmeldingById(id);
             if (innmelding == null)
             {
+                _logger.LogError($"Innmelding med id {id} ikke funnet");
                 return NotFound();
             }
 
-            var lokasjon = _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
             if (lokasjon == null)
             {
+                _logger.LogError($"Lokasjon med id {innmelding.LokasjonId} ikke funnet");
                 return NotFound();
             }
 
-            var kommune = _kommuneService.GetKommuneById(innmelding.KommuneId);
+            var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
             if (kommune == null)
             {
+                _logger.LogError($"Kommune med id {innmelding.KommuneId} ikke funnet");
                 return NotFound();
             }
 
@@ -115,12 +118,12 @@ namespace KartverketGruppe5.Controllers
 
             ViewBag.Lokasjon = lokasjon;
 
-            _logger.LogInformation($"Kommentar: {innmeldingViewModel.Kommentar}");
+            _logger.LogInformation($"Kommentar: {innmeldingViewModel.LokasjonId}");
             return View(innmeldingViewModel);
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile bilde)
         {
             try 

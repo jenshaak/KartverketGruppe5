@@ -12,18 +12,23 @@ namespace KartverketGruppe5.Services
         private readonly string? _connectionString;
         private readonly ILogger<InnmeldingService> _logger;
         private readonly BildeService _bildeService;
+        private readonly LokasjonService _lokasjonService;
 
-        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, BildeService bildeService)
+        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, BildeService bildeService, LokasjonService lokasjonService)
         {
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger;
             _bildeService = bildeService;
+            _lokasjonService = lokasjonService;
         }
 
         private IDbConnection Connection => new MySqlConnection(_connectionString);
 
+
+
+        // --- LAGER EN INNMELDING ---
         public int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
         {
             using (IDbConnection dbConnection = Connection)
@@ -45,6 +50,66 @@ namespace KartverketGruppe5.Services
             }
         }
 
+
+
+        // --- HENTING AV ENKEL INNMELDIING ---
+        public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
+        {
+            try 
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                
+                string sql = @"
+                    SELECT 
+                        i.innmeldingId,
+                        i.brukerId,
+                        i.kommuneId,
+                        i.lokasjonId,
+                        i.beskrivelse,
+                        i.kommentar,
+                        i.status,
+                        i.opprettetDato,
+                        i.saksbehandlerId,
+                        i.bildeSti,
+                        k.navn as kommuneNavn,
+                        l.latitude,
+                        l.longitude,
+                        l.geoJson,
+                        CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
+                    FROM Innmelding i 
+                    INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
+                    INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
+                    LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
+                    WHERE i.innmeldingId = @Id";
+
+                var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
+
+                if (innmelding == null)
+                {
+                    _logger.LogWarning($"Fant ingen innmelding med ID {id}");
+                    throw new KeyNotFoundException($"Innmelding med ID {id} finnes ikke");
+                }
+
+                innmelding.StatusClass = GetStatusClass(innmelding.Status);
+
+                _logger.LogInformation($"Status: {innmelding.LokasjonId}");
+                return innmelding;
+            }
+            catch (MySqlException ex)
+            {
+                _logger.LogError(ex, $"Database error ved henting av innmelding {id}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Uventet feil ved henting av innmelding {id}");
+                throw;
+            }
+        }
+
+
+
+        // --- HENTING AV FLERE INNMELDINGER ---
         public async Task<PagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
         {
             using var connection = new MySqlConnection(_connectionString);
@@ -146,6 +211,11 @@ namespace KartverketGruppe5.Services
             return await connection.ExecuteScalarAsync<int>(countSql, parameters);
         }
 
+
+
+        // --- OPPDATERINGER ---
+
+        // Klasser for oppdatering
         private List<InnmeldingViewModel> ProcessItems(List<InnmeldingViewModel> items)
         {
             return items.Select(i => new InnmeldingViewModel
@@ -164,57 +234,6 @@ namespace KartverketGruppe5.Services
             }).ToList();
         }
 
-        public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
-        {
-            try 
-            {
-                using var connection = new MySqlConnection(_connectionString);
-                
-                string sql = @"
-                    SELECT 
-                        i.innmeldingId,
-                        i.brukerId,
-                        i.kommuneId,
-                        i.lokasjonId,
-                        i.beskrivelse,
-                        i.kommentar,
-                        i.status,
-                        i.opprettetDato,
-                        i.saksbehandlerId,
-                        i.bildeSti,
-                        k.navn as kommuneNavn,
-                        l.latitude,
-                        l.longitude,
-                        l.geoJson,
-                        CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
-                    FROM Innmelding i 
-                    INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
-                    INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
-                    LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
-                    WHERE i.innmeldingId = @Id";
-
-                var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
-
-                if (innmelding == null)
-                {
-                    _logger.LogWarning($"Fant ingen innmelding med ID {id}");
-                    throw new KeyNotFoundException($"Innmelding med ID {id} finnes ikke");
-                }
-
-                innmelding.StatusClass = GetStatusClass(innmelding.Status);
-                return innmelding;
-            }
-            catch (MySqlException ex)
-            {
-                _logger.LogError(ex, $"Database error ved henting av innmelding {id}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Uventet feil ved henting av innmelding {id}");
-                throw;
-            }
-        }
 
         public class InnmeldingUpdateModel
         {
@@ -227,7 +246,6 @@ namespace KartverketGruppe5.Services
             public DateTime? OppdatertDato { get; set; }
         }
 
-        // Felles oppdateringsfunksjon
         private async Task<bool> UpdateInnmeldingInternal(InnmeldingUpdateModel updateModel)
         {
             try
@@ -291,32 +309,33 @@ namespace KartverketGruppe5.Services
 
         public async Task UpdateInnmeldingDetails(InnmeldingViewModel innmelding, LokasjonViewModel? lokasjon = null, IFormFile? bilde = null)
         {
-            using var connection = new MySqlConnection(_connectionString);
-            var oppdatertDato = DateTime.Now;
-
-            if (bilde != null)
+            try 
             {
-                innmelding.BildeSti = await _bildeService.LagreBilde(bilde, innmelding.InnmeldingId);
-            }
+                var oppdatertDato = DateTime.Now;
 
-            if (lokasjon != null)
+                if (bilde != null)
+                {
+                    innmelding.BildeSti = await _bildeService.LagreBilde(bilde, innmelding.InnmeldingId);
+                }
+
+                if (lokasjon != null)
+                {
+                    await _lokasjonService.UpdateLokasjon(lokasjon, oppdatertDato);
+                }
+
+                await UpdateInnmeldingInternal(new InnmeldingUpdateModel
+                {
+                    InnmeldingId = innmelding.InnmeldingId,
+                    Beskrivelse = innmelding.Beskrivelse,
+                    BildeSti = innmelding.BildeSti,
+                    OppdatertDato = oppdatertDato
+                });
+            }
+            catch (Exception ex)
             {
-                await UpdateLokasjon(lokasjon, oppdatertDato);
+                _logger.LogError(ex, "Feil ved oppdatering av innmelding detaljer for innmelding {InnmeldingId}", innmelding.InnmeldingId);
+                throw;
             }
-
-            string query = @"
-                UPDATE Innmelding SET 
-                    beskrivelse = @Beskrivelse,
-                    bildeSti = COALESCE(@BildeSti, bildeSti),
-                    oppdatertDato = @OppdatertDato
-                WHERE innmeldingId = @InnmeldingId";
-
-            await connection.ExecuteAsync(query, new { 
-                innmelding.Beskrivelse, 
-                innmelding.BildeSti,
-                OppdatertDato = oppdatertDato, 
-                innmelding.InnmeldingId 
-            });
         }
 
         public async Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId = null)
@@ -329,37 +348,6 @@ namespace KartverketGruppe5.Services
             });
         }
 
-        private async Task UpdateLokasjon(LokasjonViewModel lokasjon, DateTime oppdatertDato)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            string updateLokasjonQuery = @"
-                UPDATE Lokasjon SET 
-                    geoJson = @GeoJson,
-                    geometriType = @GeometriType,
-                    latitude = @Latitude,
-                    longitude = @Longitude,
-                    oppdatertDato = @OppdatertDato
-                WHERE lokasjonId = @LokasjonId";
-
-            await connection.ExecuteAsync(updateLokasjonQuery, new { 
-                lokasjon.GeoJson, 
-                lokasjon.GeometriType, 
-                lokasjon.Latitude, 
-                lokasjon.Longitude, 
-                OppdatertDato = oppdatertDato, 
-                lokasjon.LokasjonId 
-            });
-        }
-
-        public void UpdateStatus(int innmeldingId, string status)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                string query = "UPDATE Innmelding SET status = @Status WHERE innmeldingId = @Id";
-                dbConnection.Execute(query, new { Id = innmeldingId, Status = status });
-            }
-        }
-
         public async Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId)
         {
             return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
@@ -368,40 +356,6 @@ namespace KartverketGruppe5.Services
                 SaksbehandlerId = saksbehandlerId,
                 Status = "Under behandling"
             });
-        }
-
-        public InnmeldingViewModel? GetInnmeldingForLokasjon(int lokasjonId)
-        {
-            try
-            {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT 
-                        innmeldingId,
-                        brukerId,
-                        kommuneId,
-                        lokasjonId,
-                        beskrivelse,
-                        opprettetDato
-                    FROM Innmelding 
-                    WHERE lokasjonId = @LokasjonId
-                    ORDER BY opprettetDato DESC
-                    LIMIT 1";
-
-                var innmelding = connection.QueryFirstOrDefault<InnmeldingViewModel>(sql, new { LokasjonId = lokasjonId });
-                
-                if (innmelding != null)
-                {
-                    innmelding.StatusClass = GetStatusClass(innmelding.Status);
-                }
-                
-                return innmelding;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error getting innmelding for lokasjon {lokasjonId}: {ex.Message}");
-                throw;
-            }
         }
 
         public async Task<bool> UpdateStatusAndKommentar(int innmeldingId, string kommentar, string? status = "under behandling")
@@ -416,42 +370,23 @@ namespace KartverketGruppe5.Services
 
         public async Task<bool> UpdateInnmelding(Innmelding innmelding)
         {
-            try
+            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    UPDATE Innmelding 
-                    SET status = @Status,
-                        saksbehandlerId = @SaksbehandlerId,
-                        oppdatertDato = @OppdatertDato
-                    WHERE innmeldingId = @InnmeldingId";
-                
-                innmelding.OppdatertDato = DateTime.Now;
-                
-                var rowsAffected = await connection.ExecuteAsync(sql, new
-                {
-                    innmelding.Status,
-                    innmelding.SaksbehandlerId,
-                    innmelding.OppdatertDato,
-                    innmelding.InnmeldingId
-                });
-                
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error updating innmelding: {ex.Message}");
-                return false;
-            }
+                InnmeldingId = innmelding.InnmeldingId,
+                Status = innmelding.Status,
+                SaksbehandlerId = innmelding.SaksbehandlerId,
+                OppdatertDato = DateTime.Now
+            });
         }
 
         public async Task UpdateBildeSti(int innmeldingId, string bildeSti)
         {
-            using (IDbConnection dbConnection = Connection)
+            await UpdateInnmeldingInternal(new InnmeldingUpdateModel
             {
-                string query = "UPDATE Innmelding SET bildeSti = @BildeSti WHERE innmeldingId = @InnmeldingId";
-                await dbConnection.ExecuteAsync(query, new { InnmeldingId = innmeldingId, BildeSti = bildeSti });
-            }
+                InnmeldingId = innmeldingId,
+                BildeSti = bildeSti,
+                OppdatertDato = DateTime.Now
+            });
         }
 
         private string GetStatusClass(string status) => status switch

@@ -21,7 +21,7 @@ namespace KartverketGruppe5.Services
             _logger = logger;
         }
 
-        public List<LokasjonViewModel> GetAllLokasjoner()
+        public async Task<List<LokasjonViewModel>> GetAllLokasjoner()
         {
             try
             {
@@ -35,16 +35,17 @@ namespace KartverketGruppe5.Services
                         geometriType
                     FROM Lokasjon";
 
-                return connection.Query<LokasjonViewModel>(sql).ToList();
+                var result = await connection.QueryAsync<LokasjonViewModel>(sql);
+                return result.ToList();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting all lokasjoner: {ex.Message}");
-                return new List<LokasjonViewModel>();
+                _logger.LogError(ex, "Error getting all lokasjoner");
+                throw;
             }
         }
 
-        public int AddLokasjon(string geoJson, double latitude, double longitude, string geometriType)
+        public async Task<int> AddLokasjon(string geoJson, double latitude, double longitude, string geometriType)
         {
             try
             {
@@ -54,37 +55,44 @@ namespace KartverketGruppe5.Services
                     VALUES (@GeoJson, @Latitude, @Longitude, @GeometriType);
                     SELECT LAST_INSERT_ID();";
 
-                return connection.ExecuteScalar<int>(sql, new 
+                var parameters = new 
                 { 
                     GeoJson = geoJson,
                     Latitude = latitude,
                     Longitude = longitude,
                     GeometriType = geometriType
-                });
+                };
+
+                return await connection.ExecuteScalarAsync<int>(sql, parameters);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error adding lokasjon: {ex.Message}");
+                _logger.LogError(ex, "Feil ved innsetting av lokasjon ({Latitude}, {Longitude})", latitude, longitude);
                 throw;
             }
         }
 
-        public LokasjonViewModel GetLokasjonById(int id)
+        public async Task<LokasjonViewModel?> GetLokasjonById(int id)
         {
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
                 const string sql = @"
-                    SELECT lokasjonId, latitude, longitude, geoJson
+                    SELECT 
+                        lokasjonId,
+                        latitude,
+                        longitude,
+                        geoJson,
+                        geometriType
                     FROM Lokasjon 
                     WHERE lokasjonId = @Id";
 
-                return connection.QueryFirstOrDefault<LokasjonViewModel>(sql, new { Id = id });
+                return await connection.QueryFirstOrDefaultAsync<LokasjonViewModel>(sql, new { Id = id });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting lokasjon: {ex.Message}");
-                return null;
+                _logger.LogError(ex, "Error getting lokasjon with id {LokasjonId}", id);
+                throw;
             }
         }
 
@@ -93,50 +101,97 @@ namespace KartverketGruppe5.Services
             try
             {
                 using var client = new HttpClient();
-                // Legg til User-Agent header som er påkrevd av Nominatim
                 client.DefaultRequestHeaders.Add("User-Agent", "KartverketGruppe5");
                 
                 var url = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}";
                 var response = await client.GetStringAsync(url);
                 var data = JsonSerializer.Deserialize<JsonDocument>(response);
                 
-                // Hent kommune fra address objektet
-                var address = data.RootElement.GetProperty("address");
-                string municipality;
-                
-                // Nominatim kan returnere kommune i forskjellige felter
-                if (address.TryGetProperty("municipality", out var municipalityElement))
+                if (data?.RootElement.TryGetProperty("address", out var address) != true)
                 {
-                    municipality = municipalityElement.GetString();
+                    throw new Exception("Kunne ikke finne adresseinformasjon for koordinatene");
                 }
-                else if (address.TryGetProperty("city", out var cityElement))
+
+                string? kommuneNavn = null;
+                // "municipality" er API-nøkkelen fra OpenStreetMap, betyr kommune på norsk
+                if (address.TryGetProperty("municipality", out var kommuneElement))
                 {
-                    municipality = cityElement.GetString();
+                    kommuneNavn = kommuneElement.GetString();
                 }
-                else
+                // "city" er også en API-nøkkel fra OpenStreetMap
+                else if (address.TryGetProperty("city", out var byElement))
+                {
+                    kommuneNavn = byElement.GetString();
+                }
+
+                if (string.IsNullOrEmpty(kommuneNavn))
                 {
                     throw new Exception("Kunne ikke finne kommune for disse koordinatene");
                 }
 
-                // Finn kommune ID fra databasen basert på navn
                 using var connection = new MySqlConnection(_connectionString);
                 const string sql = "SELECT kommuneId FROM Kommune WHERE navn LIKE @Navn";
-                var kommuneId = await connection.QuerySingleOrDefaultAsync<int>(
-                    sql, 
-                    new { Navn = $"%{municipality}%" }
-                );
+                var kommuneId = await connection.QuerySingleOrDefaultAsync<int>(sql, new { Navn = $"%{kommuneNavn}%" });
 
                 if (kommuneId == 0)
                 {
-                    _logger.LogError($"Kommune {municipality} ikke funnet i databasen");
-                    throw new Exception("Kommune ikke funnet i databasen");
+                    _logger.LogError("Kommune {KommuneNavn} ikke funnet i databasen", kommuneNavn);
+                    throw new Exception($"Kommune {kommuneNavn} ikke funnet i databasen");
                 }
 
                 return kommuneId;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting kommune from coordinates: {ex.Message}");
+                _logger.LogError(ex, "Error getting kommune from coordinates ({Latitude}, {Longitude})", latitude, longitude);
+                throw;
+            }
+        }
+
+        public async Task UpdateLokasjon(LokasjonViewModel lokasjon, DateTime oppdatertDato)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    UPDATE Lokasjon 
+                    SET 
+                        geoJson = @GeoJson,
+                        geometriType = @GeometriType,
+                        latitude = @Latitude,
+                        longitude = @Longitude,
+                        oppdatertDato = @OppdatertDato
+                    WHERE lokasjonId = @LokasjonId";
+
+                var parameters = new
+                { 
+                    lokasjon.GeoJson, 
+                    lokasjon.GeometriType, 
+                    lokasjon.Latitude, 
+                    lokasjon.Longitude, 
+                    OppdatertDato = oppdatertDato, 
+                    lokasjon.LokasjonId 
+                };
+
+                var rowsAffected = await connection.ExecuteAsync(sql, parameters);
+                
+                if (rowsAffected == 0)
+                {
+                    var message = $"Lokasjon med ID {lokasjon.LokasjonId} finnes ikke";
+                    _logger.LogWarning(message);
+                    throw new KeyNotFoundException(message);
+                }
+
+                _logger.LogInformation("Lokasjon {LokasjonId} ble oppdatert", lokasjon.LokasjonId);
+            }
+            catch (MySqlException ex)
+            {
+                _logger.LogError(ex, "Database error ved oppdatering av lokasjon {LokasjonId}", lokasjon.LokasjonId);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Uventet feil ved oppdatering av lokasjon {LokasjonId}", lokasjon.LokasjonId);
                 throw;
             }
         }
