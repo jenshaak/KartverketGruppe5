@@ -24,7 +24,8 @@ namespace KartverketGruppe5.Services
             _httpClient = httpClient;
             _logger = logger;
             _apiSettings = apiSettings.Value;
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         private string GetFylkesnavnFromKommunenummer(string kommunenummer)

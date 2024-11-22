@@ -28,6 +28,11 @@ namespace KartverketGruppe5.Controllers
 
         public IActionResult Index()
         {
+            var brukerId = HttpContext.Session.GetInt32("BrukerId");
+            if (brukerId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -45,6 +50,13 @@ namespace KartverketGruppe5.Controllers
             {
                 model.GeometriType = "Point";
                 _logger.LogInformation("Setting default GeometriType to Point");
+            }
+
+            if (string.IsNullOrEmpty(beskrivelse))
+            {
+                _logger.LogWarning("Beskrivelse mangler");
+                ModelState.AddModelError("", "Beskrivelse er påkrevd");
+                return View(model);
             }
 
             if (!ModelState.IsValid)

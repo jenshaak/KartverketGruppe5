@@ -4,6 +4,7 @@ using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using KartverketGruppe5.Models.RequestModels;
 
 namespace KartverketGruppe5.Controllers
 {
@@ -33,30 +34,36 @@ namespace KartverketGruppe5.Controllers
             string fylkeFilter = "",
             int page = 1)
         {
-
-            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["CurrentStatus"] = statusFilter;
-            ViewData["CurrentFylke"] = fylkeFilter;
-            ViewData["Statuses"] = _innmeldingService.GetAllStatuses();
+            SetupViewData(sortOrder, statusFilter, fylkeFilter);
 
             try 
             {
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
                 
-                var result = await _innmeldingService.GetInnmeldinger(
-                    sortOrder: sortOrder,
-                    statusFilter: statusFilter,
-                    fylkeFilter: fylkeFilter,
-                    page: page);
+                var request = new InnmeldingRequest
+                {
+                    SortOrder = sortOrder,
+                    StatusFilter = statusFilter,
+                    FylkeFilter = fylkeFilter,
+                    Page = page
+                };
 
-                return View(result);
+                return View(await _innmeldingService.GetInnmeldinger(request));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av innmeldinger");
                 return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
             }
+        }
+
+        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter)
+        {
+            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentStatus"] = statusFilter;
+            ViewData["CurrentFylke"] = fylkeFilter;
+            ViewData["Statuses"] = _innmeldingService.GetAllStatuses();
         }
 
         [HttpGet]
@@ -136,29 +143,30 @@ namespace KartverketGruppe5.Controllers
         [HttpPost]
         public async Task<IActionResult> Behandle(int id)
         {
-            var innmeldingViewModel = await _innmeldingService.GetInnmeldingById(id);
-            if (innmeldingViewModel == null)
+            try 
+            {
+                var innmelding = await _innmeldingService.GetInnmeldingById(id);
+                var currentUserId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
+                
+                var innmeldingModel = new Innmelding
+                {
+                    InnmeldingId = innmelding.InnmeldingId,
+                    BrukerId = innmelding.BrukerId,
+                    KommuneId = innmelding.KommuneId,
+                    LokasjonId = innmelding.LokasjonId,
+                    Beskrivelse = innmelding.Beskrivelse,
+                    Status = "Under behandling",
+                    SaksbehandlerId = currentUserId,
+                    OpprettetDato = innmelding.OpprettetDato
+                };
+
+                await _innmeldingService.UpdateInnmeldingStatus(innmeldingModel.InnmeldingId, "Under behandling", currentUserId);
+                return RedirectToAction("Index", "MineSaker");
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-
-            var currentUserId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
-            
-            // Konverter til Innmelding
-            var innmelding = new Innmelding
-            {
-                InnmeldingId = innmeldingViewModel.InnmeldingId,
-                BrukerId = innmeldingViewModel.BrukerId,
-                KommuneId = innmeldingViewModel.KommuneId,
-                LokasjonId = innmeldingViewModel.LokasjonId,
-                Beskrivelse = innmeldingViewModel.Beskrivelse,
-                Status = "Under behandling",
-                SaksbehandlerId = currentUserId,
-                OpprettetDato = innmeldingViewModel.OpprettetDato
-            };
-
-            await _innmeldingService.UpdateInnmeldingStatus(innmelding.InnmeldingId, "Under behandling", currentUserId);
-            return RedirectToAction("Index", "MineSaker");
         }
 
         private string GetStatusClass(string status) => status switch

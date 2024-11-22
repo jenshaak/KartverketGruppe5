@@ -3,6 +3,7 @@ using MySqlConnector;
 using System.Data;
 using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
+using KartverketGruppe5.Models.RequestModels;
 namespace KartverketGruppe5.Services
 {
     public class InnmeldingService
@@ -15,7 +16,8 @@ namespace KartverketGruppe5.Services
         public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, BildeService bildeService)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            _connectionString = _configuration.GetConnectionString("DefaultConnection")
+                ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger;
             _bildeService = bildeService;
         }
@@ -43,14 +45,7 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<PagedResult<InnmeldingViewModel>> GetInnmeldinger(
-            int? saksbehandlerId = null,
-            int? innmelderBrukerId = null,
-            string sortOrder = "date_desc",
-            string statusFilter = "",
-            string fylkeFilter = "",
-            int page = 1,
-            int pageSize = 10)
+        public async Task<PagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
         {
             using var connection = new MySqlConnection(_connectionString);
             
@@ -70,60 +65,90 @@ namespace KartverketGruppe5.Services
                 INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
                 INNER JOIN Fylke f ON k.fylkeId = f.fylkeId";
 
-            // Build WHERE clause
-            var whereConditions = new List<string>();
-            if (saksbehandlerId.HasValue)
-            {
-                whereConditions.Add("i.saksbehandlerId = @SaksbehandlerId");
-            }
-            if (innmelderBrukerId.HasValue)
-            {
-                whereConditions.Add("i.brukerId = @InnmelderBrukerId");
-            }
-            if (!string.IsNullOrEmpty(statusFilter))
-            {
-                whereConditions.Add("i.status = @Status");
-            }
-            if (!string.IsNullOrEmpty(fylkeFilter))
-            {
-                whereConditions.Add("f.navn = @FylkeFilter");
-            }
+            var whereConditions = BuildWhereConditions(request);
+            var parameters = CreateParameters(request);
 
             if (whereConditions.Any())
             {
                 sql += " WHERE " + string.Join(" AND ", whereConditions);
             }
 
-            // Count total before pagination
-            var countSql = $"SELECT COUNT(*) FROM ({sql}) AS CountQuery";
-            var totalItems = await connection.ExecuteScalarAsync<int>(countSql, new { 
-                SaksbehandlerId = saksbehandlerId,
-                InnmelderBrukerId = innmelderBrukerId,
-                Status = statusFilter,
-                FylkeFilter = fylkeFilter
-            });
+            var totalItems = await GetTotalItems(connection, sql, parameters);
+            sql = AddSortingAndPagination(sql, request);
 
-            // Add sorting
-            sql += sortOrder switch
+            var innmeldinger = await connection.QueryAsync<InnmeldingViewModel>(sql, parameters);
+            
+            return new PagedResult<InnmeldingViewModel>
+            {
+                Items = ProcessItems(innmeldinger.ToList()),
+                TotalItems = totalItems,
+                CurrentPage = request.Page,
+                PageSize = request.PageSize
+            };
+        }
+
+        private List<string> BuildWhereConditions(InnmeldingRequest request)
+        {
+            var conditions = new List<string>();
+            
+            if (request.SaksbehandlerId.HasValue)
+                conditions.Add("i.saksbehandlerId = @SaksbehandlerId");
+            
+            if (request.InnmelderBrukerId.HasValue)
+                conditions.Add("i.brukerId = @InnmelderBrukerId");
+            
+            if (!string.IsNullOrEmpty(request.StatusFilter))
+                conditions.Add("i.status = @Status");
+            
+            if (!string.IsNullOrEmpty(request.FylkeFilter))
+                conditions.Add("f.navn = @FylkeFilter");
+            
+            return conditions;
+        }
+
+        private DynamicParameters CreateParameters(InnmeldingRequest request)
+        {
+            var parameters = new DynamicParameters();
+            
+            if (request.SaksbehandlerId.HasValue)
+                parameters.Add("SaksbehandlerId", request.SaksbehandlerId.Value);
+            
+            if (request.InnmelderBrukerId.HasValue)
+                parameters.Add("InnmelderBrukerId", request.InnmelderBrukerId.Value);
+            
+            if (!string.IsNullOrEmpty(request.StatusFilter))
+                parameters.Add("Status", request.StatusFilter);
+            
+            if (!string.IsNullOrEmpty(request.FylkeFilter))
+                parameters.Add("FylkeFilter", request.FylkeFilter);
+            
+            parameters.Add("Skip", (request.Page - 1) * request.PageSize);
+            parameters.Add("Take", request.PageSize);
+            
+            return parameters;
+        }
+
+        private string AddSortingAndPagination(string sql, InnmeldingRequest request)
+        {
+            sql += request.SortOrder switch
             {
                 "date_asc" => " ORDER BY i.opprettetDato ASC",
                 _ => " ORDER BY i.opprettetDato DESC"
             };
-
-            // Legg til pagination
+            
             sql += " LIMIT @Skip, @Take";
+            return sql;
+        }
 
-            var innmeldinger = (await connection.QueryAsync<InnmeldingViewModel>(sql, new { 
-                SaksbehandlerId = saksbehandlerId,
-                InnmelderBrukerId = innmelderBrukerId,
-                Status = statusFilter,
-                FylkeFilter = fylkeFilter,
-                Skip = (page - 1) * pageSize,
-                Take = pageSize
-            })).ToList();  // Konverterer til List<InnmeldingViewModel>
+        private async Task<int> GetTotalItems(MySqlConnection connection, string sql, DynamicParameters parameters)
+        {
+            var countSql = $"SELECT COUNT(*) FROM ({sql}) AS CountQuery";
+            return await connection.ExecuteScalarAsync<int>(countSql, parameters);
+        }
 
-            // Process the items
-            var items = innmeldinger.Select(i => new InnmeldingViewModel
+        private List<InnmeldingViewModel> ProcessItems(List<InnmeldingViewModel> items)
+        {
+            return items.Select(i => new InnmeldingViewModel
             {
                 InnmeldingId = i.InnmeldingId,
                 BrukerId = i.BrukerId,
@@ -137,59 +162,58 @@ namespace KartverketGruppe5.Services
                 SaksbehandlerId = i.SaksbehandlerId,
                 StatusClass = GetStatusClass(i.Status)
             }).ToList();
-
-            return new PagedResult<InnmeldingViewModel>
-            {
-                Items = items,
-                TotalItems = totalItems,
-                CurrentPage = page,
-                PageSize = pageSize
-            };
         }
 
         public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
         {
-            using var connection = new MySqlConnection(_connectionString);
-            
-            string sql = @"
-                SELECT 
-                    i.innmeldingId,
-                    i.brukerId,
-                    i.kommuneId,
-                    i.lokasjonId,
-                    i.beskrivelse,
-                    i.kommentar,
-                    i.status,
-                    i.opprettetDato,
-                    i.saksbehandlerId,
-                    i.bildeSti,
-                    k.navn as kommuneNavn,
-                    l.latitude,
-                    l.longitude,
-                    l.geoJson,
-                    CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
-                FROM Innmelding i 
-                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
-                INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
-                LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
-                WHERE i.innmeldingId = @Id";
-
-            var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
-
-            if (innmelding != null)
+            try 
             {
+                using var connection = new MySqlConnection(_connectionString);
+                
+                string sql = @"
+                    SELECT 
+                        i.innmeldingId,
+                        i.brukerId,
+                        i.kommuneId,
+                        i.lokasjonId,
+                        i.beskrivelse,
+                        i.kommentar,
+                        i.status,
+                        i.opprettetDato,
+                        i.saksbehandlerId,
+                        i.bildeSti,
+                        k.navn as kommuneNavn,
+                        l.latitude,
+                        l.longitude,
+                        l.geoJson,
+                        CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
+                    FROM Innmelding i 
+                    INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
+                    INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
+                    LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
+                    WHERE i.innmeldingId = @Id";
+
+                var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
+
+                if (innmelding == null)
+                {
+                    _logger.LogWarning($"Fant ingen innmelding med ID {id}");
+                    throw new KeyNotFoundException($"Innmelding med ID {id} finnes ikke");
+                }
+
                 innmelding.StatusClass = GetStatusClass(innmelding.Status);
-                _logger.LogInformation($"Hentet innmelding med ID {id}:");
-                _logger.LogInformation($"- Beskrivelse: {innmelding.Beskrivelse}");
-                _logger.LogInformation($"- Kommentar: {innmelding.Kommentar ?? "Ingen kommentar"}");
-                _logger.LogInformation($"- Status: {innmelding.Status}");
+                return innmelding;
             }
-            else
+            catch (MySqlException ex)
             {
-                _logger.LogWarning($"Fant ingen innmelding med ID {id}");
+                _logger.LogError(ex, $"Database error ved henting av innmelding {id}");
+                throw;
             }
-
-            return innmelding;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Uventet feil ved henting av innmelding {id}");
+                throw;
+            }
         }
 
         public class InnmeldingUpdateModel
@@ -346,32 +370,37 @@ namespace KartverketGruppe5.Services
             });
         }
 
-        public InnmeldingViewModel GetInnmeldingForLokasjon(int lokasjonId)
+        public InnmeldingViewModel? GetInnmeldingForLokasjon(int lokasjonId)
         {
             try
             {
-                using (IDbConnection db = new MySqlConnection(_connectionString))
-                {
-                    const string sql = @"
-                        SELECT 
-                            innmeldingId,
-                            brukerId,
-                            kommuneId,
-                            lokasjonId,
-                            beskrivelse,
-                            opprettetDato
-                        FROM Innmelding 
-                        WHERE lokasjonId = @LokasjonId
-                        ORDER BY opprettetDato DESC
-                        LIMIT 1";
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    SELECT 
+                        innmeldingId,
+                        brukerId,
+                        kommuneId,
+                        lokasjonId,
+                        beskrivelse,
+                        opprettetDato
+                    FROM Innmelding 
+                    WHERE lokasjonId = @LokasjonId
+                    ORDER BY opprettetDato DESC
+                    LIMIT 1";
 
-                    return db.QueryFirstOrDefault<InnmeldingViewModel>(sql, new { LokasjonId = lokasjonId });
+                var innmelding = connection.QueryFirstOrDefault<InnmeldingViewModel>(sql, new { LokasjonId = lokasjonId });
+                
+                if (innmelding != null)
+                {
+                    innmelding.StatusClass = GetStatusClass(innmelding.Status);
                 }
+                
+                return innmelding;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error getting innmelding for lokasjon {lokasjonId}: {ex.Message}");
-                return null;
+                throw;
             }
         }
 

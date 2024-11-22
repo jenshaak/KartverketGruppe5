@@ -16,7 +16,8 @@ namespace KartverketGruppe5.Services
 
         public LokasjonService(IConfiguration configuration, ILogger<LokasjonService> logger)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger;
         }
 
