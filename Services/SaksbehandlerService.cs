@@ -54,9 +54,8 @@ namespace KartverketGruppe5.Services
         }
 
         public async Task<PagedResult<Saksbehandler>> GetAllSaksbehandlere(
-            string sortOrder = "date_desc", 
-            int page = 1, 
-            int pageSize = 10)
+            string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
+            int page = PagedResult<Saksbehandler>.DefaultPage)
         {
             try
             {
@@ -65,6 +64,13 @@ namespace KartverketGruppe5.Services
                 // Base query for counting total items
                 const string countSql = "SELECT COUNT(*) FROM Saksbehandler";
                 var totalItems = await connection.ExecuteScalarAsync<int>(countSql);
+
+                var pagedResult = new PagedResult<Saksbehandler>
+                {
+                    TotalItems = totalItems,
+                    CurrentPage = page,
+                    Items = new List<Saksbehandler>()
+                };
 
                 // Build the main query with sorting
                 var orderByClause = sortOrder switch
@@ -82,27 +88,21 @@ namespace KartverketGruppe5.Services
 
                 var items = await connection.QueryAsync<Saksbehandler>(sql, new
                 {
-                    Skip = (page - 1) * pageSize,
-                    Take = pageSize
+                    Skip = pagedResult.Skip,
+                    Take = pagedResult.Take
                 });
 
-                return new PagedResult<Saksbehandler>
-                {
-                    Items = items.ToList(),
-                    TotalItems = totalItems,
-                    CurrentPage = page,
-                    PageSize = pageSize
-                };
+                pagedResult.Items = items.ToList();
+                return pagedResult;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting all saksbehandlere: {ex.Message}");
+                _logger.LogError(ex, "Error getting all saksbehandlere");
                 return new PagedResult<Saksbehandler>
                 {
                     Items = new List<Saksbehandler>(),
                     TotalItems = 0,
-                    CurrentPage = page,
-                    PageSize = pageSize
+                    CurrentPage = page
                 };
             }
         }

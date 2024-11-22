@@ -2,130 +2,25 @@
 @using KartverketGruppe5.Models
 @{
     ViewData["Title"] = "Saksbehandling";
+    ViewData["ActionName"] = "Detaljer";
     var statuses = (List<string>)ViewData["Statuses"];
     var fylker = ViewBag.Fylker as List<Fylke> ?? new List<Fylke>();
 }
 
-<div class="w-full flex justify-center py-12">
-    <div class="relative w-4/5 flex flex-col gap-4 p-8">
+<div class="page-container">
+    <div class="content-container">
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
-        <h1 class="text-3xl font-bold mb-6 text-center">Behandle Innmeldinger</h1>
-
-        <!-- Filtre -->
-        <div class="mb-6 flex gap-4">
-            <div class="w-64">
-                <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
-                <select id="statusFilter" 
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                    <option value="">Alle statuser</option>
-                    @if(statuses != null)
-                    {
-                        @foreach (var status in statuses)
-                        {
-                        <option value="@status" selected="@(status == ViewData["CurrentStatus"]?.ToString())">
-                            @status
-                            </option>
-                        }
-                    }
-                </select>
-            </div>
-            <div class="w-64">
-                <label for="fylkeFilter" class="block text-sm font-medium text-gray-700">Fylke</label>
-                <select id="fylkeFilter" name="fylkeFilter"
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                    <option value="">Alle fylker</option>
-                    @foreach (var fylke in ViewBag.Fylker)
-                    {
-                        <option value="@fylke.Navn" selected="@(fylke.Navn == ViewData["CurrentFylke"]?.ToString())">
-                            @fylke.Navn
-                        </option>
-                    }
-                </select>
-            </div>
-            <div class="w-64">
-                <label for="dateSort" class="block text-sm font-medium text-gray-700">Dato</label>
-                <select id="dateSort" 
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                    <option value="date_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_desc")">Nyeste først</option>
-                    <option value="date_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_asc")">Eldste først</option>
-                </select>
-            </div>
-        </div>
+        <h1>Behandle Innmeldinger</h1>
 
         <!-- Innmelding-tabell -->
-        <div class="min-w-full divide-y divide-gray-200 rounded-lg [border-spacing:0_0.75rem] border-separate">
-            <div class="divide-y divide-gray-200 space-y-4">
-                @foreach (var innmelding in Model.Items)
-                {
-                    <a asp-action="Detaljer" 
-                       asp-route-id="@innmelding.InnmeldingId" 
-                       class="hover:bg-gray-50  bg-white flex justify-between items-center rounded-lg px-6 py-4">
-                        <div class="whitespace-nowrap w-16">
-                            <div class="font-medium text-gray-900">@innmelding.FylkeNavn</div>
-                        </div>
-                        <div class="whitespace-nowrap w-16">
-                            <div class="font-medium text-gray-900">@innmelding.KommuneNavn</div>
-                        </div>
-                        <div class="whitespace-nowrap w-16">
-                            <div class="text-sm text-gray-500">@innmelding.OpprettetDato.ToShortDateString()</div>
-                        </div>
-                        <div class="whitespace-nowrap w-16 flex justify-end">
-                            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @innmelding.StatusClass">
-                                @innmelding.Status
-                            </span>
-                        </div>
-                    </a>
-                }
-            </div>
-        @if(Model.Items.Count == 0)
-        {
-            <h3 class="text-xl text-center text-gray-500">Ingen innmeldinger funnet.</h3>
-        }
-    </div>
+        <partial name="_InnmeldingTabell" model="Model" />
 
-    <!-- Pagination -->
-    <div class="mt-4 flex justify-center">
-        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-            @if (Model.HasPreviousPage)
-            {
-                <a asp-action="Index" 
-                   asp-route-page="@(Model.CurrentPage - 1)"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Forrige</span>
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                </a>
-            }
+        <!-- Pagination -->
+        <partial name="_Pagination" model="Model" />
 
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <a asp-action="Index"
-                   asp-route-page="@i"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium @(i == Model.CurrentPage ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:bg-gray-50")">
-                    @i
-                </a>
-            }
-
-            @if (Model.HasNextPage)
-            {
-                <a asp-action="Index"
-                   asp-route-page="@(Model.CurrentPage + 1)"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Neste</span>
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                    </svg>
-                </a>
-            }
-        </nav>
-        </div>
     </div>
 </div>
 

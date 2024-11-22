@@ -1,0 +1,78 @@
+@model PagedResult<InnmeldingViewModel>
+@{
+    var actionName = ViewData["ActionName"]?.ToString() ?? "Detaljer";
+    var statuses = (List<string>)ViewData["Statuses"];
+    var fylker = ViewBag.Fylker as List<Fylke> ?? new List<Fylke>();
+}
+
+<!-- Filtre -->
+<div class="mb-6 flex gap-4">
+    <div class="w-64">
+        <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
+        <select id="statusFilter" 
+                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+            <option value="">Alle statuser</option>
+            @if(statuses != null)
+            {
+                @foreach (var status in statuses)
+                {
+                    <option value="@status" selected="@(status == ViewData["CurrentStatus"]?.ToString())">
+                        @status
+                    </option>
+                }
+            }
+        </select>
+    </div>
+    <div class="w-64">
+        <label for="fylkeFilter" class="block text-sm font-medium text-gray-700">Fylke</label>
+        <select id="fylkeFilter" name="fylkeFilter"
+                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+            <option value="">Alle fylker</option>
+            @foreach (var fylke in fylker)
+            {
+                <option value="@fylke.Navn" selected="@(fylke.Navn == ViewData["CurrentFylke"]?.ToString())">
+                    @fylke.Navn
+                </option>
+            }
+        </select>
+    </div>
+    <div class="w-64">
+        <label for="dateSort" class="block text-sm font-medium text-gray-700">Dato</label>
+        <select id="dateSort" 
+                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+            <option value="date_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_desc")">Nyeste først</option>
+            <option value="date_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_asc")">Eldste først</option>
+        </select>
+    </div>
+</div>
+
+<!-- Tabell -->
+<div class="min-w-full divide-y divide-gray-200 rounded-lg [border-spacing:0_0.75rem] border-separate">
+    <div class="divide-y divide-gray-200 space-y-4">
+        @foreach (var innmelding in Model.Items)
+        {
+            <a asp-action="@actionName" 
+               asp-route-id="@innmelding.InnmeldingId" 
+               class="hover:bg-gray-50 bg-white flex justify-between items-center rounded-lg px-6 py-4">
+                <div class="whitespace-nowrap w-16">
+                    <div class="font-medium text-gray-900">@innmelding.FylkeNavn</div>
+                </div>
+                <div class="whitespace-nowrap w-16">
+                    <div class="font-medium text-gray-900">@innmelding.KommuneNavn</div>
+                </div>
+                <div class="whitespace-nowrap w-16">
+                    <div class="text-sm text-gray-500">@innmelding.OpprettetDato.ToShortDateString()</div>
+                </div>
+                <div class="whitespace-nowrap w-16 flex justify-end">
+                    <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full @innmelding.StatusClass">
+                        @innmelding.Status
+                    </span>
+                </div>
+            </a>
+        }
+    </div>
+    @if(Model.Items.Count == 0)
+    {
+        <h3 class="text-xl text-center text-gray-500">Ingen innmeldinger funnet.</h3>
+    }
+</div> 
