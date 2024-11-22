@@ -33,6 +33,32 @@ namespace KartverketGruppe5.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Index(
+            string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
+            int page = PagedResult<Saksbehandler>.DefaultPage)
+        {
+            try 
+            {
+                SetSortingViewData(sortOrder, page);
+                var result = await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page);
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av saksbehandlere");
+                TempData["Error"] = "Det oppstod en feil ved henting av saksbehandlere.";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        private void SetSortingViewData(string sortOrder, int page)
+        {
+            ViewData["AdminSortParam"] = sortOrder == "admin_desc" ? "admin_asc" : "admin_desc";
+            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentPage"] = page;
+        }
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(Saksbehandler saksbehandler)
@@ -63,30 +89,6 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(string sortOrder = "date_desc", int page = 1)
-        {
-            if (!User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
-
-            try 
-            {
-                ViewData["AdminSortParam"] = sortOrder == "admin_desc" ? "admin_asc" : "admin_desc";
-                ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
-                ViewData["CurrentSort"] = sortOrder;
-                ViewData["CurrentPage"] = page;
-
-                var result = await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page);
-                return View(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Feil ved henting av saksbehandlere: {ex.Message}");
-                TempData["Error"] = "Det oppstod en feil ved henting av saksbehandlere.";
-                return RedirectToAction("Index", "Home");
-            }
-        }
 
         [ValidateAntiForgeryToken]
         [HttpPost]

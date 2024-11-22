@@ -1,0 +1,43 @@
+@using KartverketGruppe5.Models
+@using KartverketGruppe5.Models.ViewModels
+@model object
+
+@{
+    var pagedResult = (dynamic)Model;
+}
+
+<div class="mt-4 flex justify-center">
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        @if (pagedResult.HasPreviousPage)
+        {
+            <a asp-action="Index" 
+               asp-route-page="@(pagedResult.CurrentPage - 1)"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Forrige</span>
+                <i class="ph ph-caret-left"></i>
+            </a>
+        }
+
+        @for (int i = 1; i <= pagedResult.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-page="@i"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium @(i == pagedResult.CurrentPage ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:bg-gray-50")">
+                @i
+            </a>
+        }
+
+        @if (pagedResult.HasNextPage)
+        {
+            <a asp-action="Index"
+               asp-route-page="@(pagedResult.CurrentPage + 1)"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Neste</span>
+                <i class="ph ph-caret-right"></i>
+            </a>
+        }
+    </nav>
+</div> 
