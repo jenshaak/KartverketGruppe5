@@ -8,8 +8,8 @@ namespace KartverketGruppe5.Services
 {
     public class SaksbehandlerService
     {
-        private readonly ILogger<SaksbehandlerService> _logger;
         private readonly string _connectionString;
+        private readonly ILogger<SaksbehandlerService> _logger;
 
         public SaksbehandlerService(IConfiguration configuration, ILogger<SaksbehandlerService> logger)
         {
@@ -18,21 +18,29 @@ namespace KartverketGruppe5.Services
             _logger = logger;
         }
 
-        public async Task<Saksbehandler> GetSaksbehandlerById(int id)
+        public async Task<Saksbehandler?> GetSaksbehandlerById(int id)
         {
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
                 const string sql = @"
-                    SELECT * FROM Saksbehandler 
+                    SELECT 
+                        saksbehandlerId,
+                        fornavn,
+                        etternavn,
+                        email,
+                        passord,
+                        admin,
+                        opprettetDato
+                    FROM Saksbehandler 
                     WHERE saksbehandlerId = @Id";
                 
                 return await connection.QueryFirstOrDefaultAsync<Saksbehandler>(sql, new { Id = id });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting saksbehandler: {ex.Message}");
-                return null;
+                _logger.LogError(ex, "Error getting saksbehandler with id {SaksbehandlerId}", id);
+                throw;
             }
         }
 
@@ -42,15 +50,23 @@ namespace KartverketGruppe5.Services
             {
                 using var connection = new MySqlConnection(_connectionString);
                 const string sql = @"
-                    SELECT * FROM Saksbehandler 
+                    SELECT 
+                        saksbehandlerId,
+                        fornavn,
+                        etternavn,
+                        email,
+                        passord,
+                        admin,
+                        opprettetDato
+                    FROM Saksbehandler 
                     WHERE email = @Email";
                 
                 return await connection.QueryFirstOrDefaultAsync<Saksbehandler>(sql, new { Email = email });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting saksbehandler by email: {ex.Message}");
-                return null;
+                _logger.LogError(ex, "Error getting saksbehandler by email {Email}", email);
+                throw;
             }
         }
 
@@ -62,7 +78,6 @@ namespace KartverketGruppe5.Services
             {
                 using var connection = new MySqlConnection(_connectionString);
                 
-                // Base query for counting total items
                 const string countSql = "SELECT COUNT(*) FROM Saksbehandler";
                 var totalItems = await connection.ExecuteScalarAsync<int>(countSql);
 
@@ -73,17 +88,18 @@ namespace KartverketGruppe5.Services
                     Items = new List<Saksbehandler>()
                 };
 
-                // Build the main query with sorting
-                var orderByClause = sortOrder switch
-                {
-                    "admin_desc" => "admin DESC, opprettetDato DESC",
-                    "admin_asc" => "admin ASC, opprettetDato DESC",
-                    "date_asc" => "opprettetDato ASC",
-                    _ => "opprettetDato DESC"
-                };
+                var orderByClause = GetOrderByClause(sortOrder);
 
                 var sql = $@"
-                    SELECT * FROM Saksbehandler
+                    SELECT 
+                        saksbehandlerId,
+                        fornavn,
+                        etternavn,
+                        email,
+                        passord,
+                        admin,
+                        opprettetDato
+                    FROM Saksbehandler
                     ORDER BY {orderByClause}
                     LIMIT @Skip, @Take";
 
@@ -98,15 +114,19 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting all saksbehandlere");
-                return new PagedResult<Saksbehandler>
-                {
-                    Items = new List<Saksbehandler>(),
-                    TotalItems = 0,
-                    CurrentPage = page
-                };
+                _logger.LogError(ex, "Error getting all saksbehandlere with sort order {SortOrder} and page {Page}", 
+                    sortOrder, page);
+                throw;
             }
         }
+
+        private static string GetOrderByClause(string sortOrder) => sortOrder switch
+        {
+            "admin_desc" => "admin DESC, opprettetDato DESC",
+            "admin_asc" => "admin ASC, opprettetDato DESC",
+            "date_asc" => "opprettetDato ASC",
+            _ => "opprettetDato DESC"
+        };
 
         public async Task<bool> CreateSaksbehandler(Saksbehandler saksbehandler)
         {
@@ -115,9 +135,19 @@ namespace KartverketGruppe5.Services
                 using var connection = new MySqlConnection(_connectionString);
                 const string sql = @"
                     INSERT INTO Saksbehandler (
-                        fornavn, etternavn, email, passord, admin, opprettetDato
+                        fornavn, 
+                        etternavn, 
+                        email, 
+                        passord, 
+                        admin, 
+                        opprettetDato
                     ) VALUES (
-                        @Fornavn, @Etternavn, @Email, @Passord, @Admin, @OpprettetDato
+                        @Fornavn, 
+                        @Etternavn, 
+                        @Email, 
+                        @Passord, 
+                        @Admin, 
+                        @OpprettetDato
                     )";
 
                 saksbehandler.Passord = HashPassword(saksbehandler.Passord);
@@ -128,8 +158,8 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error creating saksbehandler: {ex.Message}");
-                return false;
+                _logger.LogError(ex, "Error creating saksbehandler with email {Email}", saksbehandler.Email);
+                throw;
             }
         }
 
@@ -139,7 +169,6 @@ namespace KartverketGruppe5.Services
             {
                 using var connection = new MySqlConnection(_connectionString);
                 
-                // Hent eksisterende passord hvis ikke nytt er angitt
                 if (string.IsNullOrEmpty(saksbehandler.Passord))
                 {
                     var existing = await GetSaksbehandlerById(saksbehandler.SaksbehandlerId);
@@ -153,7 +182,8 @@ namespace KartverketGruppe5.Services
 
                 const string sql = @"
                     UPDATE Saksbehandler 
-                    SET fornavn = @Fornavn,
+                    SET 
+                        fornavn = @Fornavn,
                         etternavn = @Etternavn,
                         email = @Email,
                         passord = @Passord,
@@ -165,13 +195,13 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error updating saksbehandler: {ex.Message}");
-                return false;
+                _logger.LogError(ex, "Error updating saksbehandler with id {SaksbehandlerId}", 
+                    saksbehandler.SaksbehandlerId);
+                throw;
             }
         }
 
-        
-        private string HashPassword(string password)
+        private static string HashPassword(string password)
         {
             using var sha256 = SHA256.Create();
             var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -182,6 +212,5 @@ namespace KartverketGruppe5.Services
         {
             return HashPassword(password) == hashedPassword;
         }
-
     }
 } 

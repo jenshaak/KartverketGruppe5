@@ -85,7 +85,7 @@ namespace KartverketGruppe5.Controllers
                 }
 
                 _logger.LogInformation("Adding lokasjon to database");
-                int lokasjonId = _lokasjonService.AddLokasjon(
+                int lokasjonId = await _lokasjonService.AddLokasjon(
                     model.GeoJson,
                     model.Latitude,
                     model.Longitude,

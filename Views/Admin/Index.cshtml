@@ -22,12 +22,12 @@
         </div>
         @if (TempData["Message"] != null)
         {
-            <div class="w-full p-4 bg-green-100 text-green-800 mt-4 rounded-lg border-green-800">@TempData["Message"]</div>
+            <div class="w-full p-4 bg-green-100 text-green-800 mt-4 rounded-lg border border-green-800">@TempData["Message"]</div>
         }
 
         @if (TempData["Error"] != null)
         {
-            <div class="w-full p-4 bg-red-100 text-red-800 mt-4 rounded-lg border-red-800">@TempData["Error"]</div>
+            <div class="w-full p-4 bg-red-100 text-red-800 mt-4 rounded-lg border border-red-800">@TempData["Error"]</div>
         }
 
         <div class="bg-white rounded-lg shadow">

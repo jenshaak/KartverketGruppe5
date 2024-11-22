@@ -18,49 +18,74 @@ namespace KartverketGruppe5.Services
             _logger = logger;
         }
 
-        public Kommune GetKommuneById(int kommuneId)
+        public async Task<Kommune?> GetKommuneById(int kommuneId)
         {
             try
             {
-                using (IDbConnection db = new MySqlConnection(_connectionString))
-                {
-                    const string sql = @"
-                        SELECT kommuneId, fylkeId, navn, kommuneNummer 
-                        FROM Kommune 
-                        WHERE kommuneId = @KommuneId";
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    SELECT kommuneId, fylkeId, navn, kommuneNummer 
+                    FROM Kommune 
+                    WHERE kommuneId = @KommuneId";
 
-                    return db.QueryFirstOrDefault<Kommune>(sql, new { KommuneId = kommuneId });
-                }
+                return await connection.QueryFirstOrDefaultAsync<Kommune>(sql, new { KommuneId = kommuneId });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting kommune by id {kommuneId}: {ex.Message}");
-                return null;
+                _logger.LogError(ex, "Error getting kommune with id {KommuneId}", kommuneId);
+                throw;
             }
         }
 
-        public List<Kommune> GetAllKommuner()
+        public async Task<List<Kommune>> GetAllKommuner()
         {
             try
             {
-                using (IDbConnection db = new MySqlConnection(_connectionString))
-                {
-                    const string sql = "SELECT kommuneId, fylkeId, navn, kommuneNummer FROM Kommune";
-                    return db.Query<Kommune>(sql).ToList();
-                }
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    SELECT kommuneId, fylkeId, navn, kommuneNummer 
+                    FROM Kommune 
+                    ORDER BY navn";
+                    
+                var result = await connection.QueryAsync<Kommune>(sql);
+                return result.ToList();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting all kommuner: {ex.Message}");
-                return new List<Kommune>();
+                _logger.LogError(ex, "Error getting all kommuner");
+                throw;
             }
         }
 
         public async Task<List<Kommune>> SearchKommuner(string searchTerm)
         {
-            using var connection = new MySqlConnection(_connectionString);
-            var sql = "SELECT kommuneId, navn FROM Kommune WHERE navn LIKE @SearchTerm ORDER BY navn LIMIT 10";
-            return (await connection.QueryAsync<Kommune>(sql, new { SearchTerm = $"%{searchTerm}%" })).ToList();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    return new List<Kommune>();
+                }
+
+                using var connection = new MySqlConnection(_connectionString);
+                const string sql = @"
+                    SELECT kommuneId, fylkeId, navn, kommuneNummer 
+                    FROM Kommune 
+                    WHERE navn LIKE @SearchTerm 
+                    ORDER BY navn 
+                    LIMIT 10";
+
+                var result = await connection.QueryAsync<Kommune>(
+                    sql, 
+                    new { SearchTerm = $"%{searchTerm.Trim()}%" }
+                );
+                
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error searching kommuner with term {SearchTerm}", searchTerm);
+                throw;
+            }
         }
     }
 } 

@@ -90,7 +90,7 @@ namespace KartverketGruppe5.Controllers
                 return NotFound();
             }
 
-            var kommune = _kommuneService.GetKommuneById(innmelding.KommuneId);
+            var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
             if (kommune == null)
             {
                 return NotFound();
@@ -119,8 +119,8 @@ namespace KartverketGruppe5.Controllers
             return View(innmeldingViewModel);
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile bilde)
         {
             try 

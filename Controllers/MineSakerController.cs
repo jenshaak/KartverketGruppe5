@@ -105,8 +105,22 @@ namespace KartverketGruppe5.Controllers
         [HttpPost]
         public async Task<IActionResult> FullforBehandling(int innmeldingId, string kommentar, string status)
         {
-            await _innmeldingService.UpdateStatusAndKommentar(innmeldingId, kommentar, status);
-            return RedirectToAction("Index");
+            try 
+            {
+                await _innmeldingService.UpdateStatusAndKommentar(innmeldingId, kommentar, status);
+                return RedirectToAction("Index");
+            }
+            catch (KeyNotFoundException)
+            {
+                _logger.LogWarning($"Fant ikke innmelding med ID {innmeldingId}");
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Feil ved oppdatering av innmelding {innmeldingId}");
+                TempData["Error"] = "Det oppstod en feil ved behandling av saken.";
+                return RedirectToAction("Index");
+            }
         }
     }
 }
