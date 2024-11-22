@@ -4,6 +4,7 @@ using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using KartverketGruppe5.Models.RequestModels;
 
 namespace KartverketGruppe5.Controllers
 {
@@ -30,6 +31,38 @@ namespace KartverketGruppe5.Controllers
             string fylkeFilter = "",
             int page = 1)
         {
+            SetupViewData(sortOrder, statusFilter, fylkeFilter);
+
+            var brukerId = HttpContext.Session.GetInt32("BrukerId");
+            if (brukerId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try 
+            {
+                ViewBag.Fylker = await _fylkeService.GetAllFylker();
+                
+                var request = new InnmeldingRequest
+                {
+                    InnmelderBrukerId = brukerId.Value,
+                    SortOrder = sortOrder,
+                    StatusFilter = statusFilter,
+                    FylkeFilter = fylkeFilter,
+                    Page = page
+                };
+
+                return View(await _innmeldingService.GetInnmeldinger(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av innmeldinger");
+                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
+            }
+        }
+
+        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter)
+        {
             ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentStatus"] = statusFilter;
@@ -41,33 +74,6 @@ namespace KartverketGruppe5.Controllers
                 "Godkjent",
                 "Avvist"
             };
-
-            var brukerId = HttpContext.Session.GetInt32("BrukerId");
-            if (brukerId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            try 
-            {
-                var fylker = await _fylkeService.GetAllFylker();
-                _logger.LogInformation($"Fylker: {fylker.Count}");
-                ViewBag.Fylker = fylker;
-                
-                var result = await _innmeldingService.GetInnmeldinger(
-                    innmelderBrukerId: brukerId,
-                    sortOrder: sortOrder,
-                    statusFilter: statusFilter,
-                    fylkeFilter: fylkeFilter,
-                    page: page);
-
-                return View(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Feil ved henting av innmeldinger");
-                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
-            }
         }
 
         public async Task<IActionResult> Detaljer(int id)
@@ -134,20 +140,20 @@ namespace KartverketGruppe5.Controllers
                     _logger.LogInformation("Ingen ny fil lastet opp");
                 }
 
-                LokasjonViewModel lokasjon = null;
-                if (Request.Form["geoJsonInput"].Count > 0 && 
-                    Request.Form["geometriType"].Count > 0 && 
-                    Request.Form["latitude"].Count > 0 && 
-                    Request.Form["longitude"].Count > 0 &&
-                    !string.IsNullOrWhiteSpace(Request.Form["latitude"]) &&
-                    !string.IsNullOrWhiteSpace(Request.Form["longitude"]))
+                LokasjonViewModel? lokasjon = null;
+                if (Request.Form.TryGetValue("geoJsonInput", out var geoJson) && 
+                    Request.Form.TryGetValue("geometriType", out var geometriType) && 
+                    Request.Form.TryGetValue("latitude", out var latitude) && 
+                    Request.Form.TryGetValue("longitude", out var longitude) &&
+                    !string.IsNullOrWhiteSpace(latitude.ToString()) &&
+                    !string.IsNullOrWhiteSpace(longitude.ToString()))
                 {
                     lokasjon = new LokasjonViewModel
                     {
-                        GeoJson = Request.Form["geoJsonInput"],
-                        GeometriType = Request.Form["geometriType"],
-                        Latitude = double.Parse(Request.Form["latitude"]),
-                        Longitude = double.Parse(Request.Form["longitude"])
+                        GeoJson = geoJson.ToString(),
+                        GeometriType = geometriType.ToString(),
+                        Latitude = double.Parse(latitude.ToString()),
+                        Longitude = double.Parse(longitude.ToString())
                     };
                     
                     _logger.LogInformation($"Oppdaterer lokasjon:");
