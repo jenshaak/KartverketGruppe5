@@ -6,30 +6,35 @@
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
-        <h1 class="text-3xl font-bold mb-6 text-center">Administrer saksbehandlere, fylker og kommuner</h1>
-        <div class="flex justify-between items-center mb-4">
-            <div class="flex gap-4">
-                <a asp-action="Register" class="btn btn-primary">Registrer ny saksbehandler</a>
+        <h1 class="mb-6 text-center">Administrer saksbehandlere, fylker og kommuner</h1>
+        <div class="flex justify-between items-center py-4">
+            <div class="flex gap-4 justify-evenly w-full">
+                <a asp-action="Register" class="btn btn-primary">
+                    <i class="ph ph-plus ph-lg"></i>
+                    Registrer ny saksbehandler</a>
                 <form asp-action="PopulateFylkerOgKommuner" method="post" class="">
-                    <button type="submit" class="btn btn-primary">Oppdater Fylker og Kommuner</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ph ph-arrows-clockwise ph-lg"></i>
+                        Oppdater Fylker og Kommuner
+                    </button>
                 </form>
             </div>
         </div>
         @if (TempData["Message"] != null)
         {
-            <div class="alert alert-success mt-4">@TempData["Message"]</div>
+            <div class="w-full p-4 bg-green-100 text-green-800 mt-4 rounded-lg border-green-800">@TempData["Message"]</div>
         }
 
         @if (TempData["Error"] != null)
         {
-            <div class="alert alert-danger mt-4">@TempData["Error"]</div>
+            <div class="w-full p-4 bg-red-100 text-red-800 mt-4 rounded-lg border-red-800">@TempData["Error"]</div>
         }
 
         <div class="bg-white rounded-lg shadow">
-            <table class="min-w-full divide-y divide-gray-200 rounded-lg">
-                <thead class="bg-gray-50 rounded-t-lg">
+            <table class="min-w-full divide-y divide-gray-200 table-rounded">
+                <thead class="bg-gray-50 rounded-tl rounded-tr">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left rounded-tl-lg text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="px-6 py-3 text-left rounded-tl text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Navn
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -61,12 +66,12 @@
                                 }
                             </a>
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left rounded-tr-lg text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="px-6 py-3 text-left rounded-tr text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Handlinger
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200 rounded-b-lg">
+                <tbody class="bg-white divide-y divide-gray-200">
                     @foreach (var saksbehandler in Model.Items)
                     {
                         <tr class="hover:bg-gray-50 transition-colors">
