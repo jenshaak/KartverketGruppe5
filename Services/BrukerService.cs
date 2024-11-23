@@ -73,6 +73,7 @@ namespace KartverketGruppe5.Services
 
         public async Task<bool> OppdaterBruker(Bruker bruker)
         {
+            // Åpner en tilkobling til MySQL-databasen og utfører en oppdatering for å endre brukerens informasjon
             using var connection = new MySqlConnection(_connectionString);
 
             try
@@ -83,6 +84,7 @@ namespace KartverketGruppe5.Services
                 WHERE brukerId = @BrukerId", 
                 new { bruker.Fornavn, bruker.Etternavn, bruker.Email, bruker.BrukerId });
 
+            // Returnerer true hvis oppdateringen var vellykket, ellers false
             return affected > 0; 
         }
         catch (Exception ex)
