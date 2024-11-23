@@ -4,6 +4,7 @@ namespace KartverketGruppe5.Models
 {
     public class Bruker
     {
+        // Krav for hvordan å legg inn informasjon
         public int BrukerId { get; set; }
         
         [Required(ErrorMessage = "Fornavn er påkrevd")]
