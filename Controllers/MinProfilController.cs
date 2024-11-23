@@ -64,7 +64,7 @@ namespace KartverketGruppe5.Controllers
                 }
             }
 
-            return View(bruker);
+            return View("Index", bruker);
         }
     }
 }        
