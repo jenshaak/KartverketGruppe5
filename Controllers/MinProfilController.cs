@@ -33,5 +33,35 @@ namespace KartverketGruppe5.Controllers
             return View(bruker);
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OppdaterBruker(Bruker bruker)
+        {
+            var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
+            if (string.IsNullOrEmpty(brukerEmail))
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var oppdatert = await _brukerService.OppdaterBruker(bruker);
+
+                if (oppdatert)
+                {
+                    TempData["SuccessMessage"] = "Profilen din ble oppdatert!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Noe gikk galt, prøv igjen.";
+                    return View(bruker);
+                }
+            }
+
+            return View(bruker);
+        }
     }
-}
+}        
+    
