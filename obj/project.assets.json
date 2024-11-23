@@ -2626,19 +2626,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ingri\\.nuget\\packages\\": {}
+    "C:\\Users\\jensh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\KartverketGruppe5.csproj",
+      "projectUniqueName": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-19\\KartverketGruppe5\\KartverketGruppe5.csproj",
       "projectName": "KartverketGruppe5",
-      "projectPath": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\KartverketGruppe5.csproj",
-      "packagesPath": "C:\\Users\\ingri\\.nuget\\packages\\",
-      "outputPath": "C:\\Repo\\KaertverketGruppe5\\KartverketGruppe5\\obj\\",
+      "projectPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-19\\KartverketGruppe5\\KartverketGruppe5.csproj",
+      "packagesPath": "C:\\Users\\jensh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-19\\KartverketGruppe5\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ingri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jensh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
