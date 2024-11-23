@@ -1,0 +1,66 @@
+@model InnmeldingViewModel
+@{
+    var isEditable = (bool)(ViewData["IsEditable"] ?? false);
+    var lokasjon = ViewBag.Lokasjon as LokasjonViewModel;
+}
+
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" style="min-height: 400px;">
+    <div class="bg-white rounded-lg shadow p-6 flex gap-4">
+        <div class="w-2/3 flex flex-col gap-4">
+            <p class="font-medium">Beskrivelse:</p>
+            @if (isEditable)
+            {
+                <textarea asp-for="Beskrivelse" class="w-full h-full bg-slate-100 rounded-md p-2">@Model.Beskrivelse</textarea>
+            }
+            else
+            {
+                <div class="w-full h-full bg-slate-100 rounded-md p-2">@Model.Beskrivelse</div>
+            }
+        </div>
+        <div class="w-1/3 flex flex-col gap-4">
+            <p class="font-medium">Bilde:</p>
+            @if (!string.IsNullOrEmpty(Model.BildeSti))
+            {
+                <img id="eksisterendeBilde" 
+                     src="@Url.Content("~/" + Model.BildeSti.TrimStart('/'))" 
+                     alt="Innmelding-bilde" 
+                     class="w-full h-auto rounded-md">
+                @if (isEditable)
+                {
+                    <div class="flex flex-col gap-2">
+                        <input type="file" asp-for="Bilde" id="bilde" name="bilde" accept="image/*" 
+                               capture="environment" class="hidden" onchange="visForhandsvisning(this)" />
+                        <label for="bilde" class="btn btn-wide btn-blue cursor-pointer inline-block text-center">
+                            <i class="ph ph-camera ph-lg"></i>
+                            Erstatt bildet
+                        </label>
+                        <button type="button" onclick="fjernBilde(event)" class="btn btn-wide btn-red">
+                            <i class="ph ph-trash ph-lg"></i>
+                            Fjern bildet
+                        </button>
+                    </div>
+                }
+            }
+            else if (isEditable)
+            {
+                <div id="bildeSeksjon" class="flex flex-col gap-2">
+                    <!-- Bilde upload kontroller -->
+                </div>
+            }
+            else
+            {
+                <p>Ingen bilde vedlagt</p>
+            }
+        </div>
+    </div>
+    <div class="@(isEditable ? "rounded-lg shadow" : "")">
+        <div id="map" class="w-full h-full rounded-lg z-0"></div>
+        @if (isEditable)
+        {
+            <input type="hidden" name="geoJsonInput" id="geoJsonInput" />
+            <input type="hidden" name="geometriType" id="geometriType" />
+            <input type="hidden" name="latitude" id="latitude" />
+            <input type="hidden" name="longitude" id="longitude" />
+        }
+    </div>
+</div> 

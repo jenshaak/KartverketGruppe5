@@ -1,24 +1,24 @@
 @model PagedResult<KartverketGruppe5.Models.Saksbehandler>
 
-<div class="w-full flex justify-center py-12">
-    <div class="relative w-4/5 flex flex-col gap-4 p-8">
+<div class="page-container">
+    <div class="content-container">
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
-        <h1 class="mb-6 text-center">Administrer saksbehandlere, fylker og kommuner</h1>
-        <div class="flex justify-between items-center py-4">
-            <div class="flex gap-4 justify-evenly w-full">
-                <a asp-action="Register" class="btn btn-primary">
-                    <i class="ph ph-plus ph-lg"></i>
-                    Registrer ny saksbehandler</a>
-                <form asp-action="PopulateFylkerOgKommuner" method="post" class="">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="ph ph-arrows-clockwise ph-lg"></i>
-                        Oppdater Fylker og Kommuner
-                    </button>
-                </form>
-            </div>
+        <h1 class="mb-6 text-center">Administrasjon</h1>
+
+        <!-- Knapper for å registrere ny saksbehandler og oppdatere fylker og kommuner -->
+        <div class="max-md-flex-col gap-4 justify-evenly items-center w-full py-4">
+            <a asp-action="Register" class="btn btn-blue">
+                <i class="ph ph-plus ph-lg"></i>
+                Registrer ny saksbehandler</a>
+            <form asp-action="PopulateFylkerOgKommuner" method="post" class="">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ph ph-arrows-clockwise ph-lg"></i>
+                    Oppdater Fylker og Kommuner
+                </button>
+            </form>
         </div>
         @if (TempData["Message"] != null)
         {
@@ -30,6 +30,18 @@
             <div class="w-full p-4 bg-red-100 text-red-800 mt-4 rounded-lg border border-red-800">@TempData["Error"]</div>
         }
 
+        <!-- Søk etter saksbehandler -->
+        <div class="mb-2">
+            <div class="w-64">
+                <label for="saksbehandlerSearch" class="block text-sm font-medium text-gray-700">Søk etter saksbehandler</label>
+                <input type="text" 
+                       id="saksbehandlerSearch" 
+                       placeholder="Søk..."
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+            </div>
+        </div>
+
+        <!-- Tabell -->
         <div class="bg-white rounded-lg shadow">
             <table class="min-w-full divide-y divide-gray-200 table-rounded">
                 <thead class="bg-gray-50 rounded-tl rounded-tr">
@@ -37,7 +49,7 @@
                         <th scope="col" class="px-6 py-3 text-left rounded-tl text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Navn
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="max-md:hidden px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Email
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -45,23 +57,23 @@
                             asp-route-sortOrder="@ViewData["AdminSortParam"]"
                             class="text-gray-500 hover:text-gray-700">
                                 Admin
-                                @if (ViewData["CurrentSort"].ToString().StartsWith("admin"))
+                                @if (ViewData["CurrentSort"]?.ToString()?.StartsWith("admin") ?? false)
                                 {
                                     <span class="ml-1">
-                                        @(ViewData["CurrentSort"].ToString() == "admin_desc" ? "↓" : "↑")
+                                        @(ViewData["CurrentSort"]?.ToString() == "admin_desc" ? "↓" : "↑")
                                     </span>
                                 }
                             </a>
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="max-md:hidden px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <a asp-action="Index" 
                             asp-route-sortOrder="@ViewData["DateSortParam"]"
                             class="text-gray-500 hover:text-gray-700">
                                 Opprettet
-                                @if (ViewData["CurrentSort"].ToString().StartsWith("date"))
+                                @if (ViewData["CurrentSort"]?.ToString()?.StartsWith("date") ?? false)
                                 {
                                     <span class="ml-1">
-                                        @(ViewData["CurrentSort"].ToString() == "date_desc" ? "↓" : "↑")
+                                        @(ViewData["CurrentSort"]?.ToString() == "date_desc" ? "↓" : "↑")
                                     </span>
                                 }
                             </a>
@@ -78,7 +90,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="font-medium text-gray-900">@saksbehandler.Fornavn @saksbehandler.Etternavn</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="max-md:hidden px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">@saksbehandler.Email</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -88,7 +100,7 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="max-md:hidden px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">@saksbehandler.OpprettetDato.ToShortDateString()</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -108,3 +120,29 @@
         <partial name="_Pagination" model="Model" />
     </div>
 </div> 
+
+@section Scripts {
+    <!-- Sikker mot XSS fordi vi bruker .text() og bruker bare statisk tekst -->
+    <script>
+        // Søk etter saksbehandler
+        $(document).ready(function() {
+            $("#saksbehandlerSearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("tbody tr").filter(function() {
+                    var text = $(this).find("td:first").text().toLowerCase();
+                    $(this).toggle(text.indexOf(value) > -1);
+                });
+
+                // Vis eller skjul "ingen funnet" melding
+                var visibleRows = $("tbody tr:visible").length;
+                if (visibleRows === 0) {
+                    if ($("#noResults").length === 0) {
+                        $("tbody").append('<tr id="noResults"><td colspan="5" class="px-6 py-4 text-center text-gray-500">Ingen saksbehandlere funnet</td></tr>');
+                    }
+                } else {
+                    $("#noResults").remove();
+                }
+            });
+        });
+    </script>
+} 

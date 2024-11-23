@@ -1,0 +1,69 @@
+/* Admin */
+.rounded-tl {
+  border-top-left-radius: 1rem;
+}
+
+.rounded-tr {
+  border-top-right-radius: 1rem;
+}
+
+/* Admin Table Rounding */
+.rounded-bl {
+  border-bottom-left-radius: 1rem;
+}
+
+.rounded-br {
+  border-bottom-right-radius: 1rem;
+}
+
+/* For å sikre at siste rad i tabellen får avrundede hjørner */
+.table-rounded tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 1rem;
+}
+
+.table-rounded tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 1rem;
+}
+
+.mapChange-width {
+  width: 800px;
+  max-width: 100%;
+} 
+
+.map {
+  height: 400px;
+}
+
+.max-md-flex-col {
+  display: flex;
+}
+
+.max-md-flex-wrap {
+  display: flex;
+}
+
+.w64-w32 {
+  width: 256px;
+}
+
+.max-lg-hidden {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .max-md-flex-col {
+    flex-direction: column;
+  }
+  .max-md-flex-wrap {
+    flex-wrap: wrap;
+  }
+  .w64-w32 {
+    width: 128px;
+  }
+  .max-lg-hidden {
+    display: none;
+  }
+  .map {
+    height: 300px;
+  }
+}
