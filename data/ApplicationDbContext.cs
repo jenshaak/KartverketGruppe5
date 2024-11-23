@@ -131,7 +131,7 @@ namespace KartverketGruppe5.Data
 
                 // Relasjoner
                 entity.HasOne(e => e.Bruker)
-                    .WithMany(b => b.Innmeldinger)
+                    .WithMany()
                     .HasForeignKey(e => e.BrukerId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
