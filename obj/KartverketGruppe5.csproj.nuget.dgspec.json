@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jensh\\OneDrive\\Dokumenter\\GitHub\\KartverketGruppe5\\KartverketGruppe5.csproj": {}
+    "/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/KartverketGruppe5.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jensh\\OneDrive\\Dokumenter\\GitHub\\KartverketGruppe5\\KartverketGruppe5.csproj": {
+    "/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/KartverketGruppe5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jensh\\OneDrive\\Dokumenter\\GitHub\\KartverketGruppe5\\KartverketGruppe5.csproj",
+        "projectUniqueName": "/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/KartverketGruppe5.csproj",
         "projectName": "KartverketGruppe5",
-        "projectPath": "C:\\Users\\jensh\\OneDrive\\Dokumenter\\GitHub\\KartverketGruppe5\\KartverketGruppe5.csproj",
-        "packagesPath": "C:\\Users\\jensh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jensh\\OneDrive\\Dokumenter\\GitHub\\KartverketGruppe5\\obj\\",
+        "projectPath": "/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/KartverketGruppe5.csproj",
+        "packagesPath": "/Users/sirijohansenthunestvedt/.nuget/packages/",
+        "outputPath": "/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jensh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/sirijohansenthunestvedt/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -106,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

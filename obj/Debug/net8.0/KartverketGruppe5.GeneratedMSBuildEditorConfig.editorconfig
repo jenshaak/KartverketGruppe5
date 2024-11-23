@@ -9,103 +9,103 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = KartverketGruppe5
 build_property.RootNamespace = KartverketGruppe5
-build_property.ProjectDir = C:\Users\jensh\OneDrive\Skrivebord\Skole\UiA høst 2024\vs-16\KartverketGruppe5\
+build_property.ProjectDir = /Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\jensh\OneDrive\Skrivebord\Skole\UiA høst 2024\vs-16\KartverketGruppe5
+build_property.MSBuildProjectDirectory = /Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Admin/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Admin/Rediger.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVkaWdlci5jc2h0bWw=
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Admin/Rediger.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vUmVkaWdlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Admin/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVnaXN0ZXIuY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Admin/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Home/AccessDenied.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc3NEZW5pZWQuY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Home/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Login/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9naW4vSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Login/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVnaXN0ZXIuY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Login/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9naW4vUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/MapChange/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFwQ2hhbmdlXEluZGV4LmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/MapChange/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWFwQ2hhbmdlL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/MineInnmeldinger/Detaljer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZUlubm1lbGRpbmdlclxEZXRhbGplci5jc2h0bWw=
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/MineInnmeldinger/Detaljer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWluZUlubm1lbGRpbmdlci9EZXRhbGplci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/MineInnmeldinger/index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZUlubm1lbGRpbmdlclxpbmRleC5jc2h0bWw=
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/MineInnmeldinger/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWluZUlubm1lbGRpbmdlci9pbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/MineSaker/Behandle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZVNha2VyXEJlaGFuZGxlLmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/MineSaker/Behandle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWluZVNha2VyL0JlaGFuZGxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/MineSaker/index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluZVNha2VyXGluZGV4LmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/MineSaker/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWluZVNha2VyL2luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/MinProfil/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWluUHJvZmlsXEluZGV4LmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/MinProfil/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWluUHJvZmlsL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Saksbehandling/Detaljer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Frc2JlaGFuZGxpbmdcRGV0YWxqZXIuY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Saksbehandling/Detaljer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Frc2JlaGFuZGxpbmcvRGV0YWxqZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Saksbehandling/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Frc2JlaGFuZGxpbmdcSW5kZXguY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Saksbehandling/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Frc2JlaGFuZGxpbmcvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Shared/_InnmeldingTabell.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Jbm5tZWxkaW5nVGFiZWxsLmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Shared/_InnmeldingTabell.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Jbm5tZWxkaW5nVGFiZWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Shared/_Pagination.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYWdpbmF0aW9uLmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Shared/_Pagination.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19QYWdpbmF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/jensh/OneDrive/Skrivebord/Skole/UiA høst 2024/vs-16/KartverketGruppe5/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-8rm302v0mp
+[/Users/sirijohansenthunestvedt/Desktop/KartverketGruppe5/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-hg625dshku
