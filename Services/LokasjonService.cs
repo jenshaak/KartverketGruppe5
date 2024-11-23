@@ -6,10 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Net.Http;
+using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
-    public class LokasjonService
+    public class LokasjonService : ILokasjonService
     {
         private readonly string _connectionString;
         private readonly ILogger<LokasjonService> _logger;

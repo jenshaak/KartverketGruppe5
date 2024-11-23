@@ -27,8 +27,5 @@ namespace KartverketGruppe5.Models
         public string Passord { get; set; } = string.Empty;
         
         public DateTime OpprettetDato { get; set; }
-
-        // Navigasjonsegenskap for innmeldinger
-        public virtual ICollection<Innmelding>? Innmeldinger { get; set; }
     }
 } 

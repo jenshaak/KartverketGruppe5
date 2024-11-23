@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
-    public class BildeService
+    public class BildeService : IBildeService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<BildeService> _logger;

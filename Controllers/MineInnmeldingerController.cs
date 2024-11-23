@@ -5,23 +5,23 @@ using KartverketGruppe5.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using KartverketGruppe5.Models.RequestModels;
-
+using KartverketGruppe5.Services.Interfaces;
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Bruker")]
     public class MineInnmeldingerController : Controller
     {
-        private readonly InnmeldingService _innmeldingService;
-        private readonly LokasjonService _lokasjonService;
-        private readonly KommuneService _kommuneService;        
-        private readonly FylkeService _fylkeService;
+        private readonly IInnmeldingService _innmeldingService;
+        private readonly ILokasjonService _lokasjonService;
+        private readonly IKommuneService _kommuneService;        
+        private readonly IFylkeService _fylkeService;
         private readonly ILogger<MineInnmeldingerController> _logger;
 
         public MineInnmeldingerController(
-            InnmeldingService innmeldingService, 
-            LokasjonService lokasjonService, 
-            KommuneService kommuneService, 
-            FylkeService fylkeService, 
+            IInnmeldingService innmeldingService, 
+            ILokasjonService lokasjonService, 
+            IKommuneService kommuneService, 
+            IFylkeService fylkeService, 
             ILogger<MineInnmeldingerController> logger)
         {
             _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
@@ -159,6 +159,14 @@ namespace KartverketGruppe5.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SlettInnmelding(int id)
+        {
+            await _innmeldingService.SlettInnmelding(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile? bilde)
         {
             try 
@@ -173,6 +181,8 @@ namespace KartverketGruppe5.Controllers
                     _logger.LogWarning("Fant ikke innmelding med id {InnmeldingId}", innmeldingModel.InnmeldingId);
                     return NotFound();
                 }
+
+                _logger.LogInformation("LokasjonId: {LokasjonId}", originalInnmelding.LokasjonId);
 
                 var brukerId = HttpContext.Session.GetInt32("BrukerId");
                 _logger.LogInformation("Session BrukerId: {SessionBrukerId}, Original BrukerId: {OriginalBrukerId}", 
@@ -191,6 +201,7 @@ namespace KartverketGruppe5.Controllers
 
                 // Håndter lokasjon
                 LokasjonViewModel? lokasjon = GetLokasjonFromRequest();
+                _logger.LogInformation("Lokasjon: {Lokasjon}", lokasjon);
                 if (lokasjon != null)
                 {
                     _logger.LogInformation("Oppdaterer lokasjon for innmelding {InnmeldingId}: Lat: {Latitude}, Lon: {Longitude}", 
@@ -221,8 +232,15 @@ namespace KartverketGruppe5.Controllers
                 return null;
             }
 
+            if (!Request.Form.TryGetValue("lokasjonId", out var lokasjonId))
+            {
+                _logger.LogWarning("LokasjonId mangler i form data");
+                return null;
+            }
+
             return new LokasjonViewModel
             {
+                LokasjonId = int.Parse(lokasjonId.ToString()),
                 GeoJson = geoJson.ToString(),
                 GeometriType = geometriType.ToString(),
                 Latitude = double.Parse(latitude.ToString()),

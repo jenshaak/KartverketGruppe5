@@ -5,10 +5,11 @@ using Dapper;
 using MySqlConnector;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
+using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
-    public class KommunePopulateService
+    public class KommunePopulateService : IKommunePopulateService
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<KommunePopulateService> _logger;
