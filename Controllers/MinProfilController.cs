@@ -20,7 +20,7 @@ namespace KartverketGruppe5.Controllers
             var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
             if (string.IsNullOrEmpty(brukerEmail))
             {
-                return RedirectToAction("Login", "Auth");
+                return RedirectToAction("Login", "Login");
             }
 
             var bruker = await _brukerService.GetBrukerByEmail(brukerEmail);
@@ -35,13 +35,12 @@ namespace KartverketGruppe5.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> OppdaterBruker(Bruker bruker)
         {
             var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
             if (string.IsNullOrEmpty(brukerEmail))
             {
-                return RedirectToAction("Login", "Auth");
+                return RedirectToAction("Login", "Login");
             }
 
             if (ModelState.IsValid)
