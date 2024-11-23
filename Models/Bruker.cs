@@ -26,10 +26,6 @@ namespace KartverketGruppe5.Models
         [StringLength(256, MinimumLength = 8, ErrorMessage = "Passord må være mellom 8 og 256 tegn")]
         public string Passord { get; set; } = string.Empty;
         
-        [Required]
-        [StringLength(50)]
-        public string Rolle { get; set; } = "Bruker";  // Default verdi som matcher databasen
-        
         public DateTime OpprettetDato { get; set; }
 
         // Navigasjonsegenskap for innmeldinger

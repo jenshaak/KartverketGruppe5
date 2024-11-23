@@ -60,10 +60,11 @@ namespace KartverketGruppe5.Data
                 entity.HasKey(e => e.KommuneId);
                 entity.Property(e => e.Navn).IsRequired().HasMaxLength(100);
                 entity.HasIndex(e => e.Navn).IsUnique();
-                entity.HasOne<Fylke>()
+                entity.HasOne(e => e.Fylke)
                     .WithMany()
                     .HasForeignKey(e => e.FylkeId)
-                    .IsRequired();
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Lokasjon>(entity =>
@@ -130,23 +131,27 @@ namespace KartverketGruppe5.Data
 
                 // Relasjoner
                 entity.HasOne(e => e.Bruker)
-                    .WithMany()
+                    .WithMany(b => b.Innmeldinger)
                     .HasForeignKey(e => e.BrukerId)
-                    .IsRequired();
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Kommune)
                     .WithMany()
                     .HasForeignKey(e => e.KommuneId)
-                    .IsRequired();
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Lokasjon)
                     .WithMany()
                     .HasForeignKey(e => e.LokasjonId)
-                    .IsRequired();
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Saksbehandler)
                     .WithMany()
-                    .HasForeignKey(e => e.SaksbehandlerId);
+                    .HasForeignKey(e => e.SaksbehandlerId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
