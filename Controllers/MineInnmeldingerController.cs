@@ -204,8 +204,7 @@ namespace KartverketGruppe5.Controllers
                 _logger.LogError(ex, "Feil ved oppdatering av innmelding {InnmeldingId}", innmeldingModel.InnmeldingId);
                 return RedirectToAction("Detaljer", new { id = innmeldingModel.InnmeldingId });
             }
-        }
-
+            
         private LokasjonViewModel? GetLokasjonFromRequest()
         {
             if (!Request.Form.TryGetValue("geoJsonInput", out var geoJson) || 

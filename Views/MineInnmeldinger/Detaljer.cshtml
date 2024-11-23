@@ -42,18 +42,18 @@
                         @if (!string.IsNullOrEmpty(Model.BildeSti))
                         {
                             <img id="eksisterendeBilde" 
-                                src="@Url.Content("~/" + Model.BildeSti.TrimStart('/'))" 
-                                alt="Innmelding-bilde" 
-                                class="w-full h-auto rounded-md">
+                                 src="@Url.Content("~/" + Model.BildeSti.TrimStart('/'))" 
+                                 alt="Innmelding-bilde" 
+                                 class="w-full h-auto rounded-md">
                             <div class="flex flex-col gap-2">
                                 <input type="file" 
-                                    asp-for="Bilde"
-                                    id="bilde" 
-                                    name="bilde" 
-                                    accept="image/*" 
-                                    capture="environment" 
-                                    class="hidden" 
-                                    onchange="visForhandsvisning(this)" />
+                                       asp-for="Bilde"
+                                       id="bilde" 
+                                       name="bilde" 
+                                       accept="image/*" 
+                                       capture="environment" 
+                                       class="hidden" 
+                                       onchange="visForhandsvisning(this)" />
                                 <label for="bilde" class="btn btn-wide btn-blue cursor-pointer inline-block text-center">
                                     <i class="ph ph-camera ph-lg"></i>
                                     Erstatt bildet
@@ -68,13 +68,13 @@
                         {
                             <div id="bildeSeksjon" class="flex flex-col gap-2">
                                 <input type="file" 
-                                    asp-for="Bilde"
-                                    id="bilde" 
-                                    name="bilde" 
-                                    accept="image/*" 
-                                    capture="environment" 
-                                    class="hidden" 
-                                    onchange="visForhandsvisning(this)" />
+                                       asp-for="Bilde"
+                                       id="bilde" 
+                                       name="bilde" 
+                                       accept="image/*" 
+                                       capture="environment" 
+                                       class="hidden" 
+                                       onchange="visForhandsvisning(this)" />
                                 <label for="bilde" class="btn btn-blue cursor-pointer">
                                     <i class="ph ph-camera ph-lg"></i>
                                     Legg til bilde
@@ -93,11 +93,16 @@
                     <input type="hidden" name="latitude" id="latitude" />
                     <input type="hidden" name="longitude" id="longitude" />
                 </div>
-            </div>
-            <button type="submit" class="btn btn-wide btn-primary mt-4">
-                <i class="ph ph-pencil ph-lg"></i>
-                Endre innmelding
-            </button>
+            </div class="button-container">
+            <div class="button-container">
+                <button type="submit" class="btn btn-wide-half btn-primary">
+                    <i class="ph ph-pencil ph-lg"></i>
+                    Endre innmelding
+                </button>
+                <button type="submit" class="btn btn-wide-half btn-red">
+                    <i class="ph ph-trash-simple ph-lg"></i>
+                    Slett innmelding
+                </button>
         </form>
     </div>
 </div>

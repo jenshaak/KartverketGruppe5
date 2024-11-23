@@ -73,15 +73,16 @@ h3 {
   white-space: nowrap;
 }
 
-.btn-wide {
-  width: 100%;
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Fordeler knappene horisontalt */
+    gap: 2rem; /* Avstand mellom knappene (valgfritt) */
 }
 
-.btn-back {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
+.btn-wide-half {
+    width: 48%; /* Reduser bredden for å gi plass til gap */
 }
+
 
 .btn-primary {
   background-color: #156630;
