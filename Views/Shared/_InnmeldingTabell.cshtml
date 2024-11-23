@@ -9,8 +9,8 @@
 }
 
 <!-- Filtre -->
-<div class="mb-6 flex gap-4">
-    <div class="w-64">
+<div class="mb-6 flex gap-4 max-md-flex-wrap">
+    <div class="w64-w32">
         <label for="statusFilter" class="block text-sm font-medium text-gray-700">Status</label>
         <select id="statusFilter" 
                 class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
@@ -26,7 +26,7 @@
             }
         </select>
     </div>
-    <div class="w-64">
+    <div class="w64-w32">
         <label for="fylkeFilter" class="block text-sm font-medium text-gray-700">Fylke</label>
         <select id="fylkeFilter" name="fylkeFilter"
                 class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
@@ -39,13 +39,32 @@
             }
         </select>
     </div>
-    <div class="w-64">
+        
+    <div class="w64-w32">
         <label for="dateSort" class="block text-sm font-medium text-gray-700">Dato</label>
         <select id="dateSort" 
                 class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
             <option value="date_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_desc")">Nyeste først</option>
             <option value="date_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_asc")">Eldste først</option>
         </select>
+    </div>
+    <div class="w64-w32 relative">
+        <label for="kommuneSearch" class="block text-sm font-medium text-gray-700">Kommune</label>
+        <div class="relative">
+            <input type="text" 
+                   id="kommuneSearch" 
+                   value="@ViewData["CurrentKommune"]"
+                   placeholder="Søk etter kommune..."
+                   class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+            @if (!string.IsNullOrEmpty(ViewData["CurrentKommune"]?.ToString()))
+            {
+                <button type="button" 
+                        id="clearKommune" 
+                        class="clear-kommune-btn">
+                    <i class="ph ph-x-circle text-red-500"></i>
+                </button>
+            }
+        </div>
     </div>
 </div>
 
@@ -57,13 +76,13 @@
             <a asp-action="@actionName" 
                asp-route-id="@innmelding.InnmeldingId" 
                class="hover:bg-gray-50 bg-white flex justify-between items-center rounded-lg px-6 py-4">
-                <div class="whitespace-nowrap w-16">
+                <div class="whitespace-nowrap w-16 max-md:hidden">
                     <div class="font-medium text-gray-900">@innmelding.FylkeNavn</div>
                 </div>
                 <div class="whitespace-nowrap w-16">
                     <div class="font-medium text-gray-900">@innmelding.KommuneNavn</div>
                 </div>
-                <div class="whitespace-nowrap w-16">
+                <div class="whitespace-nowrap w-16 max-sm:hidden">
                     <div class="text-sm text-gray-500">@innmelding.OpprettetDato.ToShortDateString()</div>
                 </div>
                 <div class="whitespace-nowrap w-16 flex justify-end">

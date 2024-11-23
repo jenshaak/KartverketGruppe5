@@ -35,6 +35,7 @@ namespace KartverketGruppe5.Controllers
             string sortOrder = "date_desc", 
             string statusFilter = "",
             string fylkeFilter = "",
+            string kommuneFilter = "",
             int page = 1)
         {
             try 
@@ -43,7 +44,7 @@ namespace KartverketGruppe5.Controllers
                     "Henter innmeldinger med sortOrder: {SortOrder}, statusFilter: {StatusFilter}, fylkeFilter: {FylkeFilter}, page: {Page}", 
                     sortOrder, statusFilter, fylkeFilter, page);
 
-                SetupViewData(sortOrder, statusFilter, fylkeFilter);
+                SetupViewData(sortOrder, statusFilter, fylkeFilter, kommuneFilter);
 
                 var brukerId = HttpContext.Session.GetInt32("BrukerId");
                 if (brukerId == null)
@@ -74,12 +75,13 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter)
+        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
         {
             ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentStatus"] = statusFilter;
             ViewData["CurrentFylke"] = fylkeFilter;
+            ViewData["CurrentKommune"] = Request.Query["kommuneFilter"].ToString();
             ViewData["Statuses"] = new List<string> 
             { 
                 "Ny",
@@ -89,6 +91,7 @@ namespace KartverketGruppe5.Controllers
             };
         }
 
+        [HttpGet]
         public async Task<IActionResult> Detaljer(int id)
         {
             try

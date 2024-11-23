@@ -167,6 +167,9 @@ namespace KartverketGruppe5.Services
             
             if (!string.IsNullOrEmpty(request.FylkeFilter))
                 conditions.Add("f.navn = @FylkeFilter");
+
+            if (!string.IsNullOrEmpty(request.KommuneFilter))
+                conditions.Add("k.navn = @KommuneFilter");
             
             return conditions;
         }
@@ -186,6 +189,9 @@ namespace KartverketGruppe5.Services
             
             if (!string.IsNullOrEmpty(request.FylkeFilter))
                 parameters.Add("FylkeFilter", request.FylkeFilter);
+            
+            if (!string.IsNullOrEmpty(request.KommuneFilter))
+                parameters.Add("KommuneFilter", request.KommuneFilter);
             
             parameters.Add("Skip", (request.Page - 1) * request.PageSize);
             parameters.Add("Take", request.PageSize);
