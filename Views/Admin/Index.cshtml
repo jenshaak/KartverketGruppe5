@@ -65,6 +65,7 @@
                                 }
                             </a>
                         </th>
+                        <!-- Sortering av saksbehandlere -->
                         <th scope="col" class="max-md:hidden px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <a asp-action="Index" 
                             asp-route-sortOrder="@ViewData["DateSortParam"]"
@@ -83,6 +84,7 @@
                         </th>
                     </tr>
                 </thead>
+                <!-- Tabell for saksbehandlere -->
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach (var saksbehandler in Model.Items)
                     {
