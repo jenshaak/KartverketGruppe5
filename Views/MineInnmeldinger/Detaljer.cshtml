@@ -31,6 +31,7 @@
             enctype="multipart/form-data" 
             class="flex flex-col gap-4">
             <input type="hidden" asp-for="InnmeldingId" />
+            <input type="hidden" name="lokasjonId" value="@ViewBag.Lokasjon.LokasjonId" />
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" style="min-height: 400px;" >
                 <div class="bg-white rounded-lg shadow p-6 flex gap-4">
                     <div class="w-2/3 flex flex-col gap-4">
@@ -95,14 +96,17 @@
                 </div>
             </div class="button-container">
             <div class="button-container">
-                <button type="submit" class="btn btn-wide-half btn-primary">
+                <button type="submit" class="btn btn-wide btn-primary">
                     <i class="ph ph-pencil ph-lg"></i>
                     Endre innmelding
                 </button>
-                <button type="submit" class="btn btn-wide-half btn-red">
-                    <i class="ph ph-trash-simple ph-lg"></i>
-                    Slett innmelding
-                </button>
+            </div>
+        </form>
+        <form asp-action="SlettInnmelding" method="post">
+            <button type="submit" class="btn btn-wide btn-red mt-4">
+                <i class="ph ph-trash-simple ph-lg"></i>
+                Slett innmelding
+            </button>
         </form>
     </div>
 </div>

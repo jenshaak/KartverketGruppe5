@@ -4,9 +4,11 @@ using Dapper;
 using MySqlConnector;
 using System.Data;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Services.Interfaces;
+
 namespace KartverketGruppe5.Services
 {
-    public class FylkeService
+    public class FylkeService : IFylkeService
     {
         private readonly string _connectionString;
         private readonly ILogger<FylkeService> _logger;

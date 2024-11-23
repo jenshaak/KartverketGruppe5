@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
-using KartverketGruppe5.Services;
+using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Controllers
 {
     public class MinProfilController : Controller
     {
-        private readonly BrukerService _brukerService;
+        private readonly IBrukerService _brukerService;
 
-        public MinProfilController(BrukerService brukerService)
+        public MinProfilController(IBrukerService brukerService)
         {
             _brukerService = brukerService;
         }

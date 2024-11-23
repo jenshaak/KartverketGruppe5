@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
-using KartverketGruppe5.Services;
+using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 namespace KartverketGruppe5.Controllers
@@ -9,13 +10,13 @@ namespace KartverketGruppe5.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private readonly SaksbehandlerService _saksbehandlerService;
-        private readonly KommunePopulateService _kommunePopulateService;
+        private readonly ISaksbehandlerService _saksbehandlerService;
+        private readonly IKommunePopulateService _kommunePopulateService;
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(
-            SaksbehandlerService saksbehandlerService,
-            KommunePopulateService kommunePopulateService,
+            ISaksbehandlerService saksbehandlerService,
+            IKommunePopulateService kommunePopulateService,
             ILogger<AdminController> logger)
         {
             _saksbehandlerService = saksbehandlerService;

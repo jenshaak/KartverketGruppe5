@@ -4,17 +4,19 @@ using System.Data;
 using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Models.RequestModels;
+using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Models.Interfaces;
 namespace KartverketGruppe5.Services
 {
-    public class InnmeldingService
+    public class InnmeldingService : IInnmeldingService
     {
         private readonly IConfiguration _configuration;
         private readonly string? _connectionString;
         private readonly ILogger<InnmeldingService> _logger;
-        private readonly BildeService _bildeService;
-        private readonly LokasjonService _lokasjonService;
+        private readonly IBildeService _bildeService;
+        private readonly ILokasjonService _lokasjonService;
 
-        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, BildeService bildeService, LokasjonService lokasjonService)
+        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, IBildeService bildeService, ILokasjonService lokasjonService)
         {
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("DefaultConnection")
@@ -110,7 +112,7 @@ namespace KartverketGruppe5.Services
 
 
         // --- HENTING AV FLERE INNMELDINGER ---
-        public async Task<PagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
+        public async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
         {
             using var connection = new MySqlConnection(_connectionString);
             
@@ -219,6 +221,22 @@ namespace KartverketGruppe5.Services
 
 
 
+        // --- SLETTING AV INNMELDING ---
+        public async Task SlettInnmelding(int id)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                string sql = "DELETE FROM Innmelding WHERE innmeldingId = @Id";
+                await connection.ExecuteAsync(sql, new { Id = id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Feil ved sletting av innmelding {id}");
+                throw;
+            }
+        }
+
         // --- OPPDATERINGER ---
 
         // Klasser for oppdatering
@@ -240,17 +258,6 @@ namespace KartverketGruppe5.Services
             }).ToList();
         }
 
-
-        public class InnmeldingUpdateModel
-        {
-            public int InnmeldingId { get; set; }
-            public string? Status { get; set; }
-            public int? SaksbehandlerId { get; set; }
-            public string? Beskrivelse { get; set; }
-            public string? Kommentar { get; set; }
-            public string? BildeSti { get; set; }
-            public DateTime? OppdatertDato { get; set; }
-        }
 
         private async Task<bool> UpdateInnmeldingInternal(InnmeldingUpdateModel updateModel)
         {

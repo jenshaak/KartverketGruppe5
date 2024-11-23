@@ -5,25 +5,25 @@ using KartverketGruppe5.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using KartverketGruppe5.Models.RequestModels;
-
+using KartverketGruppe5.Services.Interfaces;
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Saksbehandler,Admin")] 
     public class SaksbehandlingController : Controller
     {
-        private readonly SaksbehandlerService _saksbehandlerService;
-        private readonly InnmeldingService _innmeldingService;
-        private readonly LokasjonService _lokasjonService;
-        private readonly KommuneService _kommuneService;
-        private readonly FylkeService _fylkeService;
+        private readonly ISaksbehandlerService _saksbehandlerService;
+        private readonly IInnmeldingService _innmeldingService;
+        private readonly ILokasjonService _lokasjonService;
+        private readonly IKommuneService _kommuneService;
+        private readonly IFylkeService _fylkeService;
         private readonly ILogger<SaksbehandlingController> _logger;
 
         public SaksbehandlingController(
-            SaksbehandlerService saksbehandlerService, 
-            InnmeldingService innmeldingService, 
-            LokasjonService lokasjonService, 
-            KommuneService kommuneService, 
-            FylkeService fylkeService, 
+            ISaksbehandlerService saksbehandlerService, 
+            IInnmeldingService innmeldingService, 
+            ILokasjonService lokasjonService, 
+            IKommuneService kommuneService, 
+            IFylkeService fylkeService, 
             ILogger<SaksbehandlingController> logger)
         {
             _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));

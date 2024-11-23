@@ -1,7 +1,9 @@
+using KartverketGruppe5.Models.Interfaces;
+
 namespace KartverketGruppe5.Models
 {
     // Klasse for å håndtere paginering av saksbehandlere og innmeldinger i tabellene
-    public class PagedResult<T>
+    public class PagedResult<T> : IPagedResult<T>
     {
         public const string DefaultSortOrder = "date_desc";
         public const int DefaultPage = 1;

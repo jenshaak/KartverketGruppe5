@@ -4,18 +4,23 @@ using KartverketGruppe5.Models;
 using System.Security.Cryptography;
 using System.Text;
 using KartverketGruppe5.Models.ViewModels;
+using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Models.Interfaces;
+
 namespace KartverketGruppe5.Services
 {
-    public class SaksbehandlerService
+    public class SaksbehandlerService : ISaksbehandlerService
     {
         private readonly string _connectionString;
         private readonly ILogger<SaksbehandlerService> _logger;
+        private readonly IPasswordService _passwordService;
 
-        public SaksbehandlerService(IConfiguration configuration, ILogger<SaksbehandlerService> logger)
+        public SaksbehandlerService(IConfiguration configuration, ILogger<SaksbehandlerService> logger, IPasswordService passwordService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger;
+            _passwordService = passwordService;
         }
 
         public async Task<Saksbehandler?> GetSaksbehandlerById(int id)
@@ -70,7 +75,7 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<PagedResult<Saksbehandler>> GetAllSaksbehandlere(
+        public async Task<IPagedResult<Saksbehandler>> GetAllSaksbehandlere(
             string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
             int page = PagedResult<Saksbehandler>.DefaultPage)
         {
@@ -150,7 +155,7 @@ namespace KartverketGruppe5.Services
                         @OpprettetDato
                     )";
 
-                saksbehandler.Passord = HashPassword(saksbehandler.Passord);
+                saksbehandler.Passord = _passwordService.HashPassword(saksbehandler.Passord);
                 saksbehandler.OpprettetDato = DateTime.Now;
 
                 var rowsAffected = await connection.ExecuteAsync(sql, saksbehandler);
@@ -177,7 +182,7 @@ namespace KartverketGruppe5.Services
                 }
                 else
                 {
-                    saksbehandler.Passord = HashPassword(saksbehandler.Passord);
+                    saksbehandler.Passord = _passwordService.HashPassword(saksbehandler.Passord);
                 }
 
                 const string sql = @"
@@ -201,16 +206,9 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        private static string HashPassword(string password)
-        {
-            using var sha256 = SHA256.Create();
-            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(hashedBytes);
-        }
-
         public bool VerifyPassword(string password, string hashedPassword)
         {
-            return HashPassword(password) == hashedPassword;
+            return _passwordService.VerifyPassword(password, hashedPassword);
         }
     }
 } 

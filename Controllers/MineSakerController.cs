@@ -5,19 +5,24 @@ using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
 using Microsoft.Extensions.Logging;
 using KartverketGruppe5.Models.RequestModels;
-
+using KartverketGruppe5.Services.Interfaces;
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Saksbehandler,Admin")]
     public class MineSakerController : Controller
     {
-        private readonly InnmeldingService _innmeldingService;
-        private readonly LokasjonService _lokasjonService;
-        private readonly SaksbehandlerService _saksbehandlerService;
-        private readonly FylkeService _fylkeService;
+        private readonly IInnmeldingService _innmeldingService;
+        private readonly ILokasjonService _lokasjonService;
+        private readonly ISaksbehandlerService _saksbehandlerService;
+        private readonly IFylkeService _fylkeService;
         private readonly ILogger<MineSakerController> _logger;
 
-        public MineSakerController(InnmeldingService innmeldingService, LokasjonService lokasjonService, FylkeService fylkeService, SaksbehandlerService saksbehandlerService, ILogger<MineSakerController> logger)
+        public MineSakerController(
+            IInnmeldingService innmeldingService, 
+            ILokasjonService lokasjonService, 
+            IFylkeService fylkeService, 
+            ISaksbehandlerService saksbehandlerService, 
+            ILogger<MineSakerController> logger)
         {
             _innmeldingService = innmeldingService;
             _lokasjonService = lokasjonService;

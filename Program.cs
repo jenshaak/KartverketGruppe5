@@ -1,11 +1,10 @@
 using KartverketGruppe5.Services;
+using KartverketGruppe5.Services.Interfaces;
 using KartverketGruppe5.API_Models;
-using KartverketGruppe5;
 using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
-using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
 // Legger service-filene til containeren.
-builder.Services.AddScoped<BildeService>();
-builder.Services.AddScoped<BrukerService>();
-builder.Services.AddScoped<FylkeService>();
-builder.Services.AddScoped<LokasjonService>();
-builder.Services.AddScoped<InnmeldingService>();
-builder.Services.AddScoped<KommunePopulateService>();
-builder.Services.AddScoped<KommuneService>();
-builder.Services.AddScoped<SaksbehandlerService>();
+builder.Services.AddScoped<IBildeService, BildeService>();
+builder.Services.AddScoped<IBrukerService, BrukerService>();
+builder.Services.AddScoped<IFylkeService, FylkeService>();
+builder.Services.AddScoped<ILokasjonService, LokasjonService>();
+builder.Services.AddScoped<IInnmeldingService, InnmeldingService>();
+builder.Services.AddScoped<IKommunePopulateService, KommunePopulateService>();
+builder.Services.AddScoped<IKommuneService, KommuneService>();
+builder.Services.AddScoped<ISaksbehandlerService, SaksbehandlerService>();
 
 // Legg til services til containeren.
 builder.Services.AddControllersWithViews();
@@ -68,6 +67,8 @@ builder.Services.AddHttpClient();
 
 // Alternativt, hvis du trenger en spesifikk HttpClient for KommunePopulateService
 // builder.Services.AddHttpClient<KommunePopulateService>();
+
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 var app = builder.Build();
 

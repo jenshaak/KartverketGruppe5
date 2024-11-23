@@ -7,19 +7,19 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
-
+using KartverketGruppe5.Services.Interfaces;
 namespace KartverketGruppe5.Controllers
 {
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        private readonly BrukerService _brukerService;
-        private readonly SaksbehandlerService _saksbehandlerService;
+        private readonly IBrukerService _brukerService;
+        private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly ILogger<LoginController> _logger;
 
         public LoginController(
-            BrukerService brukerService,
-            SaksbehandlerService saksbehandlerService,
+            IBrukerService brukerService,
+            ISaksbehandlerService saksbehandlerService,
             ILogger<LoginController> logger)
         {
             _brukerService = brukerService ?? throw new ArgumentNullException(nameof(brukerService));

@@ -3,42 +3,65 @@ using MySqlConnector;
 using Dapper;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Services
 {
-    public class BrukerService
+    public class BrukerService : IBrukerService
     {
-        private readonly string _connectionString;
-        public BrukerService(IConfiguration configuration)
+        private readonly MySqlConnection _connection;
+        private readonly ILogger<BrukerService> _logger;
+
+        public BrukerService(IConfiguration configuration, ILogger<BrukerService> logger)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
+            var connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException(nameof(configuration));
+            _connection = new MySqlConnection(connectionString);
+            _logger = logger;
         }
 
-        public async Task<Bruker> GetBrukerByEmail(string email)
+        public async Task<Bruker?> GetBrukerByEmail(string email)
         {
-            using var connection = new MySqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Bruker>(
-                "SELECT * FROM Bruker WHERE email = @email", 
-                new { email = email });
+            try
+            {
+                return await _connection.QueryFirstOrDefaultAsync<Bruker>(
+                    "SELECT * FROM Bruker WHERE email = @Email", 
+                    new { Email = email });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av bruker med email: {Email}", email);
+                return null;
+            }
         }
 
         public async Task<bool> CreateBruker(Bruker bruker)
         {
+            // Sjekk om emailen allerede er i bruk
+            if (await GetBrukerByEmail(bruker.Email) != null)
+            {
+                _logger.LogWarning("Forsøk på å opprette bruker med eksisterende email: {Email}", bruker.Email);
+                return false;
+            }
+
             bruker.Passord = HashPassword(bruker.Passord);
             
-            using var connection = new MySqlConnection(_connectionString);
             try
             {
-                await connection.ExecuteAsync(@"
+                await _connection.ExecuteAsync(@"
                     INSERT INTO Bruker (fornavn, etternavn, email, passord) 
-                    VALUES (@fornavn, @etternavn, @email, @passord)",
-                    bruker);
+                    VALUES (@Fornavn, @Etternavn, @Email, @Passord)",
+                    new { 
+                        bruker.Fornavn, 
+                        bruker.Etternavn, 
+                        bruker.Email, 
+                        bruker.Passord 
+                    });
                 return true;
             }
-            catch (MySqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Database error: {ex.Message}");
+                _logger.LogError(ex, "Feil ved opprettelse av bruker: {Email}", bruker.Email);
                 return false;
             }
         }
@@ -55,42 +78,48 @@ namespace KartverketGruppe5.Services
             return HashPassword(password) == hashedPassword;
         }
 
-        public async Task<bool> OppdaterBrukerRolle(int brukerId, string nyRolle)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            var affected = await connection.ExecuteAsync(
-                "UPDATE Bruker SET rolle = @Rolle WHERE brukerId = @BrukerId",
-                new { Rolle = nyRolle, BrukerId = brukerId });
-            return affected > 0;
-        }
-
         public async Task<IEnumerable<Bruker>> GetAlleBrukere()
         {
-            using var connection = new MySqlConnection(_connectionString);
-            return await connection.QueryAsync<Bruker>(
-                "SELECT brukerId, fornavn, etternavn, email, rolle, opprettetDato FROM Bruker ORDER BY opprettetDato DESC");
+            try
+            {
+                return await _connection.QueryAsync<Bruker>(@"
+                    SELECT brukerId, fornavn, etternavn, email, rolle, opprettetDato 
+                    FROM Bruker 
+                    ORDER BY opprettetDato DESC");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av alle brukere");
+                return Enumerable.Empty<Bruker>();
+            }
         }
 
         public async Task<bool> OppdaterBruker(Bruker bruker)
         {
-            using var connection = new MySqlConnection(_connectionString);
-
             try
-        {
-                var affected = await connection.ExecuteAsync(@"
-                UPDATE Bruker
-                SET fornavn = @Fornavn, etternavn = @Etternavn, email = @Email
-                WHERE brukerId = @BrukerId", 
-                new { bruker.Fornavn, bruker.Etternavn, bruker.Email, bruker.BrukerId });
+            {
+                var sql = @"
+                    UPDATE Bruker
+                    SET fornavn = @Fornavn, 
+                        etternavn = @Etternavn, 
+                        email = @Email
+                    WHERE brukerId = @BrukerId";
 
-            return affected > 0; 
-        }
-        catch (Exception ex)
-        {
-        Console.WriteLine($"Error: {ex.Message}");
-        return false;
-        }
-}
+                var affected = await _connection.ExecuteAsync(sql, 
+                    new { 
+                        bruker.Fornavn, 
+                        bruker.Etternavn, 
+                        bruker.Email, 
+                        bruker.BrukerId 
+                    });
 
+                return affected > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av bruker");
+                return false;
+            }
+        }
     }
 } 

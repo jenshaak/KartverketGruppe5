@@ -3,21 +3,21 @@ using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-
+using KartverketGruppe5.Services.Interfaces;
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Bruker")]
     public class MapChangeController : Controller
     {
-        private readonly LokasjonService _lokasjonService;
-        private readonly InnmeldingService _innmeldingService;
-        private readonly BildeService _bildeService;
+        private readonly ILokasjonService _lokasjonService;
+        private readonly IInnmeldingService _innmeldingService;
+        private readonly IBildeService _bildeService;
         private readonly ILogger<MapChangeController> _logger;
 
         public MapChangeController(
-            LokasjonService lokasjonService, 
-            InnmeldingService innmeldingService,
-            BildeService bildeService,
+            ILokasjonService lokasjonService, 
+            IInnmeldingService innmeldingService,
+            IBildeService bildeService,
             ILogger<MapChangeController> logger)
         {
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
