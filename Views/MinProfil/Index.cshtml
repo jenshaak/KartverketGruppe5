@@ -3,6 +3,10 @@
 <!--Håndterer styling for bakgrunnen-->
 <div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">
     <div class="relative w-3/5 flex flex-col gap-2 bg-bg/85 rounded-xl p-12">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
+            <i class="ph ph-arrow-left ph-lg"></i>
+            Tilbake
+        </a>
         <h1 class="text-3xl font-bold mt-4 text-center">Min Profil</h1>
 
         <!--Viser informasjon om brukeren-->
@@ -27,11 +31,6 @@
             </dl>
         </div>
 
-        <!--Tilbake knapp og Rediger knapp-->
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
-            <i class="ph ph-arrow-left ph-lg"></i>
-            Tilbake
-        </a>
 
         <!-- Rediger profil knapp (button uten a-tag) -->
         <button id="editButton" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
