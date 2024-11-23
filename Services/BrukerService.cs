@@ -9,7 +9,6 @@ namespace KartverketGruppe5.Services
     public class BrukerService
     {
         private readonly string _connectionString;
-
         public BrukerService(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection")
@@ -71,5 +70,27 @@ namespace KartverketGruppe5.Services
             return await connection.QueryAsync<Bruker>(
                 "SELECT brukerId, fornavn, etternavn, email, rolle, opprettetDato FROM Bruker ORDER BY opprettetDato DESC");
         }
+
+        public async Task<bool> OppdaterBruker(Bruker bruker)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+
+            try
+        {
+                var affected = await connection.ExecuteAsync(@"
+                UPDATE Bruker
+                SET fornavn = @Fornavn, etternavn = @Etternavn, email = @Email
+                WHERE brukerId = @BrukerId", 
+                new { bruker.Fornavn, bruker.Etternavn, bruker.Email, bruker.BrukerId });
+
+            return affected > 0; 
+        }
+        catch (Exception ex)
+        {
+        Console.WriteLine($"Error: {ex.Message}");
+        return false;
+        }
+}
+
     }
 } 
