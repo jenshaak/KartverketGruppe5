@@ -13,8 +13,10 @@ namespace KartverketGruppe5.Controllers
             _brukerService = brukerService;
         }
 
-
+        
         [HttpGet]
+
+        // --- Sjekker om bruker er i systemet ---
         public async Task<IActionResult> Index()
         {
             var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
@@ -23,6 +25,7 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
+            // --- Data om bruker hentes gjennom Service filen ---
             var bruker = await _brukerService.GetBrukerByEmail(brukerEmail);
 
             if (bruker == null)
