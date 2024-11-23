@@ -37,12 +37,14 @@ namespace KartverketGruppe5.Controllers
         [HttpPost]
         public async Task<IActionResult> OppdaterBruker(Bruker bruker)
         {
+            // Sjekk om brukeren er logget inn
             var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
             if (string.IsNullOrEmpty(brukerEmail))
             {
                 return RedirectToAction("Login", "Login");
             }
 
+            // Hvis dataene er gyldige, prøv å oppdatere brukerens informasjon og håndter resultatet
             if (ModelState.IsValid)
             {
                 var oppdatert = await _brukerService.OppdaterBruker(bruker);
