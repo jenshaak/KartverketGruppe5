@@ -22,25 +22,6 @@ namespace KartverketGruppe5.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("KartverketGruppe5.Data.GeoChange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("GeoJson")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GeoChanges");
-                });
-
             modelBuilder.Entity("KartverketGruppe5.Models.Bruker", b =>
                 {
                     b.Property<int>("BrukerId")
@@ -88,7 +69,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "ole@gmail.com",
                             Etternavn = "Olsen",
                             Fornavn = "Ole",
-                            OpprettetDato = new DateTime(2024, 11, 17, 10, 30, 22, 821, DateTimeKind.Utc).AddTicks(5746),
+                            OpprettetDato = new DateTime(2024, 11, 23, 19, 40, 35, 539, DateTimeKind.Utc).AddTicks(8830),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
@@ -132,6 +113,7 @@ namespace KartverketGruppe5.Migrations
 
                     b.Property<string>("Beskrivelse")
                         .IsRequired()
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BildeSti")
@@ -142,6 +124,7 @@ namespace KartverketGruppe5.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Kommentar")
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("KommuneId")
@@ -195,7 +178,8 @@ namespace KartverketGruppe5.Migrations
 
                     b.Property<string>("KommuneNummer")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(4)
+                        .HasColumnType("varchar(4)");
 
                     b.Property<string>("Navn")
                         .IsRequired()
@@ -293,7 +277,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "rune@kartverket.no",
                             Etternavn = "Bengtson",
                             Fornavn = "Rune",
-                            OpprettetDato = new DateTime(2024, 11, 17, 10, 30, 22, 824, DateTimeKind.Utc).AddTicks(9634),
+                            OpprettetDato = new DateTime(2024, 11, 23, 19, 40, 35, 540, DateTimeKind.Utc).AddTicks(1160),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         },
                         new
@@ -303,7 +287,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "lars@kartverket.no",
                             Etternavn = "Larsen",
                             Fornavn = "Lars",
-                            OpprettetDato = new DateTime(2024, 11, 17, 10, 30, 22, 824, DateTimeKind.Utc).AddTicks(9641),
+                            OpprettetDato = new DateTime(2024, 11, 23, 19, 40, 35, 540, DateTimeKind.Utc).AddTicks(1160),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
@@ -311,26 +295,27 @@ namespace KartverketGruppe5.Migrations
             modelBuilder.Entity("KartverketGruppe5.Models.Innmelding", b =>
                 {
                     b.HasOne("KartverketGruppe5.Models.Bruker", "Bruker")
-                        .WithMany()
+                        .WithMany("Innmeldinger")
                         .HasForeignKey("BrukerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("KartverketGruppe5.Models.Kommune", "Kommune")
                         .WithMany()
                         .HasForeignKey("KommuneId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("KartverketGruppe5.Models.Lokasjon", "Lokasjon")
                         .WithMany()
                         .HasForeignKey("LokasjonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("KartverketGruppe5.Models.Saksbehandler", "Saksbehandler")
                         .WithMany()
-                        .HasForeignKey("SaksbehandlerId");
+                        .HasForeignKey("SaksbehandlerId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Bruker");
 
@@ -343,11 +328,18 @@ namespace KartverketGruppe5.Migrations
 
             modelBuilder.Entity("KartverketGruppe5.Models.Kommune", b =>
                 {
-                    b.HasOne("KartverketGruppe5.Models.Fylke", null)
+                    b.HasOne("KartverketGruppe5.Models.Fylke", "Fylke")
                         .WithMany()
                         .HasForeignKey("FylkeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Fylke");
+                });
+
+            modelBuilder.Entity("KartverketGruppe5.Models.Bruker", b =>
+                {
+                    b.Navigation("Innmeldinger");
                 });
 #pragma warning restore 612, 618
         }
