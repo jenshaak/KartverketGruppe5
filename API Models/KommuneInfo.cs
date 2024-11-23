@@ -7,7 +7,7 @@ namespace KartverketGruppe5.API_Models
         [JsonPropertyName("type")]
         public string? Type { get; set; }
         [JsonPropertyName("properties")]
-        public CrsProperties Properties { get; set; }
+        public required CrsProperties Properties { get; set; }
     }
 
     public class CrsProperties
@@ -21,9 +21,9 @@ namespace KartverketGruppe5.API_Models
         [JsonPropertyName("type")]
         public string? Type { get; set; }
         [JsonPropertyName("coordinates")]
-        public List<List<List<double>>> Coordinates { get; set; }
+        public required List<List<List<double>>> Coordinates { get; set; }
         [JsonPropertyName("crs")]
-        public Crs Crs { get; set; }
+        public required Crs Crs { get; set; }
     }
 
     public class PunktIOmrade
@@ -31,9 +31,9 @@ namespace KartverketGruppe5.API_Models
         [JsonPropertyName("type")]
         public string? Type { get; set; }
         [JsonPropertyName("coordinates")]
-        public List<double> Coordinates { get; set; }
+        public required List<double> Coordinates { get; set; }
         [JsonPropertyName("crs")]
-        public Crs Crs { get; set; }
+        public required Crs Crs { get; set; }
     }
 
     public class GyldigeNavn
@@ -67,13 +67,13 @@ namespace KartverketGruppe5.API_Models
         public bool SamiskForvaltningsomrade { get; set; }
 
         [JsonPropertyName("avgrensningsboks")]
-        public Avgrensningsboks Avgrensningsboks { get; set; }
+        public required Avgrensningsboks Avgrensningsboks { get; set; }
 
         [JsonPropertyName("punktIOmrade")]
-        public PunktIOmrade PunktIOmrade { get; set; }
+        public required PunktIOmrade PunktIOmrade { get; set; }
 
         [JsonPropertyName("gyldigeNavn")]
-        public List<GyldigeNavn> GyldigeNavn { get; set; }
+        public required List<GyldigeNavn> GyldigeNavn { get; set; }
     }
 
 }

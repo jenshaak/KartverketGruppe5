@@ -1,0 +1,15 @@
+@model InnmeldingViewModel
+
+<div class="flex justify-between items-center w-full rounded-lg bg-white px-6 py-4">
+    <div>@Model.KommuneNavn</div>
+    <div>@Model.OpprettetDato.ToShortDateString()</div>
+    <div class="flex items-center justify-center px-3 py-1 rounded-full @Model.StatusClass">@Model.Status</div>
+</div>
+
+@if (Model.Kommentar != null)
+{
+    <div class="rounded-lg shadow px-6 py-4 flex items-center gap-4 @Model.StatusClass">
+        <p class="font-medium">Kommentar:</p>
+        <div class="w-full h-full rounded-md p-2">@Model.Kommentar</div>
+    </div>
+} 

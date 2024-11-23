@@ -38,11 +38,12 @@ namespace KartverketGruppe5.Controllers
             string sortOrder = "date_desc", 
             string statusFilter = "",
             string fylkeFilter = "",
+            string kommuneFilter = "",
             int page = 1)
         {
             try 
             {
-                SetupViewData(sortOrder, statusFilter, fylkeFilter);
+                SetupViewData(sortOrder, statusFilter, fylkeFilter, kommuneFilter);
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
                 
                 var request = new InnmeldingRequest
@@ -50,6 +51,7 @@ namespace KartverketGruppe5.Controllers
                     SortOrder = sortOrder,
                     StatusFilter = statusFilter,
                     FylkeFilter = fylkeFilter,
+                    KommuneFilter = kommuneFilter,
                     Page = page
                 };
 
@@ -62,12 +64,13 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter)
+        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
         {
             ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentStatus"] = statusFilter;
             ViewData["CurrentFylke"] = fylkeFilter;
+            ViewData["CurrentKommune"] = Request.Query["kommuneFilter"].ToString();
             ViewData["Statuses"] = _innmeldingService.GetAllStatuses();
         }
 

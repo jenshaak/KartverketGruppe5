@@ -25,6 +25,9 @@ module.exports = {
     {
       pattern: /(absolute|fixed|sticky|relative|hidden|h-screen|group|group-hover|cursor-pointer|max-md:hidden|max-sm:hidden|max-lg:hidden|divider)/,
     },
+    // {
+    //   pattern: /(max-md:flex-col)/,
+    // },
     {
       pattern: /(rounded-l-lg|rounded-r-lg)/,
     },

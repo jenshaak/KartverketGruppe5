@@ -22,11 +22,19 @@
             Tilbake
         </a>
         <h1>Behandling av innmeldingen</h1>
-        <div class="flex justify-between items-center w-full rounded-lg bg-white p-4">
+        <partial name="_InnmeldingVisning" model="Model" />
+        @* <div class="flex justify-between items-center w-full rounded-lg bg-white p-4">
             <div>@Model.KommuneNavn</div>
             <div>@Model.OpprettetDato.ToShortDateString()</div>
             <div class="flex items-center justify-center px-3 py-1 rounded-full @Model.StatusClass">@Model.Status</div>
         </div>
+        @if (Model.Kommentar != null)
+        {
+            <div class="rounded-lg shadow px-6 py-4 flex items-center gap-4 @Model.StatusClass">
+                <p class="font-medium">Kommentar:</p>
+                <div class="w-full h-full rounded-md p-2">@Model.Kommentar</div>
+            </div>
+        }
         <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" style="min-height: 400px;" >
             <div class="bg-white rounded-lg shadow p-6 flex gap-4">
                 <div class="w-2/3 flex flex-col gap-4">
@@ -45,7 +53,7 @@
                 </div>  
             </div>  
             <div id="map" class="w-full h-full rounded-lg z-0"></div>
-        </div>
+        </div> *@
 
         <!-- Handlinger -->
         <div class="mt-8 flex flex-col gap-4 w-full">
@@ -67,6 +75,11 @@
                                 class="btn btn-red">
                             <i class="ph ph-x ph-lg"></i>
                             Avvis
+                        </button>
+                        <button type="submit" name="status" value="Under behandling" 
+                                class="btn btn-blue">
+                            <i class="ph ph-chat-circle-text ph-lg"></i>
+                            Kun kommentar
                         </button>
                         <button type="submit" name="status" value="Godkjent" 
                                 class="btn btn-primary">
