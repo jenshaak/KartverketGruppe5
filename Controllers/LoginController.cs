@@ -19,17 +19,20 @@ namespace KartverketGruppe5.Controllers
         private readonly IBrukerService _brukerService;
         private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly IPasswordService _passwordService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<LoginController> _logger;
 
         public LoginController(
             IBrukerService brukerService,
             ISaksbehandlerService saksbehandlerService,
             IPasswordService passwordService,
+            INotificationService notificationService,
             ILogger<LoginController> logger)
         {
             _brukerService = brukerService ?? throw new ArgumentNullException(nameof(brukerService));
             _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));
             _passwordService = passwordService ?? throw new ArgumentNullException(nameof(passwordService));
+            _notificationService = notificationService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -167,6 +170,7 @@ namespace KartverketGruppe5.Controllers
                 HttpContext.Session.Clear();
                 
                 _logger.LogInformation("Utlogging fullført");
+                _notificationService.AddSuccessMessage("Du er nå utlogget.");
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
