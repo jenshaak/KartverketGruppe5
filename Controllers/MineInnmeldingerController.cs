@@ -17,13 +17,15 @@ namespace KartverketGruppe5.Controllers
         private readonly ILokasjonService _lokasjonService;
         private readonly IKommuneService _kommuneService;        
         private readonly IFylkeService _fylkeService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<MineInnmeldingerController> _logger;
 
         public MineInnmeldingerController(
             IInnmeldingService innmeldingService, 
             ILokasjonService lokasjonService, 
             IKommuneService kommuneService, 
-            IFylkeService fylkeService, 
+            IFylkeService fylkeService,
+            INotificationService notificationService,
             ILogger<MineInnmeldingerController> logger)
         {
             _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
@@ -31,6 +33,7 @@ namespace KartverketGruppe5.Controllers
             _kommuneService = kommuneService ?? throw new ArgumentNullException(nameof(kommuneService));
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _notificationService = notificationService;
         }
 
         public async Task<IActionResult> Index(
@@ -77,6 +80,7 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        //Gå til detaljer på den spesifikke innmeldingen
         [HttpGet]
         public async Task<IActionResult> Detaljer(int id)
         {
@@ -133,9 +137,11 @@ namespace KartverketGruppe5.Controllers
         public async Task<IActionResult> SlettInnmelding(int id)
         {
             await _innmeldingService.SlettInnmelding(id);
+            _notificationService.AddErrorMessage("Innmelding slettet!");
             return RedirectToAction("Index");
         }
 
+        //Endre innmelding i detaljer
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile? bilde)
@@ -181,7 +187,7 @@ namespace KartverketGruppe5.Controllers
 
                 await _innmeldingService.UpdateInnmeldingDetails(innmeldingModel, lokasjon, bilde);
                 _logger.LogInformation("Innmelding {InnmeldingId} oppdatert", innmeldingModel.InnmeldingId);
-                
+                _notificationService.AddSuccessMessage("Innmelding redigert!");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
