@@ -1,0 +1,69 @@
+﻿@* @model KartverketGruppe5.Models.HomeViewModel *@
+@{
+    ViewData["Title"] = "Hjemmeside";
+    var userType = Context.Session.GetString("UserType");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
+}
+
+<div class="w-full text-center flex flex-col items-center justify-center gap-4 bakgrunn-bilde">
+    <div class="flex flex-col items-center gap-4 bg-bg/80 rounded-xl p-4">
+    <partial name="_Notifications" /> 
+    @if (userType != "Saksbehandler")
+    {
+        <a asp-controller="MapChange" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center gap-4">
+                <i class="ph ph-map-pin text-5xl font-bold"></i>
+                <h3>Meld inn endring</h3>
+            </div>
+        </a>
+        <div class="bg-custom-gray w-4/5 h-1 rounded-full"></div>
+        <a asp-controller="MineInnmeldinger" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center gap-4">
+                <i class="ph ph-archive text-5xl font-bold"></i>
+                <h3>Mine innmeldinger</h3>
+            </div>
+        </a>
+    }
+    else if (userType == "Saksbehandler")
+    {
+        <a asp-controller="Saksbehandling" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center gap-4">
+                <i class="ph ph-list-checks text-5xl font-bold"></i>
+                <h3>Saksbehandling</h3>
+            </div>
+        </a>
+        <div class="bg-custom-gray w-4/5 h-1 rounded-full"></div>
+
+        <a asp-controller="MineSaker" asp-action="Index" class="no-underline">
+            <div class="w-max hover:scale-105 transition-all ease-in-out 
+            duration-300 p-10 rounded-xl flex justify-center items-center gap-4">
+                <i class="ph ph-folder-open text-5xl font-bold"></i>
+                <h3>Mine saker</h3>
+            </div>
+        </a>
+        @if (isAdmin)
+        {
+        <div class="bg-custom-gray w-4/5 h-1 rounded-full"></div>
+
+            <a asp-controller="Admin" asp-action="Index" class="no-underline">
+                <div class="w-max hover:scale-105 transition-all ease-in-out 
+                duration-300 p-10 rounded-xl flex justify-center items-center gap-4">
+                    <i class="ph ph-address-book text-5xl font-bold"></i>
+                    <h3>Administrasjon</h3>
+                </div>
+            </a>
+        }
+    }
+    </div>
+</div>
+
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["Error"]
+    </div>
+}
