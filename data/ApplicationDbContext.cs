@@ -31,6 +31,7 @@ namespace KartverketGruppe5.Data
                 entity.Property(e => e.Passord).IsRequired().HasMaxLength(256);
                 entity.Property(e => e.OpprettetDato)
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.Slettet).HasDefaultValue(false);
                 entity.HasIndex(e => e.Email).IsUnique();
                 
                 entity.HasData(new Bruker

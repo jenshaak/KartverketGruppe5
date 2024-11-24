@@ -29,7 +29,8 @@ namespace KartverketGruppe5.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Passord = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    OpprettetDato = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
+                    OpprettetDato = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Slettet = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -174,17 +175,17 @@ namespace KartverketGruppe5.Migrations
             migrationBuilder.InsertData(
                 table: "Bruker",
                 columns: new[] { "BrukerId", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
-                values: new object[] { 1, "ole@gmail.com", "Olsen", "Ole", new DateTime(2024, 11, 23, 21, 32, 21, 97, DateTimeKind.Utc).AddTicks(1950), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+                values: new object[] { 1, "ole@gmail.com", "Olsen", "Ole", new DateTime(2024, 11, 24, 14, 26, 2, 477, DateTimeKind.Utc).AddTicks(8870), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
 
             migrationBuilder.InsertData(
                 table: "Saksbehandler",
                 columns: new[] { "SaksbehandlerId", "Admin", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
-                values: new object[] { 1, true, "rune@kartverket.no", "Bengtson", "Rune", new DateTime(2024, 11, 23, 21, 32, 21, 97, DateTimeKind.Utc).AddTicks(4350), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+                values: new object[] { 1, true, "rune@kartverket.no", "Bengtson", "Rune", new DateTime(2024, 11, 24, 14, 26, 2, 478, DateTimeKind.Utc).AddTicks(1340), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
 
             migrationBuilder.InsertData(
                 table: "Saksbehandler",
                 columns: new[] { "SaksbehandlerId", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
-                values: new object[] { 2, "lars@kartverket.no", "Larsen", "Lars", new DateTime(2024, 11, 23, 21, 32, 21, 97, DateTimeKind.Utc).AddTicks(4350), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+                values: new object[] { 2, "lars@kartverket.no", "Larsen", "Lars", new DateTime(2024, 11, 24, 14, 26, 2, 478, DateTimeKind.Utc).AddTicks(1340), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bruker_Email",
