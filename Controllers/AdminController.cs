@@ -27,7 +27,7 @@ namespace KartverketGruppe5.Controllers
             _logger = logger;
         }
 
-
+        //List 10 og 10 saksbehandlere i tabellen
         [HttpGet]
         public async Task<IActionResult> Index(
             string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
@@ -65,6 +65,7 @@ namespace KartverketGruppe5.Controllers
             return View();
         }
         
+        //Registrer Saksbehandler
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Saksbehandler saksbehandler)
@@ -79,7 +80,7 @@ namespace KartverketGruppe5.Controllers
                 var result = await _saksbehandlerService.CreateSaksbehandler(saksbehandler);
                 if (result)
                 {
-                    TempData["Success"] = "Saksbehandler opprettet!";
+                    _notificationService.AddSuccessMessage("Saksbehandler registrert!");
                     return RedirectToAction("Index", "Admin");
                 }
                 
@@ -90,11 +91,12 @@ namespace KartverketGruppe5.Controllers
             {
                 _logger.LogError($"Error creating saksbehandler: {ex.Message}");
                 ModelState.AddModelError("", "En feil oppstod ved registrering");
+                _notificationService.AddErrorMessage("En feil oppstod ved registrering");
                 return View(saksbehandler);
             }
         }
 
-
+        // Legge til fylker og kommuner
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PopulateFylkerOgKommuner()
@@ -113,6 +115,7 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index");
         }
 
+        //Henting av saksbehandler for redigering
         [HttpGet]
         public async Task<IActionResult> Rediger(int id)
         {
@@ -149,6 +152,7 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        //Rediger hentet Saksbehandler
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Rediger(SaksbehandlerRegistrerViewModel viewModel)
