@@ -5,18 +5,18 @@ using MySqlConnector;
 using System.Data;
 using KartverketGruppe5.Models;
 using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Repositories.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
     public class FylkeService : IFylkeService
     {
-        private readonly string _connectionString;
+        private readonly IFylkeRepository _repository;
         private readonly ILogger<FylkeService> _logger;
 
-        public FylkeService(IConfiguration configuration, ILogger<FylkeService> logger)
+        public FylkeService(IFylkeRepository repository, ILogger<FylkeService> logger)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(configuration));
+            _repository = repository;
             _logger = logger;
         }
 
@@ -24,27 +24,9 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                const string sql = @"
-                    SELECT 
-                        fylkeId,
-                        navn 
-                    FROM Fylke 
-                    ORDER BY navn";
-
-                var fylker = await connection.QueryAsync<Fylke>(sql);
-
-                var fylkeListe = fylker.ToList();
+                var fylkeListe = await _repository.GetAllFylker();
                 _logger.LogInformation("Hentet {AntallFylker} fylker", fylkeListe.Count);
-
                 return fylkeListe;
-            }
-            catch (MySqlException ex)
-            {
-                _logger.LogError(ex, "Database error ved henting av fylker");
-                throw;
             }
             catch (Exception ex)
             {

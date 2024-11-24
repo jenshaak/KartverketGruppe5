@@ -1,9 +1,4 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Threading.Tasks;
+
 using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Services

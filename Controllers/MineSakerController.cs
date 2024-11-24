@@ -6,10 +6,12 @@ using KartverketGruppe5.Models.ViewModels;
 using Microsoft.Extensions.Logging;
 using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Models.Helpers;
+
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Saksbehandler,Admin")]
-    public class MineSakerController : Controller
+    public class MineSakerController : BaseController
     {
         private readonly IInnmeldingService _innmeldingService;
         private readonly ILokasjonService _lokasjonService;
@@ -76,16 +78,6 @@ namespace KartverketGruppe5.Controllers
                 _logger.LogError(ex, "Feil ved henting av saker for saksbehandler");
                 return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
             }
-        }
-
-        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
-        {
-            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["CurrentStatus"] = statusFilter;
-            ViewData["CurrentFylke"] = fylkeFilter;
-            ViewData["CurrentKommune"] = Request.Query["kommuneFilter"].ToString();
-            ViewData["Statuses"] = _innmeldingService.GetAllStatuses();
         }
 
         public async Task<IActionResult> Behandle(int id)

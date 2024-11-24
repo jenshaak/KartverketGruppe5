@@ -4,18 +4,18 @@ using MySqlConnector;
 using KartverketGruppe5.Models;
 using Microsoft.Extensions.Configuration;
 using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Repositories.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
     public class KommuneService : IKommuneService
     {
-        private readonly string _connectionString;
+        private readonly IKommuneRepository _repository;
         private readonly ILogger<KommuneService> _logger;
 
-        public KommuneService(IConfiguration configuration, ILogger<KommuneService> logger)
+        public KommuneService(IKommuneRepository repository, ILogger<KommuneService> logger)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(configuration));
+            _repository = repository;
             _logger = logger;
         }
 
@@ -23,13 +23,7 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT kommuneId, fylkeId, navn, kommuneNummer 
-                    FROM Kommune 
-                    WHERE kommuneId = @KommuneId";
-
-                return await connection.QueryFirstOrDefaultAsync<Kommune>(sql, new { KommuneId = kommuneId });
+                return await _repository.GetKommuneById(kommuneId);
             }
             catch (Exception ex)
             {
@@ -42,14 +36,7 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT kommuneId, fylkeId, navn, kommuneNummer 
-                    FROM Kommune 
-                    ORDER BY navn";
-                    
-                var result = await connection.QueryAsync<Kommune>(sql);
-                return result.ToList();
+                return await _repository.GetAllKommuner();
             }
             catch (Exception ex)
             {
@@ -62,25 +49,7 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(searchTerm))
-                {
-                    return new List<Kommune>();
-                }
-
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT kommuneId, fylkeId, navn, kommuneNummer 
-                    FROM Kommune 
-                    WHERE navn LIKE @SearchTerm 
-                    ORDER BY navn 
-                    LIMIT 10";
-
-                var result = await connection.QueryAsync<Kommune>(
-                    sql, 
-                    new { SearchTerm = $"%{searchTerm.Trim()}%" }
-                );
-                
-                return result.ToList();
+                return await _repository.SearchKommuner(searchTerm);
             }
             catch (Exception ex)
             {

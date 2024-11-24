@@ -5,6 +5,8 @@ using KartverketGruppe5.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using KartverketGruppe5.Repositories;
+using KartverketGruppe5.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,14 @@ builder.Services.AddScoped<IInnmeldingService, InnmeldingService>();
 builder.Services.AddScoped<IKommunePopulateService, KommunePopulateService>();
 builder.Services.AddScoped<IKommuneService, KommuneService>();
 builder.Services.AddScoped<ISaksbehandlerService, SaksbehandlerService>();
+
+// Registrer repositories (legg til denne linjen sammen med de andre service-registreringene)
+builder.Services.AddScoped<IBrukerRepository, BrukerRepository>();
+builder.Services.AddScoped<IFylkeRepository, FylkeRepository>();
+builder.Services.AddScoped<IKommuneRepository, KommuneRepository>();
+builder.Services.AddScoped<ILokasjonRepository, LokasjonRepository>();
+builder.Services.AddScoped<ISaksbehandlerRepository, SaksbehandlerRepository>();
+builder.Services.AddScoped<IInnmeldingRepository, InnmeldingRepository>();
 
 // Legg til services til containeren.
 builder.Services.AddControllersWithViews();

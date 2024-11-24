@@ -2,6 +2,7 @@ using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.Interfaces;
 using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Models.RequestModels;
+using KartverketGruppe5.Models.Helpers;
 
 namespace KartverketGruppe5.Services.Interfaces;
 
@@ -25,7 +26,4 @@ public interface IInnmeldingService
     Task<bool> UpdateInnmelding(Innmelding innmelding);
     Task UpdateBildeSti(int innmeldingId, string bildeSti);
     Task UpdateInnmeldingDetails(InnmeldingViewModel innmelding, LokasjonViewModel? lokasjon = null, IFormFile? bilde = null);
-
-    // Hjelpemetoder
-    List<string> GetAllStatuses();
 } 
