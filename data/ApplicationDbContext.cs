@@ -129,9 +129,9 @@ namespace KartverketGruppe5.Data
                 entity.Property(e => e.BildeSti)
                     .HasMaxLength(100);
 
-                // Relasjoner
+                // Enkel one-way relasjon
                 entity.HasOne(e => e.Bruker)
-                    .WithMany(b => b.Innmeldinger)
+                    .WithMany()
                     .HasForeignKey(e => e.BrukerId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);

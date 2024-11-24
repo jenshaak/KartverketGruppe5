@@ -6,326 +6,256 @@ using KartverketGruppe5.Models.ViewModels;
 using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Services.Interfaces;
 using KartverketGruppe5.Models.Interfaces;
+using KartverketGruppe5.Repositories.Interfaces;
+using KartverketGruppe5.Models.Helpers;
 namespace KartverketGruppe5.Services
 {
     public class InnmeldingService : IInnmeldingService
     {
-        private readonly IConfiguration _configuration;
-        private readonly string? _connectionString;
+        private readonly IInnmeldingRepository _repository;
         private readonly ILogger<InnmeldingService> _logger;
         private readonly IBildeService _bildeService;
         private readonly ILokasjonService _lokasjonService;
 
-        public InnmeldingService(IConfiguration configuration, ILogger<InnmeldingService> logger, IBildeService bildeService, ILokasjonService lokasjonService)
+        public InnmeldingService(
+            IInnmeldingRepository repository,
+            ILogger<InnmeldingService> logger,
+            IBildeService bildeService,
+            ILokasjonService lokasjonService)
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(configuration));
+            _repository = repository;
             _logger = logger;
             _bildeService = bildeService;
             _lokasjonService = lokasjonService;
         }
 
-        private IDbConnection Connection => new MySqlConnection(_connectionString);
-
-
-
-        // --- LAGER EN INNMELDING ---
-        public int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
+        public async Task<int> CreateInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, IFormFile? bilde)
         {
-            using (IDbConnection dbConnection = Connection)
-            {
-                string query = @"INSERT INTO Innmelding 
-                               (brukerId, kommuneId, lokasjonId, beskrivelse, status, bildeSti) 
-                               VALUES 
-                               (@BrukerId, @KommuneId, @LokasjonId, @Beskrivelse, 'Ny', @BildeSti);
-                               SELECT LAST_INSERT_ID();";
+            var innmeldingId = await _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, null);
 
-                return dbConnection.ExecuteScalar<int>(query, new
+            if (bilde != null)
+            {
+                var bildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
+                if (bildeSti != null)
                 {
-                    BrukerId = brukerId,
-                    KommuneId = kommuneId,
-                    LokasjonId = lokasjonId,
-                    Beskrivelse = beskrivelse,
-                    BildeSti = bildeSti
-                });
+                    await _repository.UpdateBildeSti(innmeldingId, bildeSti);
+                }
             }
+
+            return innmeldingId;
         }
 
-
-
-        // --- HENTING AV ENKEL INNMELDIING ---
         public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
         {
-            try 
+            var innmeldingViewModel = await _repository.GetInnmeldingById(id);
+            if (innmeldingViewModel == null)
+                throw new KeyNotFoundException($"Innmelding med id {id} ble ikke funnet");
+
+            return innmeldingViewModel;
+        }
+
+        public async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
+        {
+            try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                
-                string sql = @"
-                    SELECT 
-                        i.innmeldingId,
-                        i.brukerId,
-                        i.kommuneId,
-                        i.lokasjonId,
-                        i.beskrivelse,
-                        i.kommentar,
-                        i.status,
-                        i.opprettetDato,
-                        i.saksbehandlerId,
-                        i.bildeSti,
-                        k.navn as kommuneNavn,
-                        l.latitude,
-                        l.longitude,
-                        l.geoJson,
-                        CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
-                    FROM Innmelding i 
-                    INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
-                    INNER JOIN Lokasjon l ON i.lokasjonId = l.lokasjonId
-                    LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
-                    WHERE i.innmeldingId = @Id";
-
-                var innmelding = await connection.QueryFirstOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
-
-                if (innmelding == null)
-                {
-                    _logger.LogWarning($"Fant ingen innmelding med ID {id}");
-                    throw new KeyNotFoundException($"Innmelding med ID {id} finnes ikke");
-                }
-
-                innmelding.StatusClass = GetStatusClass(innmelding.Status);
-
-                _logger.LogInformation($"Status: {innmelding.LokasjonId}");
-                return innmelding;
-            }
-            catch (MySqlException ex)
-            {
-                _logger.LogError(ex, $"Database error ved henting av innmelding {id}");
-                throw;
+                return await _repository.GetInnmeldinger(request);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Uventet feil ved henting av innmelding {id}");
+                _logger.LogError(ex, "Feil ved henting av innmeldinger");
                 throw;
             }
         }
 
-
-
-        // --- HENTING AV FLERE INNMELDINGER ---
-        public async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            
-            var sql = @"
-                SELECT 
-                    i.innmeldingId,
-                    i.brukerId,
-                    i.kommuneId,
-                    i.lokasjonId,
-                    i.beskrivelse,
-                    i.status,
-                    i.opprettetDato,
-                    i.saksbehandlerId,
-                    k.navn as kommuneNavn,
-                    f.navn as fylkeNavn
-                FROM Innmelding i
-                INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
-                INNER JOIN Fylke f ON k.fylkeId = f.fylkeId";
-
-            var whereConditions = BuildWhereConditions(request);
-            var parameters = CreateParameters(request);
-
-            if (whereConditions.Any())
-            {
-                sql += " WHERE " + string.Join(" AND ", whereConditions);
-            }
-
-            var totalItems = await GetTotalItems(connection, sql, parameters);
-            sql = AddSortingAndPagination(sql, request);
-
-            var innmeldinger = await connection.QueryAsync<InnmeldingViewModel>(sql, parameters);
-            
-            return new PagedResult<InnmeldingViewModel>
-            {
-                Items = ProcessItems(innmeldinger.ToList()),
-                TotalItems = totalItems,
-                CurrentPage = request.Page,
-                PageSize = request.PageSize
-            };
-        }
-
-        private List<string> BuildWhereConditions(InnmeldingRequest request)
-        {
-            var conditions = new List<string>();
-            
-            if (request.SaksbehandlerId.HasValue)
-                conditions.Add("i.saksbehandlerId = @SaksbehandlerId");
-            
-            if (request.InnmelderBrukerId.HasValue)
-                conditions.Add("i.brukerId = @InnmelderBrukerId");
-            
-            if (!string.IsNullOrEmpty(request.StatusFilter))
-                conditions.Add("i.status = @Status");
-            
-            if (!string.IsNullOrEmpty(request.FylkeFilter))
-                conditions.Add("f.navn = @FylkeFilter");
-
-            if (!string.IsNullOrEmpty(request.KommuneFilter))
-                conditions.Add("k.navn = @KommuneFilter");
-            
-            return conditions;
-        }
-
-        private DynamicParameters CreateParameters(InnmeldingRequest request)
-        {
-            var parameters = new DynamicParameters();
-            
-            if (request.SaksbehandlerId.HasValue)
-                parameters.Add("SaksbehandlerId", request.SaksbehandlerId.Value);
-            
-            if (request.InnmelderBrukerId.HasValue)
-                parameters.Add("InnmelderBrukerId", request.InnmelderBrukerId.Value);
-            
-            if (!string.IsNullOrEmpty(request.StatusFilter))
-                parameters.Add("Status", request.StatusFilter);
-            
-            if (!string.IsNullOrEmpty(request.FylkeFilter))
-                parameters.Add("FylkeFilter", request.FylkeFilter);
-            
-            if (!string.IsNullOrEmpty(request.KommuneFilter))
-                parameters.Add("KommuneFilter", request.KommuneFilter);
-            
-            parameters.Add("Skip", (request.Page - 1) * request.PageSize);
-            parameters.Add("Take", request.PageSize);
-            
-            return parameters;
-        }
-
-        private string AddSortingAndPagination(string sql, InnmeldingRequest request)
-        {
-            sql += request.SortOrder switch
-            {
-                "date_asc" => " ORDER BY i.opprettetDato ASC",
-                _ => " ORDER BY i.opprettetDato DESC"
-            };
-            
-            sql += " LIMIT @Skip, @Take";
-            return sql;
-        }
-
-        private async Task<int> GetTotalItems(MySqlConnection connection, string sql, DynamicParameters parameters)
-        {
-            var countSql = $"SELECT COUNT(*) FROM ({sql}) AS CountQuery";
-            return await connection.ExecuteScalarAsync<int>(countSql, parameters);
-        }
-
-
-
-        // --- SLETTING AV INNMELDING ---
         public async Task SlettInnmelding(int id)
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                string sql = "DELETE FROM Innmelding WHERE innmeldingId = @Id";
-                await connection.ExecuteAsync(sql, new { Id = id });
+                await _repository.SlettInnmelding(id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Feil ved sletting av innmelding {id}");
+                _logger.LogError(ex, "Feil ved sletting av innmelding {InnmeldingId}", id);
                 throw;
             }
         }
 
-        // --- OPPDATERINGER ---
-
-        // Klasser for oppdatering
-        private List<InnmeldingViewModel> ProcessItems(List<InnmeldingViewModel> items)
-        {
-            return items.Select(i => new InnmeldingViewModel
-            {
-                InnmeldingId = i.InnmeldingId,
-                BrukerId = i.BrukerId,
-                KommuneId = i.KommuneId,
-                LokasjonId = i.LokasjonId,
-                Beskrivelse = i.Beskrivelse,
-                Status = i.Status,
-                OpprettetDato = i.OpprettetDato,
-                KommuneNavn = i.KommuneNavn,
-                FylkeNavn = i.FylkeNavn,
-                SaksbehandlerId = i.SaksbehandlerId,
-                StatusClass = GetStatusClass(i.Status)
-            }).ToList();
-        }
 
 
-        private async Task<bool> UpdateInnmeldingInternal(InnmeldingUpdateModel updateModel)
+        /// ----- OPPDATERINGER -----
+
+        public async Task<bool> UpdateInnmelding(InnmeldingUpdateModel updateModel)
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                var updateFields = new List<string>();
-                var parameters = new DynamicParameters();
-                
-                // Legg til felter som skal oppdateres
-                if (updateModel.Status != null)
-                {
-                    updateFields.Add("status = @Status");
-                    parameters.Add("Status", updateModel.Status);
-                }
-                
-                if (updateModel.SaksbehandlerId.HasValue)
-                {
-                    updateFields.Add("saksbehandlerId = @SaksbehandlerId");
-                    parameters.Add("SaksbehandlerId", updateModel.SaksbehandlerId.Value);
-                }
-                
-                if (updateModel.Beskrivelse != null)
-                {
-                    updateFields.Add("beskrivelse = @Beskrivelse");
-                    parameters.Add("Beskrivelse", updateModel.Beskrivelse);
-                }
-                
-                if (updateModel.Kommentar != null)
-                {
-                    updateFields.Add("kommentar = @Kommentar");
-                    parameters.Add("Kommentar", updateModel.Kommentar);
-                }
-                
-                if (updateModel.BildeSti != null)
-                {
-                    updateFields.Add("bildeSti = @BildeSti");
-                    parameters.Add("BildeSti", updateModel.BildeSti);
-                }
-
-                // Alltid oppdater oppdatertDato
-                updateFields.Add("oppdatertDato = @OppdatertDato");
-                parameters.Add("OppdatertDato", updateModel.OppdatertDato ?? DateTime.Now);
-                parameters.Add("InnmeldingId", updateModel.InnmeldingId);
-
-                if (!updateFields.Any()) return true; // Ingen endringer å gjøre
-
-                string sql = $@"
-                    UPDATE Innmelding 
-                    SET {string.Join(", ", updateFields)}
-                    WHERE innmeldingId = @InnmeldingId";
-
-                var rowsAffected = await connection.ExecuteAsync(sql, parameters);
-                return rowsAffected > 0;
+                updateModel.OppdatertDato = DateTime.Now;
+                return await _repository.UpdateInnmelding(updateModel);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error updating innmelding: {ex.Message}");
-                return false;
+                _logger.LogError(ex, "Feil ved oppdatering av innmelding {InnmeldingId}", 
+                    updateModel.InnmeldingId);
+                throw;
+            }
+        }
+
+        public async Task UpdateBilde(int innmeldingId, IFormFile bilde)
+        {
+            try
+            {
+                var innmelding = await GetInnmeldingById(innmeldingId);
+                if (innmelding == null)
+                {
+                    throw new KeyNotFoundException($"Innmelding {innmeldingId} ikke funnet");
+                }
+
+                // Slett gammelt bilde hvis det finnes
+                if (!string.IsNullOrEmpty(innmelding.BildeSti))
+                {
+                    // TODO: Implementer sletting av gammelt bilde
+                }
+
+                // Lagre nytt bilde
+                var nyBildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
+                if (nyBildeSti != null)
+                {
+                    await _repository.UpdateBildeSti(innmeldingId, nyBildeSti);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av bilde for innmelding {InnmeldingId}", innmeldingId);
+                throw;
+            }
+        }
+
+        public int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
+        {
+            try
+            {
+                // Kjør asynkron metode synkront siden interfacet krever synkron operasjon
+                return _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, bildeSti)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved opprettelse av innmelding");
+                throw;
+            }
+        }
+
+        private async Task<int> AddInnmeldingAsync(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
+        {
+            try
+            {
+                return await _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, bildeSti);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved opprettelse av innmelding");
+                throw;
+            }
+        }
+
+        public async Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId)
+        {
+            try
+            {
+                var updateModel = new InnmeldingUpdateModel
+                {
+                    InnmeldingId = innmeldingId,
+                    Status = status,
+                    SaksbehandlerId = saksbehandlerId,
+                    OppdatertDato = DateTime.Now
+                };
+
+                return await _repository.UpdateInnmelding(updateModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av status for innmelding {InnmeldingId}", innmeldingId);
+                throw;
+            }
+        }
+
+        public async Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId)
+        {
+            try
+            {
+                var updateModel = new InnmeldingUpdateModel
+                {
+                    InnmeldingId = innmeldingId,
+                    SaksbehandlerId = saksbehandlerId,
+                    Status = "Under behandling",
+                    OppdatertDato = DateTime.Now
+                };
+
+                return await _repository.UpdateInnmelding(updateModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av saksbehandler for innmelding {InnmeldingId}", innmeldingId);
+                throw;
+            }
+        }
+
+        public async Task<bool> UpdateStatusAndKommentar(int innmeldingId, string kommentar, string? status = "Under behandling")
+        {
+            var updateModel = new InnmeldingUpdateModel
+            {
+                InnmeldingId = innmeldingId,
+                Status = status,
+                Kommentar = kommentar,
+                OppdatertDato = DateTime.Now
+            };
+            
+            return await _repository.UpdateInnmelding(updateModel);
+        }
+
+        public async Task<bool> UpdateInnmelding(Innmelding innmelding)
+        {
+            try
+            {
+                var updateModel = new InnmeldingUpdateModel
+                {
+                    InnmeldingId = innmelding.InnmeldingId,
+                    Status = innmelding.Status,
+                    SaksbehandlerId = innmelding.SaksbehandlerId,
+                    Beskrivelse = innmelding.Beskrivelse,
+                    Kommentar = innmelding.Kommentar,
+                    BildeSti = innmelding.BildeSti,
+                    OppdatertDato = DateTime.Now
+                };
+                return await _repository.UpdateInnmelding(updateModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av innmelding {InnmeldingId}", innmelding.InnmeldingId);
+                throw;
+            }
+        }
+
+        public async Task UpdateBildeSti(int innmeldingId, string bildeSti)
+        {
+            try
+            {
+                await _repository.UpdateBildeSti(innmeldingId, bildeSti);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av bildesti for innmelding {InnmeldingId}", innmeldingId);
+                throw;
             }
         }
 
         public async Task UpdateInnmeldingDetails(InnmeldingViewModel innmelding, LokasjonViewModel? lokasjon = null, IFormFile? bilde = null)
         {
-            try 
+            try
             {
                 var oppdatertDato = DateTime.Now;
 
+                // Håndter bilde hvis det er lastet opp
                 if (bilde != null)
                 {
                     innmelding.BildeSti = await _bildeService.LagreBilde(bilde, innmelding.InnmeldingId);
@@ -336,13 +266,16 @@ namespace KartverketGruppe5.Services
                     await _lokasjonService.UpdateLokasjon(lokasjon, oppdatertDato);
                 }
 
-                await UpdateInnmeldingInternal(new InnmeldingUpdateModel
+                // Oppdater innmelding til slutt
+                var updateModel = new InnmeldingUpdateModel
                 {
                     InnmeldingId = innmelding.InnmeldingId,
                     Beskrivelse = innmelding.Beskrivelse,
                     BildeSti = innmelding.BildeSti,
                     OppdatertDato = oppdatertDato
-                });
+                };
+
+                await _repository.UpdateInnmelding(updateModel);
             }
             catch (Exception ex)
             {
@@ -351,75 +284,5 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public async Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId = null)
-        {
-            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
-            {
-                InnmeldingId = innmeldingId,
-                Status = status,
-                SaksbehandlerId = saksbehandlerId
-            });
-        }
-
-        public async Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId)
-        {
-            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
-            {
-                InnmeldingId = innmeldingId,
-                SaksbehandlerId = saksbehandlerId,
-                Status = "Under behandling"
-            });
-        }
-
-        public async Task<bool> UpdateStatusAndKommentar(int innmeldingId, string kommentar, string? status = "under behandling")
-        {
-            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
-            {
-                InnmeldingId = innmeldingId,
-                Status = status,
-                Kommentar = kommentar
-            });
-        }
-
-        public async Task<bool> UpdateInnmelding(Innmelding innmelding)
-        {
-            return await UpdateInnmeldingInternal(new InnmeldingUpdateModel
-            {
-                InnmeldingId = innmelding.InnmeldingId,
-                Status = innmelding.Status,
-                SaksbehandlerId = innmelding.SaksbehandlerId,
-                OppdatertDato = DateTime.Now
-            });
-        }
-
-        public async Task UpdateBildeSti(int innmeldingId, string bildeSti)
-        {
-            await UpdateInnmeldingInternal(new InnmeldingUpdateModel
-            {
-                InnmeldingId = innmeldingId,
-                BildeSti = bildeSti,
-                OppdatertDato = DateTime.Now
-            });
-        }
-
-        private string GetStatusClass(string status) => status switch
-        {
-            "Ny" => "bg-blue-100 text-blue-800",
-            "Under behandling" => "bg-yellow-100 text-yellow-800",
-            "Godkjent" => "bg-green-100 text-green-800",
-            "Avvist" => "bg-red-100 text-red-800",
-            _ => "bg-gray-100 text-gray-800"
-        };
-
-        public List<string> GetAllStatuses()
-        {
-            return new List<string> 
-            { 
-                "Ny",
-                "Under behandling",
-                "Godkjent",
-                "Avvist"
-            };
-        }
     }
 } 

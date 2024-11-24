@@ -6,10 +6,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Models.Helpers;
+
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Saksbehandler,Admin")] 
-    public class SaksbehandlingController : Controller
+    public class SaksbehandlingController : BaseController
     {
         private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly IInnmeldingService _innmeldingService;
@@ -64,16 +66,6 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
-        {
-            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["CurrentStatus"] = statusFilter;
-            ViewData["CurrentFylke"] = fylkeFilter;
-            ViewData["CurrentKommune"] = Request.Query["kommuneFilter"].ToString();
-            ViewData["Statuses"] = _innmeldingService.GetAllStatuses();
-        }
-
         [HttpGet]
         public async Task<IActionResult> SearchKommuner(string term)
         {
@@ -89,35 +81,19 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public async Task<IActionResult> Register(Saksbehandler saksbehandler)
-        {
-            if (ModelState.IsValid)
-            {
-                var success = await _saksbehandlerService.CreateSaksbehandler(saksbehandler);
-                if (!success)
-                {
-                    _logger.LogError("Registrering feilet for bruker med epost: {Email}", saksbehandler.Email);
-                    ModelState.AddModelError("", "Registrering feilet. Prøv igjen.");
-                }
-                return RedirectToAction("Index", "Home");
-            }
-            return View(saksbehandler);
-        }
 
         public async Task<IActionResult> Detaljer(int id)
         {
             try
             {
-                var innmelding = await _innmeldingService.GetInnmeldingById(id);
-                if (innmelding == null)
+                var innmeldingViewModel = await _innmeldingService.GetInnmeldingById(id);
+                if (innmeldingViewModel == null)
                 {
                     return NotFound();
                 }
 
-                var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
-                var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
+                var lokasjon = await _lokasjonService.GetLokasjonById(innmeldingViewModel.LokasjonId);
+                var kommune = await _kommuneService.GetKommuneById(innmeldingViewModel.KommuneId);
                 if (lokasjon == null || kommune == null)
                 {
                     return NotFound();
@@ -127,23 +103,7 @@ namespace KartverketGruppe5.Controllers
                 ViewBag.Saksbehandlere = saksbehandlerResult.Items.ToList();
                 ViewBag.Lokasjon = lokasjon;
 
-                var viewModel = new InnmeldingViewModel
-                {
-                    InnmeldingId = innmelding.InnmeldingId,
-                    BrukerId = innmelding.BrukerId,
-                    KommuneId = innmelding.KommuneId,
-                    LokasjonId = innmelding.LokasjonId,
-                    Beskrivelse = innmelding.Beskrivelse,
-                    Status = innmelding.Status,
-                    BildeSti = innmelding.BildeSti,
-                    OpprettetDato = innmelding.OpprettetDato,
-                    KommuneNavn = kommune.Navn,
-                    SaksbehandlerId = innmelding.SaksbehandlerId,
-                    SaksbehandlerNavn = innmelding.SaksbehandlerNavn,
-                    StatusClass = GetStatusClass(innmelding.Status)
-                };
-
-                return View(viewModel);
+                return View(innmeldingViewModel);
             }
             catch (Exception ex)
             {
@@ -193,14 +153,5 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-        private static string GetStatusClass(string status) => status switch
-        {
-            "Ny" => "bg-blue-100 text-blue-800",
-            "Under behandling" => "bg-yellow-100 text-yellow-800",
-            "Fullført" => "bg-green-100 text-green-800",
-            "Avvist" => "bg-red-100 text-red-800",
-            _ => "bg-gray-100 text-gray-800"
-        };
     }
 }

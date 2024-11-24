@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Services.Interfaces;
+using KartverketGruppe5.Models.Helpers;
+
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Bruker")]
-    public class MineInnmeldingerController : Controller
+    public class MineInnmeldingerController : BaseController
     {
         private readonly IInnmeldingService _innmeldingService;
         private readonly ILokasjonService _lokasjonService;
@@ -75,22 +77,6 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        private void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
-        {
-            ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["CurrentStatus"] = statusFilter;
-            ViewData["CurrentFylke"] = fylkeFilter;
-            ViewData["CurrentKommune"] = Request.Query["kommuneFilter"].ToString();
-            ViewData["Statuses"] = new List<string> 
-            { 
-                "Ny",
-                "Under behandling",
-                "Godkjent",
-                "Avvist"
-            };
-        }
-
         [HttpGet]
         public async Task<IActionResult> Detaljer(int id)
         {
@@ -98,8 +84,8 @@ namespace KartverketGruppe5.Controllers
             {
                 _logger.LogInformation("Henter detaljer for innmelding {InnmeldingId}", id);
 
-                var innmelding = await _innmeldingService.GetInnmeldingById(id);
-                if (innmelding == null)
+                var innmeldingViewModel = await _innmeldingService.GetInnmeldingById(id);
+                if (innmeldingViewModel == null)
                 {
                     _logger.LogWarning("Innmelding med id {InnmeldingId} ikke funnet", id);
                     return NotFound();
@@ -107,43 +93,28 @@ namespace KartverketGruppe5.Controllers
 
                 // Sjekk at innmeldingen tilhører innlogget bruker
                 var brukerId = HttpContext.Session.GetInt32("BrukerId");
-                if (brukerId != innmelding.BrukerId)
+                if (brukerId != innmeldingViewModel.BrukerId)
                 {
                     _logger.LogWarning("Bruker {BrukerId} forsøkte å se innmelding {InnmeldingId} som tilhører en annen bruker", 
                         brukerId, id);
                     return Forbid();
                 }
 
-                var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+                var lokasjon = await _lokasjonService.GetLokasjonById(innmeldingViewModel.LokasjonId);
                 if (lokasjon == null)
                 {
                     _logger.LogError("Lokasjon med id {LokasjonId} ikke funnet for innmelding {InnmeldingId}", 
-                        innmelding.LokasjonId, id);
+                        innmeldingViewModel.LokasjonId, id);
                     return NotFound();
                 }
 
-                var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
+                var kommune = await _kommuneService.GetKommuneById(innmeldingViewModel.KommuneId);
                 if (kommune == null)
                 {
                     _logger.LogError("Kommune med id {KommuneId} ikke funnet for innmelding {InnmeldingId}", 
-                        innmelding.KommuneId, id);
+                        innmeldingViewModel.KommuneId, id);
                     return NotFound();
                 }
-
-                var innmeldingViewModel = new InnmeldingViewModel
-                {
-                    InnmeldingId = innmelding.InnmeldingId,
-                    BrukerId = innmelding.BrukerId,
-                    KommuneId = innmelding.KommuneId,
-                    LokasjonId = innmelding.LokasjonId,
-                    Beskrivelse = innmelding.Beskrivelse,
-                    Kommentar = innmelding.Kommentar,
-                    Status = innmelding.Status,
-                    OpprettetDato = innmelding.OpprettetDato,
-                    KommuneNavn = kommune.Navn,
-                    StatusClass = GetStatusClass(innmelding.Status),
-                    BildeSti = innmelding.BildeSti
-                };
 
                 ViewBag.Lokasjon = lokasjon;
 
@@ -248,13 +219,5 @@ namespace KartverketGruppe5.Controllers
             };
         }
 
-        private string GetStatusClass(string status) => status switch
-        {
-            "Ny" => "bg-blue-100 text-blue-800",
-            "Under behandling" => "bg-yellow-100 text-yellow-800",
-            "Fullført" => "bg-green-100 text-green-800",
-            "Avvist" => "bg-red-100 text-red-800",
-            _ => "bg-gray-100 text-gray-800"
-        };
     }
 } 

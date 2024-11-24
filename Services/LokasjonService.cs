@@ -7,18 +7,19 @@ using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Net.Http;
 using KartverketGruppe5.Services.Interfaces;
-
+using KartverketGruppe5.Repositories.Interfaces;
 namespace KartverketGruppe5.Services
 {
     public class LokasjonService : ILokasjonService
     {
-        private readonly string _connectionString;
+        private readonly ILokasjonRepository _repository;
         private readonly ILogger<LokasjonService> _logger;
 
-        public LokasjonService(IConfiguration configuration, ILogger<LokasjonService> logger)
+        public LokasjonService(
+            ILokasjonRepository repository,
+            ILogger<LokasjonService> logger)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                ?? throw new ArgumentNullException(nameof(configuration));
+            _repository = repository;
             _logger = logger;
         }
 
@@ -26,22 +27,11 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT 
-                        lokasjonId,
-                        geoJson,
-                        latitude,
-                        longitude,
-                        geometriType
-                    FROM Lokasjon";
-
-                var result = await connection.QueryAsync<LokasjonViewModel>(sql);
-                return result.ToList();
+                return await _repository.GetAllLokasjoner();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting all lokasjoner");
+                _logger.LogError(ex, "Uventet feil ved henting av alle lokasjoner");
                 throw;
             }
         }
@@ -50,25 +40,12 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    INSERT INTO Lokasjon (geoJson, latitude, longitude, geometriType) 
-                    VALUES (@GeoJson, @Latitude, @Longitude, @GeometriType);
-                    SELECT LAST_INSERT_ID();";
-
-                var parameters = new 
-                { 
-                    GeoJson = geoJson,
-                    Latitude = latitude,
-                    Longitude = longitude,
-                    GeometriType = geometriType
-                };
-
-                return await connection.ExecuteScalarAsync<int>(sql, parameters);
+                return await _repository.AddLokasjon(geoJson, latitude, longitude, geometriType);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved innsetting av lokasjon ({Latitude}, {Longitude})", latitude, longitude);
+                _logger.LogError(ex, "Uventet feil ved opprettelse av lokasjon: ({Latitude}, {Longitude})", 
+                    latitude, longitude);
                 throw;
             }
         }
@@ -77,22 +54,16 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT 
-                        lokasjonId,
-                        latitude,
-                        longitude,
-                        geoJson,
-                        geometriType
-                    FROM Lokasjon 
-                    WHERE lokasjonId = @Id";
-
-                return await connection.QueryFirstOrDefaultAsync<LokasjonViewModel>(sql, new { Id = id });
+                var lokasjon = await _repository.GetLokasjonById(id);
+                if (lokasjon == null)
+                {
+                    _logger.LogWarning("Ingen lokasjon funnet med ID {LokasjonId}", id);
+                }
+                return lokasjon;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting lokasjon with id {LokasjonId}", id);
+                _logger.LogError(ex, "Uventet feil ved henting av lokasjon {LokasjonId}", id);
                 throw;
             }
         }
@@ -101,50 +72,17 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("User-Agent", "KartverketGruppe5");
-                
-                var url = $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}";
-                var response = await client.GetStringAsync(url);
-                var data = JsonSerializer.Deserialize<JsonDocument>(response);
-                
-                if (data?.RootElement.TryGetProperty("address", out var address) != true)
-                {
-                    throw new Exception("Kunne ikke finne adresseinformasjon for koordinatene");
-                }
-
-                string? kommuneNavn = null;
-                // "municipality" er API-nøkkelen fra OpenStreetMap, betyr kommune på norsk
-                if (address.TryGetProperty("municipality", out var kommuneElement))
-                {
-                    kommuneNavn = kommuneElement.GetString();
-                }
-                // "city" er også en API-nøkkel fra OpenStreetMap
-                else if (address.TryGetProperty("city", out var byElement))
-                {
-                    kommuneNavn = byElement.GetString();
-                }
-
-                if (string.IsNullOrEmpty(kommuneNavn))
-                {
-                    throw new Exception("Kunne ikke finne kommune for disse koordinatene");
-                }
-
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = "SELECT kommuneId FROM Kommune WHERE navn LIKE @Navn";
-                var kommuneId = await connection.QuerySingleOrDefaultAsync<int>(sql, new { Navn = $"%{kommuneNavn}%" });
-
-                if (kommuneId == 0)
-                {
-                    _logger.LogError("Kommune {KommuneNavn} ikke funnet i databasen", kommuneNavn);
-                    throw new Exception($"Kommune {kommuneNavn} ikke funnet i databasen");
-                }
-
-                return kommuneId;
+                return await _repository.GetKommuneIdFromCoordinates(latitude, longitude);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting kommune from coordinates ({Latitude}, {Longitude})", latitude, longitude);
+                _logger.LogError(ex, "Uventet feil ved henting av kommuneId fra koordinater ({Latitude}, {Longitude})", 
+                    latitude, longitude);
                 throw;
             }
         }
@@ -153,46 +91,18 @@ namespace KartverketGruppe5.Services
         {
             try
             {
-                using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    UPDATE Lokasjon 
-                    SET 
-                        geoJson = @GeoJson,
-                        geometriType = @GeometriType,
-                        latitude = @Latitude,
-                        longitude = @Longitude,
-                        oppdatertDato = @OppdatertDato
-                    WHERE lokasjonId = @LokasjonId";
-
-                var parameters = new
-                { 
-                    lokasjon.GeoJson, 
-                    lokasjon.GeometriType, 
-                    lokasjon.Latitude, 
-                    lokasjon.Longitude, 
-                    OppdatertDato = oppdatertDato, 
-                    lokasjon.LokasjonId 
-                };
-
-                var rowsAffected = await connection.ExecuteAsync(sql, parameters);
-                
-                if (rowsAffected == 0)
-                {
-                    var message = $"Lokasjon med ID {lokasjon.LokasjonId} finnes ikke";
-                    _logger.LogWarning(message);
-                    throw new KeyNotFoundException(message);
-                }
-
+                await _repository.UpdateLokasjon(lokasjon, oppdatertDato);
                 _logger.LogInformation("Lokasjon {LokasjonId} ble oppdatert", lokasjon.LokasjonId);
             }
-            catch (MySqlException ex)
+            catch (KeyNotFoundException ex)
             {
-                _logger.LogError(ex, "Database error ved oppdatering av lokasjon {LokasjonId}", lokasjon.LokasjonId);
+                _logger.LogWarning(ex.Message);
                 throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Uventet feil ved oppdatering av lokasjon {LokasjonId}", lokasjon.LokasjonId);
+                _logger.LogError(ex, "Uventet feil ved oppdatering av lokasjon {LokasjonId}", 
+                    lokasjon.LokasjonId);
                 throw;
             }
         }
