@@ -1,7 +1,11 @@
 @model IPagedResult<KartverketGruppe5.Models.Saksbehandler>
 @using KartverketGruppe5.Models.Interfaces
+
+
 <div class="page-container">
     <div class="content-container">
+        <partial name="_Notifications" />
+        
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake

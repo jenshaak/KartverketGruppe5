@@ -75,7 +75,7 @@ namespace KartverketGruppe5.Repositories
 
 
         /// ----- HENTING AV INNMELDINGER -----
-        public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
+        public async Task<InnmeldingViewModel?> GetInnmeldingById(int id)
         {
             try
             {
@@ -107,9 +107,10 @@ namespace KartverketGruppe5.Repositories
                 if (innmelding != null)
                 {
                     innmelding.StatusClass = InnmeldingHelper.GetStatusClass(innmelding.Status);
+                    return innmelding;
                 }
 
-                return innmelding;
+                return null;
             }
             catch (Exception ex)
             {

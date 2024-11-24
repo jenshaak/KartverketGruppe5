@@ -19,6 +19,7 @@ builder.Services.AddScoped<IBrukerService, BrukerService>();
 builder.Services.AddScoped<IFylkeService, FylkeService>();
 builder.Services.AddScoped<ILokasjonService, LokasjonService>();
 builder.Services.AddScoped<IInnmeldingService, InnmeldingService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IKommunePopulateService, KommunePopulateService>();
 builder.Services.AddScoped<IKommuneService, KommuneService>();
 builder.Services.AddScoped<ISaksbehandlerService, SaksbehandlerService>();
@@ -26,10 +27,12 @@ builder.Services.AddScoped<ISaksbehandlerService, SaksbehandlerService>();
 // Registrer repositories (legg til denne linjen sammen med de andre service-registreringene)
 builder.Services.AddScoped<IBrukerRepository, BrukerRepository>();
 builder.Services.AddScoped<IFylkeRepository, FylkeRepository>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IKommuneRepository, KommuneRepository>();
 builder.Services.AddScoped<ILokasjonRepository, LokasjonRepository>();
 builder.Services.AddScoped<ISaksbehandlerRepository, SaksbehandlerRepository>();
 builder.Services.AddScoped<IInnmeldingRepository, InnmeldingRepository>();
+builder.Services.AddScoped<IKommunePopulateRepository, KommunePopulateRepository>();
 
 // Legg til services til containeren.
 builder.Services.AddControllersWithViews();
@@ -78,7 +81,8 @@ builder.Services.AddHttpClient();
 // Alternativt, hvis du trenger en spesifikk HttpClient for KommunePopulateService
 // builder.Services.AddHttpClient<KommunePopulateService>();
 
-builder.Services.AddScoped<IPasswordService, PasswordService>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
