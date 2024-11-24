@@ -1,13 +1,19 @@
 ﻿@model KartverketGruppe5.Models.Bruker
 
+@{
+    ViewData["Title"] = "Min Profil";
+}
+
 <!--Håndterer styling for bakgrunnen-->
 <div class="w-full flex justify-center py-12 bakgrunn-bilde-taake">
-    <div class="relative w-3/5 flex flex-col gap-2 bg-bg/85 rounded-xl p-12">
+    <div class="relative flex flex-col gap-2 bg-bg/85 rounded-xl p-12" style="width: 500px; max-width: 90%;">
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
         </a>
         <h1 class="text-3xl font-bold mt-4 text-center">Min Profil</h1>
+
+        <partial name="_Notifications" />
 
         <!--Viser informasjon om brukeren-->
         <div class="mt-4">
@@ -33,7 +39,7 @@
 
 
         <!-- Rediger profil knapp (button uten a-tag) -->
-        <button id="editButton" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button id="editButton" class="mt-6 btn btn-blue btn-wide">
             <i class="ph ph-pencil ph-lg"></i>
             Rediger Profil
         </button>
@@ -43,6 +49,7 @@
 
          <!-- Skjema for Redigering av Profil (Skjult ved først lastet) -->
         <form method="post" asp-action="OppdaterBruker" class="mt-6 hidden" id="editForm">
+            <input type="hidden" name="brukerId" value="@Model.BrukerId" />
             <div class="mt-4">
                 <label for="Fornavn" class="block text-sm font-medium text-gray-700">Fornavn</label>
                 <input 
@@ -76,10 +83,17 @@
             <div class="mt-6 flex justify-end">
                 <button 
                     type="submit" 
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    class="btn btn-blue btn-wide">
                     Oppdater Profil
                 </button>
             </div>
+        </form>
+        <form method="post" asp-action="SlettBruker">
+            <input type="hidden" name="brukerId" value="@Model.BrukerId" />
+            <button type="submit" class="btn btn-red btn-wide mt-4">
+                <i class="ph ph-trash ph-lg"></i>
+                Slett Bruker
+            </button>
         </form>
     </div>
 </div>

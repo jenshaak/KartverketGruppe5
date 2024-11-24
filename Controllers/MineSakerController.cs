@@ -6,46 +6,46 @@ using KartverketGruppe5.Models.ViewModels;
 using Microsoft.Extensions.Logging;
 using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Services.Interfaces;
-using KartverketGruppe5.Models.Helpers;
+using KartverketGruppe5.Models.Interfaces;
 
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Saksbehandler,Admin")]
     public class MineSakerController : BaseController
     {
-        private readonly IInnmeldingService _innmeldingService;
+        private const string DefaultSortOrder = "date_desc";
+        private const int DefaultPage = 1;
+        private const string SaksbehandlerIdClaimType = "SaksbehandlerId";
+
         private readonly ILokasjonService _lokasjonService;
         private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly IFylkeService _fylkeService;
-        private readonly ILogger<MineSakerController> _logger;
-
+        private readonly INotificationService _notificationService;
         public MineSakerController(
             IInnmeldingService innmeldingService, 
             ILokasjonService lokasjonService, 
             IFylkeService fylkeService, 
             ISaksbehandlerService saksbehandlerService, 
+            INotificationService notificationService,
             ILogger<MineSakerController> logger)
+            : base(innmeldingService, logger)
         {
-            _innmeldingService = innmeldingService;
             _lokasjonService = lokasjonService;
             _saksbehandlerService = saksbehandlerService;
             _fylkeService = fylkeService;
-            _logger = logger;
+            _notificationService = notificationService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(
-            string sortOrder = "date_desc", 
+            string sortOrder = DefaultSortOrder, 
             string statusFilter = "", 
             string fylkeFilter = "", 
             string kommuneFilter = "",
-            int page = 1)
+            int page = DefaultPage)
         {
             try 
             {
-                _logger.LogInformation(
-                    "Henter saker med sortOrder: {SortOrder}, statusFilter: {StatusFilter}, fylkeFilter: {FylkeFilter}, page: {Page}", 
-                    sortOrder, statusFilter, fylkeFilter, page);
-
                 SetupViewData(sortOrder, statusFilter, fylkeFilter, kommuneFilter);
                 ViewData["ActionName"] = "Behandle";
 
@@ -57,41 +57,23 @@ namespace KartverketGruppe5.Controllers
                 }
 
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
-                
-                var request = new InnmeldingRequest
-                {
-                    SaksbehandlerId = saksbehandlerId,
-                    SortOrder = sortOrder,
-                    StatusFilter = statusFilter,
-                    FylkeFilter = fylkeFilter,
-                    KommuneFilter = kommuneFilter,
-                    Page = page
-                };
-
-                _logger.LogInformation("Henter innmeldinger for saksbehandler {SaksbehandlerId}", saksbehandlerId);
-                var result = await _innmeldingService.GetInnmeldinger(request);
-                
-                return View(result);
+                var innmeldinger = await GetInnmeldinger(saksbehandlerId, sortOrder, statusFilter, fylkeFilter, kommuneFilter, page, false);
+                return View(innmeldinger);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av saker for saksbehandler");
-                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
+                return View(CreateEmptyPagedResult());
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Behandle(int id)
         {
             try
             {
-                var innmelding = await _innmeldingService.GetInnmeldingById(id);
-                if (innmelding == null)
-                {
-                    return NotFound();
-                }
-
-                var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
-                if (lokasjon == null)
+                var (innmelding, lokasjon) = await GetBehandlingData(id);
+                if (innmelding == null || lokasjon == null)
                 {
                     return NotFound();
                 }
@@ -110,13 +92,14 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> FullforBehandling(int innmeldingId, string kommentar, string status)
         {
             try 
             {
                 await _innmeldingService.UpdateStatusAndKommentar(innmeldingId, kommentar, status);
+                _notificationService.AddSuccessMessage("Innmelding fullført");
                 return RedirectToAction("Index");
             }
             catch (KeyNotFoundException)
@@ -126,9 +109,29 @@ namespace KartverketGruppe5.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved oppdatering av innmelding {innmeldingId}", innmeldingId);
-                TempData["Error"] = "Det oppstod en feil ved behandling av saken.";
+                _notificationService.AddErrorMessage("Feil ved behandling av saken.");
                 return RedirectToAction("Index");
             }
         }
+
+        // Private hjelpemetode
+
+        private async Task<(InnmeldingViewModel? innmelding, LokasjonViewModel? lokasjon)> GetBehandlingData(int id)
+        {
+            var innmelding = await _innmeldingService.GetInnmeldingById(id);
+            if (innmelding == null)
+            {
+                return (null, null);
+            }
+
+            var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            if (lokasjon == null)
+            {
+                return (null, null);
+            }
+
+            return (innmelding, lokasjon);
+        }
+
     }
 }

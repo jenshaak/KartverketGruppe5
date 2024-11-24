@@ -13,67 +13,55 @@ namespace KartverketGruppe5.Controllers
     [Authorize(Roles = "Bruker")]
     public class MineInnmeldingerController : BaseController
     {
-        private readonly IInnmeldingService _innmeldingService;
+        private const string BrukerIdSessionKey = "BrukerId";
+        private const string DefaultSortOrder = "date_desc";
+        private const int DefaultPage = 1;
+
         private readonly ILokasjonService _lokasjonService;
         private readonly IKommuneService _kommuneService;        
         private readonly IFylkeService _fylkeService;
-        private readonly ILogger<MineInnmeldingerController> _logger;
+        private readonly INotificationService _notificationService;
 
         public MineInnmeldingerController(
             IInnmeldingService innmeldingService, 
             ILokasjonService lokasjonService, 
             IKommuneService kommuneService, 
             IFylkeService fylkeService, 
+            INotificationService notificationService,
             ILogger<MineInnmeldingerController> logger)
+            : base(innmeldingService, logger)
         {
-            _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
             _kommuneService = kommuneService ?? throw new ArgumentNullException(nameof(kommuneService));
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
         public async Task<IActionResult> Index(
-            string sortOrder = "date_desc", 
+            string sortOrder = DefaultSortOrder, 
             string statusFilter = "",
             string fylkeFilter = "",
             string kommuneFilter = "",
-            int page = 1)
+            int page = DefaultPage)
         {
             try 
             {
-                _logger.LogInformation(
-                    "Henter innmeldinger med sortOrder: {SortOrder}, statusFilter: {StatusFilter}, fylkeFilter: {FylkeFilter}, page: {Page}", 
-                    sortOrder, statusFilter, fylkeFilter, page);
-
-                SetupViewData(sortOrder, statusFilter, fylkeFilter, kommuneFilter);
-
-                var brukerId = HttpContext.Session.GetInt32("BrukerId");
-                if (brukerId == null)
+                var brukerId = GetBrukerIdFromSession();
+                if (!brukerId.HasValue)
                 {
-                    _logger.LogWarning("Ingen BrukerId funnet i session");
                     return RedirectToAction("Index", "Login");
                 }
 
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
-                
-                var request = new InnmeldingRequest
-                {
-                    InnmelderBrukerId = brukerId.Value,
-                    SortOrder = sortOrder,
-                    StatusFilter = statusFilter,
-                    FylkeFilter = fylkeFilter,
-                    Page = page
-                };
+                SetupViewData(sortOrder, statusFilter, fylkeFilter, kommuneFilter);
 
-                _logger.LogInformation("Henter innmeldinger for bruker {BrukerId}", brukerId.Value);
-                return View(await _innmeldingService.GetInnmeldinger(request));
+                return View(await GetInnmeldinger(brukerId.Value, sortOrder, statusFilter, fylkeFilter, kommuneFilter, page, true));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved henting av innmeldinger for bruker {BrukerId}", 
-                    HttpContext.Session.GetInt32("BrukerId"));
-                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
+                _logger.LogError(ex, "Feil ved henting av innmeldinger");
+                var emptyResult = CreateEmptyPagedResult();
+                return View(emptyResult);
             }
         }
 
@@ -82,58 +70,50 @@ namespace KartverketGruppe5.Controllers
         {
             try
             {
-                _logger.LogInformation("Henter detaljer for innmelding {InnmeldingId}", id);
-
-                var innmeldingViewModel = await _innmeldingService.GetInnmeldingById(id);
-                if (innmeldingViewModel == null)
+                var brukerId = GetBrukerIdFromSession();
+                if (!brukerId.HasValue)
                 {
-                    _logger.LogWarning("Innmelding med id {InnmeldingId} ikke funnet", id);
-                    return NotFound();
+                    _logger.LogWarning("Ingen bruker-ID funnet i session ved forsøk på å se detaljer for innmelding {InnmeldingId}", id);
+                    return RedirectToAction("Index", "Login");
                 }
 
-                // Sjekk at innmeldingen tilhører innlogget bruker
-                var brukerId = HttpContext.Session.GetInt32("BrukerId");
-                if (brukerId != innmeldingViewModel.BrukerId)
+                var (innmelding, lokasjon) = await ValidateAndGetInnmeldingDetails(id, brukerId.Value);
+                if (innmelding == null || lokasjon == null)
                 {
-                    _logger.LogWarning("Bruker {BrukerId} forsøkte å se innmelding {InnmeldingId} som tilhører en annen bruker", 
-                        brukerId, id);
-                    return Forbid();
-                }
-
-                var lokasjon = await _lokasjonService.GetLokasjonById(innmeldingViewModel.LokasjonId);
-                if (lokasjon == null)
-                {
-                    _logger.LogError("Lokasjon med id {LokasjonId} ikke funnet for innmelding {InnmeldingId}", 
-                        innmeldingViewModel.LokasjonId, id);
-                    return NotFound();
-                }
-
-                var kommune = await _kommuneService.GetKommuneById(innmeldingViewModel.KommuneId);
-                if (kommune == null)
-                {
-                    _logger.LogError("Kommune med id {KommuneId} ikke funnet for innmelding {InnmeldingId}", 
-                        innmeldingViewModel.KommuneId, id);
                     return NotFound();
                 }
 
                 ViewBag.Lokasjon = lokasjon;
-
-                _logger.LogInformation("Returnerer detaljer for innmelding {InnmeldingId}", id);
-                return View(innmeldingViewModel);
+                return View(innmelding);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                _logger.LogWarning("Uautorisert tilgang forsøkt for innmelding {InnmeldingId}", id);
+                return Forbid();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved henting av detaljer for innmelding {InnmeldingId}", id);
+                _logger.LogError(ex, "Uventet feil ved henting av detaljer for innmelding {InnmeldingId}", id);
                 return RedirectToAction("Index");
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SlettInnmelding(int id)
+        public async Task<IActionResult> SlettInnmelding(int innmeldingId)
         {
-            await _innmeldingService.SlettInnmelding(id);
-            return RedirectToAction("Index");
+            try
+            {
+                await _innmeldingService.SlettInnmelding(innmeldingId);
+                _notificationService.AddSuccessMessage("Innmelding slettet");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved sletting av innmelding {InnmeldingId}", innmeldingId);
+                _notificationService.AddErrorMessage("Feil ved sletting av innmelding");
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
@@ -180,13 +160,13 @@ namespace KartverketGruppe5.Controllers
                 }
 
                 await _innmeldingService.UpdateInnmeldingDetails(innmeldingModel, lokasjon, bilde);
-                _logger.LogInformation("Innmelding {InnmeldingId} oppdatert", innmeldingModel.InnmeldingId);
-                
+                _notificationService.AddSuccessMessage("Innmelding oppdatert");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved oppdatering av innmelding {InnmeldingId}", innmeldingModel.InnmeldingId);
+                _notificationService.AddErrorMessage("Feil ved oppdatering av innmelding");
                 return RedirectToAction("Detaljer", new { id = innmeldingModel.InnmeldingId });
             }
         }
@@ -219,5 +199,42 @@ namespace KartverketGruppe5.Controllers
             };
         }
 
+        private int? GetBrukerIdFromSession()
+        {
+            var brukerId = HttpContext.Session.GetInt32(BrukerIdSessionKey);
+            if (brukerId.HasValue)
+            {
+                _logger.LogInformation("Hentet bruker-ID {BrukerId} fra session", brukerId.Value);
+            }
+            else
+            {
+                _logger.LogWarning("Ingen bruker-ID funnet i session");
+            }
+            return brukerId;
+        }
+
+        private async Task<(InnmeldingViewModel? innmelding, LokasjonViewModel? lokasjon)> ValidateAndGetInnmeldingDetails(int id, int brukerId)
+        {
+            try
+            {
+                var innmelding = await _innmeldingService.GetInnmeldingById(id);
+                if (innmelding == null || innmelding.BrukerId != brukerId)
+                {
+                    return (null, null);
+                }
+
+                var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+                if (lokasjon == null)
+                {
+                    return (null, null);
+                }
+                return (innmelding, lokasjon);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av detaljer for innmelding {InnmeldingId}", id);
+                return (null, null);
+            }
+        }
     }
 } 

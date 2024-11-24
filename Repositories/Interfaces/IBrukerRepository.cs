@@ -6,7 +6,7 @@ namespace KartverketGruppe5.Repositories.Interfaces
     {
         Task<Bruker?> GetByEmail(string email);
         Task<bool> Create(Bruker bruker);
-        Task<bool> Delete(int brukerId);
         Task<bool> Update(Bruker bruker);
+        Task<bool> SoftDelete(int brukerId);
     }
 } 

@@ -29,21 +29,19 @@ namespace KartverketGruppe5.Services
             _lokasjonService = lokasjonService;
         }
 
-        public async Task<int> CreateInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, IFormFile? bilde)
+        public async Task<int> CreateInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
         {
-            var innmeldingId = await _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, null);
-
-            if (bilde != null)
+            try
             {
-                var bildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
-                if (bildeSti != null)
-                {
-                    await _repository.UpdateBildeSti(innmeldingId, bildeSti);
-                }
+                return await _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, bildeSti);
             }
-
-            return innmeldingId;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved opprettelse av innmelding");
+                throw;
+            }
         }
+
 
         public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
         {
@@ -129,34 +127,6 @@ namespace KartverketGruppe5.Services
             }
         }
 
-        public int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
-        {
-            try
-            {
-                // Kjør asynkron metode synkront siden interfacet krever synkron operasjon
-                return _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, bildeSti)
-                    .GetAwaiter()
-                    .GetResult();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Feil ved opprettelse av innmelding");
-                throw;
-            }
-        }
-
-        private async Task<int> AddInnmeldingAsync(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
-        {
-            try
-            {
-                return await _repository.AddInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse, bildeSti);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Feil ved opprettelse av innmelding");
-                throw;
-            }
-        }
 
         public async Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId)
         {

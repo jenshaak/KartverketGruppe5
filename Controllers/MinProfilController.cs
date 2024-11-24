@@ -1,22 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using KartverketGruppe5.Models;
+using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Controllers
 {
     public class MinProfilController : Controller
     {
         private readonly IBrukerService _brukerService;
+        private readonly ILogger<MinProfilController> _logger;
+        private readonly INotificationService _notificationService;
 
-        public MinProfilController(IBrukerService brukerService)
+        public MinProfilController(
+            IBrukerService brukerService,
+            ILogger<MinProfilController> logger,
+            INotificationService notificationService)
         {
             _brukerService = brukerService;
+            _logger = logger;
+            _notificationService = notificationService;
         }
 
-        
         [HttpGet]
-
-        // --- Sjekker om bruker er i systemet ---
         public async Task<IActionResult> Index()
         {
             var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
@@ -25,46 +31,90 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            // --- Data om bruker hentes gjennom Service filen ---
-            var bruker = await _brukerService.GetBrukerByEmail(brukerEmail);
-
-            if (bruker == null)
+            try
             {
-                return NotFound();
+                var bruker = await _brukerService.GetBrukerByEmail(brukerEmail);
+                if (bruker == null)
+                {
+                    _logger.LogWarning("Bruker ikke funnet for epost: {Email}", brukerEmail);
+                    return RedirectToAction("Login", "Login");
+                }
+
+                return View(bruker);
             }
-
-            return View(bruker);
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved henting av brukerprofil for {Email}", brukerEmail);
+                _notificationService.AddErrorMessage("Kunne ikke hente brukerprofilen din. Prøv igjen senere.");
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> OppdaterBruker(Bruker bruker)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OppdaterBruker(BrukerRequest brukerRequest)
         {
-            // Sjekk om brukeren er logget inn
             var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
             if (string.IsNullOrEmpty(brukerEmail))
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "Login");
             }
 
-            // Hvis dataene er gyldige, prøv å oppdatere brukerens informasjon og håndter resultatet
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var oppdatert = await _brukerService.OppdaterBruker(bruker);
+                _notificationService.AddErrorMessage("Vennligst sjekk at alle felt er fylt ut korrekt.");
+                return View("Index", brukerRequest);
+            }
 
+            try
+            {
+                var oppdatert = await _brukerService.UpdateBruker(brukerRequest);
                 if (oppdatert)
                 {
-                    TempData["SuccessMessage"] = "Profilen din ble oppdatert!";
+                    _notificationService.AddSuccessMessage("Profilen din ble oppdatert!");
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    TempData["ErrorMessage"] = "Noe gikk galt, prøv igjen.";
-                    return View(bruker);
-                }
+                
+                _notificationService.AddErrorMessage("Kunne ikke oppdatere profilen din. Prøv igjen.");
+                return View("Index", brukerRequest);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved oppdatering av bruker: {@Bruker}", brukerRequest);
+                _notificationService.AddErrorMessage("En feil oppstod ved oppdatering av profilen din.");
+                return View("Index", brukerRequest);
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SlettBruker(int brukerId)
+        {
+            var brukerEmail = HttpContext.Session.GetString("BrukerEmail");
+            if (string.IsNullOrEmpty(brukerEmail))
+            {
+                return RedirectToAction("Index", "Login");
             }
 
-            return View("Index", bruker);
+            try
+            {
+                var slettet = await _brukerService.DeleteBruker(brukerId);
+                if (slettet)
+                {
+                    _notificationService.AddSuccessMessage("Brukeren ble slettet.");
+                    return RedirectToAction("Index", "Login");
+                }
+                
+                _notificationService.AddErrorMessage("Kunne ikke slette brukeren. Prøv igjen senere.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved sletting av bruker: {Email}", brukerEmail);
+                _notificationService.AddErrorMessage("En feil oppstod ved sletting av profilen din.");
+                return RedirectToAction("Index");
+            }
         }
     }
 }        

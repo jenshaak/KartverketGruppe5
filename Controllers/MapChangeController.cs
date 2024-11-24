@@ -9,6 +9,7 @@ namespace KartverketGruppe5.Controllers
     [Authorize(Roles = "Bruker")]
     public class MapChangeController : Controller
     {
+        private const string BrukerIdSessionKey = "BrukerId";
         private readonly ILokasjonService _lokasjonService;
         private readonly IInnmeldingService _innmeldingService;
         private readonly IBildeService _bildeService;
@@ -40,105 +41,145 @@ namespace KartverketGruppe5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(LokasjonViewModel model, string beskrivelse, IFormFile? bilde)
         {
-            _logger.LogInformation("Starting Index POST method with Latitude: {Latitude}, Longitude: {Longitude}, GeoJson length: {GeoJsonLength}, Beskrivelse length: {BeskrivelseLength}, GeometriType: {GeometriType}",
-                model.Latitude, model.Longitude, 
-                model.GeoJson?.Length ?? 0, 
-                beskrivelse?.Length ?? 0,
-                model.GeometriType ?? "null");
-
-            if (string.IsNullOrEmpty(model.GeometriType))
-            {
-                model.GeometriType = "Point";
-                _logger.LogInformation("Setting default GeometriType to Point");
-            }
-
-            if (string.IsNullOrEmpty(beskrivelse))
-            {
-                _logger.LogWarning("Beskrivelse mangler");
-                ModelState.AddModelError("", "Beskrivelse er påkrevd");
-                return View(model);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("ModelState is invalid: {Errors}", 
-                    string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
-                return View(model);
-            }
-
-            var brukerId = HttpContext.Session.GetInt32("BrukerId");
-            _logger.LogInformation("BrukerId from session: {BrukerId}", brukerId);
-            
-            if (brukerId == null)
-            {
-                _logger.LogWarning("No BrukerId found in session");
-                return RedirectToAction("Index", "Login");
-            }
-
             try
             {
-                if (string.IsNullOrEmpty(model.GeoJson))
+                LogInputParameters(model, beskrivelse);
+
+                if (!ValidateInput(model, beskrivelse))
                 {
-                    _logger.LogWarning("GeoJson data is missing");
-                    ModelState.AddModelError("", "GeoJson data mangler");
                     return View(model);
                 }
 
-                _logger.LogInformation("Adding lokasjon to database");
-                int lokasjonId = await _lokasjonService.AddLokasjon(
+                var brukerId = GetBrukerIdFromSession();
+                if (!brukerId.HasValue)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+
+                return await ProcessInnmelding(model, beskrivelse, bilde, brukerId.Value);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Uventet feil under lagring av innmelding");
+                ModelState.AddModelError("", "Kunne ikke lagre innmeldingen: " + ex.Message);
+                return View(model);
+            }
+        }
+
+        private async Task<IActionResult> ProcessInnmelding(
+            LokasjonViewModel model, string beskrivelse, IFormFile? bilde, int brukerId)
+        {
+            if(model.GeoJson == null)
+            {
+                ModelState.AddModelError("", "GeoJson data mangler");
+                return View(model);
+            }
+            try
+            {
+                var lokasjonId = await _lokasjonService.AddLokasjon(
                     model.GeoJson,
                     model.Latitude,
                     model.Longitude,
                     model.GeometriType
                 );
-                _logger.LogInformation("Lokasjon added with ID: {LokasjonId}", lokasjonId);
 
                 if (lokasjonId <= 0)
                 {
-                    _logger.LogError("Failed to save lokasjon, returned ID: {LokasjonId}", lokasjonId);
                     throw new Exception("Feil ved lagring av lokasjon");
                 }
 
-                _logger.LogInformation("Getting kommune ID for coordinates: {Latitude}, {Longitude}", 
+                var kommuneId = await _lokasjonService.GetKommuneIdFromCoordinates(
                     model.Latitude, model.Longitude);
-                int kommuneId = await _lokasjonService.GetKommuneIdFromCoordinates(model.Latitude, model.Longitude);
-                _logger.LogInformation("Got kommune ID: {KommuneId}", kommuneId);
 
-                _logger.LogInformation("Adding innmelding to database");
-                var innmeldingId = _innmeldingService.AddInnmelding(
-                    brukerId: brukerId.Value,
-                    kommuneId: kommuneId,
-                    lokasjonId: lokasjonId,
-                    beskrivelse: beskrivelse,
-                    bildeSti: null
-                );
-                _logger.LogInformation("Innmelding added with ID: {InnmeldingId}", innmeldingId);
-
-                if (innmeldingId <= 0)
-                {
-                    _logger.LogError("Failed to save innmelding, returned ID: {InnmeldingId}", innmeldingId);
-                    throw new Exception("Feil ved lagring av innmelding");
-                }
-
+                var innmeldingId = await SaveInnmelding(brukerId, kommuneId, lokasjonId, beskrivelse);
+                
                 if (bilde != null)
                 {
-                    var bildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
-                    if (!string.IsNullOrEmpty(bildeSti))
-                    {
-                        await _innmeldingService.UpdateBildeSti(innmeldingId, bildeSti);
-                    }
+                    await HandleBildeUpload(bilde, innmeldingId);
                 }
 
-                _logger.LogInformation("Successfully saved both lokasjon and innmelding. Redirecting to MineInnmeldinger");
                 TempData["Success"] = "Innmelding er lagret";
                 return RedirectToAction("Index", "MineInnmeldinger");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error during save operation: {ErrorMessage}", ex.Message);
+                _logger.LogError(ex, "Feil ved lagring av innmelding");
                 ModelState.AddModelError("", "Kunne ikke lagre innmeldingen: " + ex.Message);
                 return View(model);
             }
+        }
+
+        private bool ValidateInput(LokasjonViewModel model, string beskrivelse)
+        {
+            if (string.IsNullOrEmpty(model.GeometriType))
+            {
+                model.GeometriType = "Point";
+            }
+
+            if (string.IsNullOrEmpty(beskrivelse))
+            {
+                ModelState.AddModelError("", "Beskrivelse er påkrevd");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(model.GeoJson))
+            {
+                ModelState.AddModelError("", "GeoJson data mangler");
+                return false;
+            }
+
+            return ModelState.IsValid;
+        }
+
+        private async Task<int> SaveInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse)
+        {
+            try
+            {
+                var innmeldingId = await _innmeldingService.CreateInnmelding(
+                    brukerId: brukerId,
+                    kommuneId: kommuneId,
+                    lokasjonId: lokasjonId,
+                    beskrivelse: beskrivelse,
+                    bildeSti: null
+                );
+
+                if (innmeldingId <= 0)
+                {
+                    throw new Exception("Feil ved lagring av innmelding");
+                }
+
+                return innmeldingId;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved lagring av innmelding");
+                throw;
+            }
+        }
+
+        private async Task HandleBildeUpload(IFormFile bilde, int innmeldingId)
+        {
+            var bildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
+            if (!string.IsNullOrEmpty(bildeSti))
+            {
+                await _innmeldingService.UpdateBildeSti(innmeldingId, bildeSti);
+            }
+        }
+
+        private int? GetBrukerIdFromSession()
+        {
+            return HttpContext.Session.GetInt32(BrukerIdSessionKey);
+        }
+
+        private void LogInputParameters(LokasjonViewModel model, string beskrivelse)
+        {
+            _logger.LogInformation(
+                "Starting Index POST method with Latitude: {Latitude}, Longitude: {Longitude}, " +
+                "GeoJson length: {GeoJsonLength}, Beskrivelse length: {BeskrivelseLength}, GeometriType: {GeometriType}",
+                model.Latitude, model.Longitude, 
+                model.GeoJson?.Length ?? 0, 
+                beskrivelse?.Length ?? 0,
+                model.GeometriType ?? "null");
         }
 
         public async Task<IActionResult> ViewInnmelding(int id)

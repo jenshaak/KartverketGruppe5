@@ -13,6 +13,9 @@ namespace KartverketGruppe5.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
+        private const string DefaultErrorMessage = "Ugyldig email eller passord";
+        private const string UnexpectedErrorMessage = "En uventet feil oppstod";
+        
         private readonly IBrukerService _brukerService;
         private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly ILogger<LoginController> _logger;
@@ -41,65 +44,63 @@ namespace KartverketGruppe5.Controllers
         {
             try 
             {
-                _logger.LogInformation("Innloggingsforsøk startet for email: {Email}", model.Email);
-
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarning("Innlogging feilet: Ugyldig modell-tilstand for {Email}", model.Email);
                     return View("Index", model);
                 }
 
-                // Sjekk først om det er en saksbehandler
-                var saksbehandler = await _saksbehandlerService.GetSaksbehandlerByEmail(model.Email);
-                if (saksbehandler != null)
-                {
-                    _logger.LogInformation("Fant saksbehandler med email: {Email}", model.Email);
-                    
-                    if (_saksbehandlerService.VerifyPassword(model.Password, saksbehandler.Passord))
-                    {
-                        _logger.LogInformation("Vellykket innlogging for saksbehandler: {Email}", model.Email);
-                        
-                        await SignInUser(model.Email, saksbehandler.SaksbehandlerId, "Saksbehandler", saksbehandler.Fornavn, saksbehandler.Etternavn, saksbehandler.Admin);
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        _logger.LogWarning("Feil passord for saksbehandler: {Email}", model.Email);
-                    }
-                }
+                // Forsøk innlogging som saksbehandler først
+                var loginResult = await TryLoginAsSaksbehandler(model);
+                if (loginResult != null) return loginResult;
 
-                // Hvis ikke saksbehandler, sjekk om det er en vanlig bruker
-                var bruker = await _brukerService.GetBrukerByEmail(model.Email);
-                if (bruker != null)
-                {
-                    _logger.LogInformation("Fant bruker med email: {Email}", model.Email);
-                    
-                    if (_brukerService.VerifyPassword(model.Password, bruker.Passord))
-                    {
-                        _logger.LogInformation("Vellykket innlogging for bruker: {Email}", model.Email);
-                        
-                        await SignInUser(model.Email, bruker.BrukerId, "Bruker", bruker.Fornavn, bruker.Etternavn);
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        _logger.LogWarning("Feil passord for bruker: {Email}", model.Email);
-                    }
-                }
-                else
-                {
-                    _logger.LogWarning("Ingen bruker eller saksbehandler funnet med email: {Email}", model.Email);
-                }
+                // Deretter forsøk innlogging som bruker
+                loginResult = await TryLoginAsBruker(model);
+                if (loginResult != null) return loginResult;
 
-                ModelState.AddModelError("", "Ugyldig email eller passord");
+                ModelState.AddModelError("", DefaultErrorMessage);
                 return View("Index", model);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Uventet feil under innlogging for {Email}", model.Email);
-                ModelState.AddModelError("", "En uventet feil oppstod under innlogging");
+                ModelState.AddModelError("", UnexpectedErrorMessage);
                 return View("Index", model);
             }
+        }
+
+        // Nye private hjelpemetoder for å dele opp loginlogikken
+        private async Task<IActionResult?> TryLoginAsSaksbehandler(LoginViewModel model)
+        {
+            var saksbehandler = await _saksbehandlerService.GetSaksbehandlerByEmail(model.Email);
+            if (saksbehandler == null) return null;
+
+            if (!_saksbehandlerService.VerifyPassword(model.Password, saksbehandler.Passord))
+            {
+                _logger.LogWarning("Feil passord for saksbehandler: {Email}", model.Email);
+                return null;
+            }
+
+            await SignInUser(model.Email, saksbehandler.SaksbehandlerId, 
+                "Saksbehandler", saksbehandler.Fornavn, 
+                saksbehandler.Etternavn, saksbehandler.Admin);
+            return RedirectToAction("Index", "Home");
+        }
+
+        private async Task<IActionResult?> TryLoginAsBruker(LoginViewModel model)
+        {
+            var bruker = await _brukerService.GetBrukerByEmail(model.Email);
+            if (bruker == null) return null;
+
+            if (!_brukerService.VerifyPassword(model.Password, bruker.Passord))
+            {
+                _logger.LogWarning("Feil passord for bruker: {Email}", model.Email);
+                return null;
+            }
+
+            await SignInUser(model.Email, bruker.BrukerId, 
+                "Bruker", bruker.Fornavn, 
+                bruker.Etternavn);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -173,46 +174,69 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        private async Task SignInUser(string email, int userId, string userType, string fornavn, string etternavn, bool isAdmin = false)
+        private async Task SignInUser(string email, int userId, string userType, 
+            string fornavn, string etternavn, bool isAdmin = false)
         {
             try 
             {
-                _logger.LogInformation("Starter innlogging for {UserType}: {Email}", userType, email);
-
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, email),
-                    new Claim($"{userType}Id", userId.ToString()),
-                    new Claim("UserType", userType),
-                    new Claim(ClaimTypes.Role, userType)
-                };
-
-                if (isAdmin)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-                    claims.Add(new Claim("IsAdmin", "True"));
-                }
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-                // Sett session-variabler
-                HttpContext.Session.SetString($"{userType}Navn", $"{fornavn} {etternavn}");
-                HttpContext.Session.SetString($"{userType}Email", email);
-                HttpContext.Session.SetInt32($"{userType}Id", userId);
-                HttpContext.Session.SetString("UserType", userType);
-
-                if (isAdmin)
-                {
-                    HttpContext.Session.SetString("IsAdmin", "True");
-                }
-
-                _logger.LogInformation("{UserType} logget inn: {Email} med ID: {UserId}", userType, email, userId);
+                var claims = BuildUserClaims(email, userId, userType, isAdmin);
+                await SignInWithClaims(claims);
+                SetUserSession(userType, fornavn, etternavn, email, userId, isAdmin);
+                
+                _logger.LogInformation("{UserType} logget inn: {Email} med ID: {UserId}", 
+                    userType, email, userId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil under innlogging av {UserType}: {Email}", userType, email);
+                _logger.LogError(ex, "Feil under innlogging av {UserType}: {Email}", 
+                    userType, email);
                 throw;
+            }
+        }
+
+        private List<Claim> BuildUserClaims(string email, int userId, 
+            string userType, bool isAdmin)
+        {
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, email),
+                new($"{userType}Id", userId.ToString()),
+                new("UserType", userType),
+                new(ClaimTypes.Role, userType)
+            };
+
+            if (isAdmin)
+            {
+                claims.AddRange(new[]
+                {
+                    new Claim(ClaimTypes.Role, "Admin"),
+                    new Claim("IsAdmin", "True")
+                });
+            }
+
+            return claims;
+        }
+
+        private async Task SignInWithClaims(List<Claim> claims)
+        {
+            var claimsIdentity = new ClaimsIdentity(claims, 
+                CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme, 
+                new ClaimsPrincipal(claimsIdentity));
+        }
+
+        private void SetUserSession(string userType, string fornavn, 
+            string etternavn, string email, int userId, bool isAdmin)
+        {
+            HttpContext.Session.SetString($"{userType}Navn", $"{fornavn} {etternavn}");
+            HttpContext.Session.SetString($"{userType}Email", email);
+            HttpContext.Session.SetInt32($"{userType}Id", userId);
+            HttpContext.Session.SetString("UserType", userType);
+
+            if (isAdmin)
+            {
+                HttpContext.Session.SetString("IsAdmin", "True");
             }
         }
     }

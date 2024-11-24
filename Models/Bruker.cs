@@ -27,5 +27,6 @@ namespace KartverketGruppe5.Models
         public string Passord { get; set; } = string.Empty;
         
         public DateTime OpprettetDato { get; set; }
+        public bool Slettet { get; set; }
     }
 } 

@@ -1,6 +1,4 @@
-using KartverketGruppe5.Models;
 using KartverketGruppe5.Models.ViewModels;
-using KartverketGruppe5.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
@@ -10,11 +8,9 @@ namespace KartverketGruppe5.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
         }
 
         [HttpGet]

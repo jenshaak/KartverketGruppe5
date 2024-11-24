@@ -9,7 +9,7 @@ namespace KartverketGruppe5.Services.Interfaces;
 public interface IInnmeldingService
 {
     // Grunnleggende CRUD-operasjoner
-    int AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti);
+    Task<int> CreateInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti);
 
     // Hent en innmelding
     Task<InnmeldingViewModel> GetInnmeldingById(int id);

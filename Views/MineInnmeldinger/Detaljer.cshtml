@@ -103,6 +103,7 @@
             </div>
         </form>
         <form asp-action="SlettInnmelding" method="post">
+            <input type="hidden" name="innmeldingId" value="@Model.InnmeldingId" />
             <button type="submit" class="btn btn-wide btn-red mt-4">
                 <i class="ph ph-trash-simple ph-lg"></i>
                 Slett innmelding
