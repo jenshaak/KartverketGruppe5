@@ -176,6 +176,24 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
+        public async Task<bool> Delete(int saksbehandlerId)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                var affected = await connection.ExecuteAsync(@"
+                    DELETE FROM Saksbehandler 
+                    WHERE saksbehandlerId = @SaksbehandlerId",
+                    new { SaksbehandlerId = saksbehandlerId });
+                return affected > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Database error ved sletting av saksbehandler: {Id}", saksbehandlerId);
+                throw new Exception("Kunne ikke slette saksbehandler", ex);
+            }
+        }
+
         private static string GetOrderByClause(string sortOrder) => sortOrder switch
         {
             "admin_desc" => "admin DESC, opprettetDato DESC",

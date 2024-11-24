@@ -11,5 +11,6 @@ namespace KartverketGruppe5.Repositories.Interfaces
         Task<IPagedResult<Saksbehandler>> GetAllSaksbehandlere(string sortOrder, int page);
         Task<bool> CreateSaksbehandler(Saksbehandler saksbehandler);
         Task<bool> UpdateSaksbehandler(SaksbehandlerRegistrerViewModel saksbehandler);
+        Task<bool> Delete(int saksbehandlerId);
     }
 } 

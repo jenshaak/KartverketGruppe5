@@ -109,13 +109,23 @@
                             <td class="max-md:hidden px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-500">@saksbehandler.OpprettetDato.ToShortDateString()</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm flex items-center gap-2">
                                 <a asp-action="Rediger" 
-                                asp-route-id="@saksbehandler.SaksbehandlerId" 
-                                class="btn btn-blue">
+                                   asp-route-id="@saksbehandler.SaksbehandlerId" 
+                                   class="btn btn-blue">
                                     <i class="ph ph-pencil-simple ph-lg"></i>
-                                    Rediger
+                                    <p class="max-md:hidden">Rediger</p>
                                 </a>
+                                
+                                <form asp-action="SlettSaksbehandler" 
+                                      asp-route-id="@saksbehandler.SaksbehandlerId" 
+                                      method="post">
+                                    <input type="hidden" name="saksbehandlerId" value="@saksbehandler.SaksbehandlerId" />
+                                    <button type="submit" class="btn btn-red">
+                                        <i class="ph ph-trash ph-lg"></i>
+                                        <p class="max-md:hidden">Slett</p>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     }

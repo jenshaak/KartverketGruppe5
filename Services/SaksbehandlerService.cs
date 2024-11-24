@@ -112,5 +112,18 @@ namespace KartverketGruppe5.Services
         {
             return _passwordService.VerifyPassword(password, hashedPassword);
         }
+
+        public async Task<bool> DeleteSaksbehandler(int saksbehandlerId)
+        {
+            try
+            {
+                return await _repository.Delete(saksbehandlerId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved sletting av saksbehandler med ID: {Id}", saksbehandlerId);
+                return false;
+            }
+        }
     }
 } 

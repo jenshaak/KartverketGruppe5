@@ -36,13 +36,12 @@ namespace KartverketGruppe5.Controllers
             try 
             {
                 SetSortingViewData(sortOrder, page);
-                var result = await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page);
-                return View(result);
+                return View(await _saksbehandlerService.GetAllSaksbehandlere(sortOrder, page));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av saksbehandlere");
-                TempData["Error"] = "Det oppstod en feil ved henting av saksbehandlere.";
+                _notificationService.AddErrorMessage("Det oppstod en feil ved henting av saksbehandlere.");
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -58,10 +57,6 @@ namespace KartverketGruppe5.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
             return View();
         }
         
@@ -116,11 +111,6 @@ namespace KartverketGruppe5.Controllers
         [HttpGet]
         public async Task<IActionResult> Rediger(int id)
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
-
             try
             {
                 var saksbehandler = await _saksbehandlerService.GetSaksbehandlerById(id);
@@ -129,24 +119,27 @@ namespace KartverketGruppe5.Controllers
                     return NotFound();
                 }
 
-                var viewModel = new SaksbehandlerRegistrerViewModel
-                {
-                    SaksbehandlerId = saksbehandler.SaksbehandlerId,
-                    Fornavn = saksbehandler.Fornavn,
-                    Etternavn = saksbehandler.Etternavn,
-                    Email = saksbehandler.Email,
-                    Admin = saksbehandler.Admin,
-                    OpprettetDato = saksbehandler.OpprettetDato
-                };
-
-                return View(viewModel);
+                return View(MapToViewModel(saksbehandler));
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Feil ved henting av saksbehandler: {ex.Message}");
-                TempData["Error"] = "Det oppstod en feil ved henting av saksbehandler.";
+                _logger.LogError(ex, "Feil ved henting av saksbehandler med ID: {Id}", id);
+                _notificationService.AddErrorMessage("Det oppstod en feil ved henting av saksbehandler.");
                 return RedirectToAction("Index");
             }
+        }
+
+        private static SaksbehandlerRegistrerViewModel MapToViewModel(Saksbehandler saksbehandler)
+        {
+            return new SaksbehandlerRegistrerViewModel
+            {
+                SaksbehandlerId = saksbehandler.SaksbehandlerId,
+                Fornavn = saksbehandler.Fornavn,
+                Etternavn = saksbehandler.Etternavn,
+                Email = saksbehandler.Email,
+                Admin = saksbehandler.Admin,
+                OpprettetDato = saksbehandler.OpprettetDato
+            };
         }
 
         [HttpPost]
@@ -181,6 +174,30 @@ namespace KartverketGruppe5.Controllers
                 ModelState.AddModelError("", "En feil oppstod ved oppdatering");
                 _notificationService.AddErrorMessage("En feil oppstod ved oppdatering");
                 return View(viewModel);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SlettSaksbehandler(int saksbehandlerId)
+        {
+            try
+            {
+                var slettet = await _saksbehandlerService.DeleteSaksbehandler(saksbehandlerId);
+                if (slettet)
+                {
+                    _notificationService.AddSuccessMessage("Saksbehandler ble slettet.");
+                    return RedirectToAction("Index");
+                }
+                
+                _notificationService.AddErrorMessage("Kunne ikke slette saksbehandler. Prøv igjen senere.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved sletting av saksbehandler med ID: {SaksbehandlerId}", saksbehandlerId);
+                _notificationService.AddErrorMessage("En feil oppstod ved sletting av saksbehandler.");
+                return RedirectToAction("Index");
             }
         }
     }

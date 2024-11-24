@@ -13,56 +13,51 @@ namespace KartverketGruppe5.Controllers
     [Authorize(Roles = "Saksbehandler,Admin")] 
     public class SaksbehandlingController : BaseController
     {
+        private const string DefaultSortOrder = "date_desc";
+        private const int DefaultPage = 1;
+        private const string UnderBehandlingStatus = "Under behandling";
+
         private readonly ISaksbehandlerService _saksbehandlerService;
-        private readonly IInnmeldingService _innmeldingService;
         private readonly ILokasjonService _lokasjonService;
         private readonly IKommuneService _kommuneService;
         private readonly IFylkeService _fylkeService;
-        private readonly ILogger<SaksbehandlingController> _logger;
-
+        private readonly INotificationService _notificationService;
         public SaksbehandlingController(
             ISaksbehandlerService saksbehandlerService, 
             IInnmeldingService innmeldingService, 
             ILokasjonService lokasjonService, 
             IKommuneService kommuneService, 
             IFylkeService fylkeService, 
-            ILogger<SaksbehandlingController> logger)
+            ILogger<SaksbehandlingController> logger,
+            INotificationService notificationService)
+            : base(innmeldingService, logger)
         {
             _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));
-            _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
             _kommuneService = kommuneService ?? throw new ArgumentNullException(nameof(kommuneService));
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(
-            string sortOrder = "date_desc", 
+            string sortOrder = DefaultSortOrder, 
             string statusFilter = "",
             string fylkeFilter = "",
             string kommuneFilter = "",
-            int page = 1)
+            int page = DefaultPage)
         {
             try 
             {
                 SetupViewData(sortOrder, statusFilter, fylkeFilter, kommuneFilter);
                 ViewBag.Fylker = await _fylkeService.GetAllFylker();
-                
-                var request = new InnmeldingRequest
-                {
-                    SortOrder = sortOrder,
-                    StatusFilter = statusFilter,
-                    FylkeFilter = fylkeFilter,
-                    KommuneFilter = kommuneFilter,
-                    Page = page
-                };
-
-                return View(await _innmeldingService.GetInnmeldinger(request));
+                var innmeldinger = await GetInnmeldinger(null, sortOrder, statusFilter, fylkeFilter, kommuneFilter, page, false);
+                return View(innmeldinger);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved henting av innmeldinger");
-                return View(new PagedResult<InnmeldingViewModel> { Items = new List<InnmeldingViewModel>() });
+                return View(CreateEmptyPagedResult());
             }
         }
 
@@ -82,76 +77,97 @@ namespace KartverketGruppe5.Controllers
         }
 
 
+        [HttpGet]
         public async Task<IActionResult> Detaljer(int id)
         {
             try
             {
-                var innmeldingViewModel = await _innmeldingService.GetInnmeldingById(id);
-                if (innmeldingViewModel == null)
+                var (innmelding, lokasjon, saksbehandlere) = await GetDetaljerData(id);
+                if (innmelding == null || lokasjon == null)
                 {
                     return NotFound();
                 }
 
-                var lokasjon = await _lokasjonService.GetLokasjonById(innmeldingViewModel.LokasjonId);
-                var kommune = await _kommuneService.GetKommuneById(innmeldingViewModel.KommuneId);
-                if (lokasjon == null || kommune == null)
-                {
-                    return NotFound();
-                }
-
-                var saksbehandlerResult = await _saksbehandlerService.GetAllSaksbehandlere();
-                ViewBag.Saksbehandlere = saksbehandlerResult.Items.ToList();
+                ViewBag.Saksbehandlere = saksbehandlere;
                 ViewBag.Lokasjon = lokasjon;
 
-                return View(innmeldingViewModel);
+                return View(innmelding);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved henting av detaljer for innmelding {id}", id);
+                _logger.LogError(ex, "Feil ved henting av detaljer for innmelding {InnmeldingId}", id);
                 return RedirectToAction("Index");
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Videresend(int innmeldingId, int saksbehandlerId)
         {
             try
             {
                 await _innmeldingService.UpdateInnmeldingSaksbehandler(innmeldingId, saksbehandlerId);
+                _notificationService.AddSuccessMessage("Innmelding videresendt");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved videresending av innmelding {innmeldingId}", innmeldingId);
+                _notificationService.AddErrorMessage("Feil ved videresending av innmelding");
                 return RedirectToAction("Index");
             }
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Behandle(int id)
         {
             try 
             {
+                var saksbehandlerId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
+                if (saksbehandlerId == 0)
+                {
+                    return Forbid();
+                }
+
                 var innmelding = await _innmeldingService.GetInnmeldingById(id);
                 if (innmelding == null)
                 {
                     return NotFound();
                 }
 
-                var currentUserId = int.Parse(User.FindFirst("SaksbehandlerId")?.Value ?? "0");
-                if (currentUserId == 0)
-                {
-                    return Forbid();
-                }
-
-                await _innmeldingService.UpdateInnmeldingStatus(id, "Under behandling", currentUserId);
+                await _innmeldingService.UpdateInnmeldingStatus(id, UnderBehandlingStatus, saksbehandlerId);
+                _notificationService.AddSuccessMessage("Innmelding behandlet");
                 return RedirectToAction("Index", "MineSaker");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved behandling av innmelding {id}", id);
+                _logger.LogError(ex, "Feil ved behandling av innmelding {InnmeldingId}", id);
+                _notificationService.AddErrorMessage("Feil ved behandling av innmelding");
                 return RedirectToAction("Index");
             }
+        }
+
+        // Private hjelpemetode
+
+        private async Task<(InnmeldingViewModel? innmelding, LokasjonViewModel? lokasjon, List<Saksbehandler> saksbehandlere)> 
+            GetDetaljerData(int id)
+        {
+            var innmelding = await _innmeldingService.GetInnmeldingById(id);
+            if (innmelding == null)
+            {
+                return (null, null, new List<Saksbehandler>());
+            }
+
+            var lokasjon = await _lokasjonService.GetLokasjonById(innmelding.LokasjonId);
+            var kommune = await _kommuneService.GetKommuneById(innmelding.KommuneId);
+            if (lokasjon == null || kommune == null)
+            {
+                return (null, null, new List<Saksbehandler>());
+            }
+
+            var saksbehandlerResult = await _saksbehandlerService.GetAllSaksbehandlere();
+            return (innmelding, lokasjon, saksbehandlerResult.Items.ToList());
         }
     }
 }

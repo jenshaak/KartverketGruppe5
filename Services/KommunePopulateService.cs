@@ -74,7 +74,11 @@ namespace KartverketGruppe5.Services
                 
                 _logger.LogInformation($"Hentet {alleKommuner.Count} kommuner fra API");
 
-                var kommuneNumreFraApi = alleKommuner.Select(k => k.Kommunenummer).OrderBy(n => n).ToList();
+                var kommuneNumreFraApi = alleKommuner
+                    .Where(k => k.Kommunenummer != null)
+                    .Select(k => k.Kommunenummer!)
+                    .OrderBy(n => n)
+                    .ToList();
 
                 using (var db = await _repository.CreateConnection())
                 {
@@ -197,18 +201,21 @@ namespace KartverketGruppe5.Services
             if (mangler.Any())
             {
                 var manglendeKommuner = alleKommuner
-                    .Where(k => mangler.Contains(k.Kommunenummer))
+                    .Where(k => k.Kommunenummer != null && mangler.Contains(k.Kommunenummer))
                     .Select(k => new {
                         Nummer = k.Kommunenummer,
-                        Navn = k.KommunenavnNorsk,
+                        Navn = k.KommunenavnNorsk ?? "Ukjent navn",
                         FylkeNummer = k.Kommunenummer?.Substring(0, 2)
                     })
                     .ToList();
 
                 foreach (var kommune in manglendeKommuner)
                 {
-                    _logger.LogWarning(
-                        $"Kommune mangler: {kommune.Navn} ({kommune.Nummer}) i fylke {GetFylkesnavnFromKommunenummer(kommune.FylkeNummer ?? throw new ArgumentNullException(nameof(kommune.FylkeNummer)))}");
+                    if (kommune.FylkeNummer != null)
+                    {
+                        _logger.LogWarning(
+                            $"Kommune mangler: {kommune.Navn} ({kommune.Nummer}) i fylke {GetFylkesnavnFromKommunenummer(kommune.FylkeNummer)}");
+                    }
                 }
             }
 

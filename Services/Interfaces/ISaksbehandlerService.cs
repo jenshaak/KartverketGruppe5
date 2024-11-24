@@ -14,4 +14,5 @@ public interface ISaksbehandlerService
     Task<bool> CreateSaksbehandler(Saksbehandler saksbehandler);
     Task<bool> UpdateSaksbehandler(SaksbehandlerRegistrerViewModel saksbehandler);
     bool VerifyPassword(string password, string hashedPassword);
+    Task<bool> DeleteSaksbehandler(int saksbehandlerId);
 } 
