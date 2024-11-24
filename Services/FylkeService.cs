@@ -16,10 +16,14 @@ namespace KartverketGruppe5.Services
 
         public FylkeService(IFylkeRepository repository, ILogger<FylkeService> logger)
         {
-            _repository = repository;
-            _logger = logger;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Henter alle fylker, med caching for bedre ytelse
+        /// </summary>
+        /// <returns>Liste over alle fylker</returns>
         public async Task<List<Fylke>> GetAllFylker()
         {
             try

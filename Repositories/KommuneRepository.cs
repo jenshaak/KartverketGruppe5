@@ -14,9 +14,12 @@ namespace KartverketGruppe5.Repositories
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection") 
                 ?? throw new ArgumentNullException(nameof(configuration));
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Henter kommune basert på ID
+        /// </summary>
         public async Task<Kommune?> GetKommuneById(int kommuneId)
         {
             try
@@ -36,6 +39,9 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
+        /// <summary>
+        /// Henter alle kommuner
+        /// </summary>
         public async Task<List<Kommune>> GetAllKommuner()
         {
             try
@@ -56,6 +62,9 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
+        /// <summary>
+        /// Søker etter kommuner med et gitt søkeord
+        /// </summary>
         public async Task<List<Kommune>> SearchKommuner(string searchTerm)
         {
             try

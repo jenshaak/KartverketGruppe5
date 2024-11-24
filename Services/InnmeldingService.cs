@@ -23,12 +23,15 @@ namespace KartverketGruppe5.Services
             IBildeService bildeService,
             ILokasjonService lokasjonService)
         {
-            _repository = repository;
-            _logger = logger;
-            _bildeService = bildeService;
-            _lokasjonService = lokasjonService;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _bildeService = bildeService ?? throw new ArgumentNullException(nameof(bildeService));
+            _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
         }
 
+        /// <summary>
+        /// Oppretter en ny innmelding
+        /// </summary>
         public async Task<int> CreateInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
         {
             try
@@ -37,21 +40,28 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved opprettelse av innmelding");
+                _logger.LogError(ex, "Feil ved opprettelse av innmelding for bruker {BrukerId}", brukerId);
                 throw;
             }
         }
 
-
+        /// <summary>
+        /// Henter en spesifikk innmelding med full informasjon
+        /// </summary>
         public async Task<InnmeldingViewModel> GetInnmeldingById(int id)
         {
-            var innmeldingViewModel = await _repository.GetInnmeldingById(id);
-            if (innmeldingViewModel == null)
+            var innmelding = await _repository.GetInnmeldingById(id);
+            if (innmelding == null)
+            {
+                _logger.LogWarning("Innmelding med id {InnmeldingId} ble ikke funnet", id);
                 throw new KeyNotFoundException($"Innmelding med id {id} ble ikke funnet");
-
-            return innmeldingViewModel;
+            }
+            return innmelding;
         }
 
+        /// <summary>
+        /// Henter innmeldinger basert på søkekriterier
+        /// </summary>
         public async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
         {
             try
@@ -65,6 +75,9 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Sletter en innmelding
+        /// </summary>
         public async Task SlettInnmelding(int id)
         {
             try
@@ -77,11 +90,11 @@ namespace KartverketGruppe5.Services
                 throw;
             }
         }
+        
 
-
-
-        /// ----- OPPDATERINGER -----
-
+        /// <summary>
+        /// Oppdaterer en eksisterende innmelding
+        /// </summary>
         public async Task<bool> UpdateInnmelding(InnmeldingUpdateModel updateModel)
         {
             try
@@ -91,28 +104,20 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved oppdatering av innmelding {InnmeldingId}", 
-                    updateModel.InnmeldingId);
+                _logger.LogError(ex, "Feil ved oppdatering av innmelding {InnmeldingId}", updateModel.InnmeldingId);
                 throw;
             }
         }
 
+        /// <summary>
+        /// Oppdaterer bilde for en innmelding
+        /// </summary>
         public async Task UpdateBilde(int innmeldingId, IFormFile bilde)
         {
             try
             {
                 var innmelding = await GetInnmeldingById(innmeldingId);
-                if (innmelding == null)
-                {
-                    throw new KeyNotFoundException($"Innmelding {innmeldingId} ikke funnet");
-                }
-
-                // Slett gammelt bilde hvis det finnes
-                if (!string.IsNullOrEmpty(innmelding.BildeSti))
-                {
-                    // TODO: Implementer sletting av gammelt bilde
-                }
-
+                
                 // Lagre nytt bilde
                 var nyBildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
                 if (nyBildeSti != null)
@@ -127,29 +132,13 @@ namespace KartverketGruppe5.Services
             }
         }
 
-
-        public async Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId)
-        {
-            try
-            {
-                var updateModel = new InnmeldingUpdateModel
-                {
-                    InnmeldingId = innmeldingId,
-                    Status = status,
-                    SaksbehandlerId = saksbehandlerId,
-                    OppdatertDato = DateTime.Now
-                };
-
-                return await _repository.UpdateInnmelding(updateModel);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Feil ved oppdatering av status for innmelding {InnmeldingId}", innmeldingId);
-                throw;
-            }
-        }
-
-        public async Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId)
+        /// <summary>
+        /// Oppdaterer status og/eller saksbehandler for en innmelding
+        /// </summary>
+        public async Task<bool> UpdateInnmeldingStatus(
+            int innmeldingId, 
+            int? saksbehandlerId = null, 
+            string? status = null)
         {
             try
             {
@@ -157,15 +146,22 @@ namespace KartverketGruppe5.Services
                 {
                     InnmeldingId = innmeldingId,
                     SaksbehandlerId = saksbehandlerId,
-                    Status = "Under behandling",
+                    // Hvis status ikke er spesifisert og vi har en saksbehandler, sett til "Under behandling"
+                    Status = status ?? (saksbehandlerId.HasValue ? "Under behandling" : null),
                     OppdatertDato = DateTime.Now
                 };
+
+                _logger.LogInformation(
+                    "Oppdaterer innmelding {InnmeldingId} - Status: {Status}, SaksbehandlerId: {SaksbehandlerId}", 
+                    innmeldingId, updateModel.Status, saksbehandlerId);
 
                 return await _repository.UpdateInnmelding(updateModel);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved oppdatering av saksbehandler for innmelding {InnmeldingId}", innmeldingId);
+                _logger.LogError(ex, 
+                    "Feil ved oppdatering av innmelding {InnmeldingId}. Status: {Status}, SaksbehandlerId: {SaksbehandlerId}", 
+                    innmeldingId, status, saksbehandlerId);
                 throw;
             }
         }

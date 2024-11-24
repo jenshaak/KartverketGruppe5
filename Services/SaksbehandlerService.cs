@@ -21,11 +21,14 @@ namespace KartverketGruppe5.Services
             ILogger<SaksbehandlerService> logger,
             IPasswordService passwordService)
         {
-            _repository = repository;
-            _logger = logger;
-            _passwordService = passwordService;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _passwordService = passwordService ?? throw new ArgumentNullException(nameof(passwordService));
         }
 
+        /// <summary>
+        /// Henter en saksbehandler basert på ID
+        /// </summary>
         public async Task<Saksbehandler?> GetSaksbehandlerById(int id)
         {
             try
@@ -34,11 +37,14 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting saksbehandler with id {SaksbehandlerId}", id);
+                _logger.LogError(ex, "Feil ved henting av saksbehandler med ID {SaksbehandlerId}", id);
                 throw;
             }
         }
 
+        /// <summary>
+        /// Henter en saksbehandler basert på email
+        /// </summary>
         public async Task<Saksbehandler?> GetSaksbehandlerByEmail(string email)
         {
             try
@@ -47,11 +53,14 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting saksbehandler by email {Email}", email);
+                _logger.LogError(ex, "Feil ved henting av saksbehandler med email {Email}", email);
                 throw;
             }
         }
 
+        /// <summary>
+        /// Henter alle saksbehandlere med paginering
+        /// </summary>
         public async Task<IPagedResult<Saksbehandler>> GetAllSaksbehandlere(
             string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
             int page = PagedResult<Saksbehandler>.DefaultPage)
@@ -106,11 +115,6 @@ namespace KartverketGruppe5.Services
                     saksbehandler.SaksbehandlerId);
                 throw;
             }
-        }
-
-        public bool VerifyPassword(string password, string hashedPassword)
-        {
-            return _passwordService.VerifyPassword(password, hashedPassword);
         }
 
         public async Task<bool> DeleteSaksbehandler(int saksbehandlerId)

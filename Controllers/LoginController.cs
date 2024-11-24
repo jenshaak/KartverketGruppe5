@@ -18,15 +18,18 @@ namespace KartverketGruppe5.Controllers
         
         private readonly IBrukerService _brukerService;
         private readonly ISaksbehandlerService _saksbehandlerService;
+        private readonly IPasswordService _passwordService;
         private readonly ILogger<LoginController> _logger;
 
         public LoginController(
             IBrukerService brukerService,
             ISaksbehandlerService saksbehandlerService,
+            IPasswordService passwordService,
             ILogger<LoginController> logger)
         {
             _brukerService = brukerService ?? throw new ArgumentNullException(nameof(brukerService));
             _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));
+            _passwordService = passwordService ?? throw new ArgumentNullException(nameof(passwordService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -74,7 +77,7 @@ namespace KartverketGruppe5.Controllers
             var saksbehandler = await _saksbehandlerService.GetSaksbehandlerByEmail(model.Email);
             if (saksbehandler == null) return null;
 
-            if (!_saksbehandlerService.VerifyPassword(model.Password, saksbehandler.Passord))
+            if (!_passwordService.VerifyPassword(model.Password, saksbehandler.Passord))
             {
                 _logger.LogWarning("Feil passord for saksbehandler: {Email}", model.Email);
                 return null;
@@ -91,7 +94,7 @@ namespace KartverketGruppe5.Controllers
             var bruker = await _brukerService.GetBrukerByEmail(model.Email);
             if (bruker == null) return null;
 
-            if (!_brukerService.VerifyPassword(model.Password, bruker.Passord))
+            if (!_passwordService.VerifyPassword(model.Password, bruker.Passord))
             {
                 _logger.LogWarning("Feil passord for bruker: {Email}", model.Email);
                 return null;

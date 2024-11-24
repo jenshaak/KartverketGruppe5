@@ -20,8 +20,7 @@ public interface IInnmeldingService
     // Slett innmelding
     Task SlettInnmelding(int id);
     // Status og oppdateringer
-    Task<bool> UpdateInnmeldingStatus(int innmeldingId, string status, int? saksbehandlerId = null);
-    Task<bool> UpdateInnmeldingSaksbehandler(int innmeldingId, int saksbehandlerId);
+    Task<bool> UpdateInnmeldingStatus(int innmeldingId, int? saksbehandlerId = null, string? status = null);
     Task<bool> UpdateStatusAndKommentar(int innmeldingId, string kommentar, string? status = "under behandling");
     Task<bool> UpdateInnmelding(Innmelding innmelding);
     Task UpdateBildeSti(int innmeldingId, string bildeSti);

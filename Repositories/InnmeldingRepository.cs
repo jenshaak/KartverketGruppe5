@@ -18,16 +18,41 @@ namespace KartverketGruppe5.Repositories
         private readonly string _connectionString;
         private readonly ILogger<InnmeldingRepository> _logger;
 
-        public InnmeldingRepository(IConfiguration configuration, ILogger<InnmeldingRepository> logger)
+        // SQL-spørringer som konstanter for bedre vedlikehold
+        private const string SELECT_INNMELDING_BASE = @"
+            SELECT 
+                i.innmeldingId,
+                i.brukerId,
+                i.kommuneId,
+                i.lokasjonId,
+                i.beskrivelse,
+                i.kommentar,
+                i.status,
+                i.opprettetDato,
+                i.oppdatertDato,
+                i.saksbehandlerId,
+                i.bildeSti,
+                k.navn as kommuneNavn,
+                f.navn as fylkeNavn,
+                CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
+            FROM Innmelding i
+            LEFT JOIN Kommune k ON i.kommuneId = k.kommuneId
+            LEFT JOIN Fylke f ON k.fylkeId = f.fylkeId
+            LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId";
+
+        public InnmeldingRepository(
+            IConfiguration configuration, 
+            ILogger<InnmeldingRepository> logger)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection") 
                 ?? throw new ArgumentNullException(nameof(configuration));
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-
-
-        /// ----- LAGRING AV INNMELDING -----
+        /// <summary>
+        /// Legger til ny innmelding
+        /// </summary>
+        /// <returns>ID for den nye innmeldingen</returns>
         public async Task<int> AddInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse, string? bildeSti)
         {
             try
@@ -67,50 +92,28 @@ namespace KartverketGruppe5.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Database error ved opprettelse av innmelding");
+                _logger.LogError(ex, "Database error ved opprettelse av innmelding for bruker {BrukerId}", brukerId);
                 throw;
             }
         }
 
-
-
-        /// ----- HENTING AV INNMELDINGER -----
+        /// <summary>
+        /// Henter en spesifikk innmelding med full informasjon
+        /// </summary>
         public async Task<InnmeldingViewModel?> GetInnmeldingById(int id)
         {
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
-                const string sql = @"
-                    SELECT 
-                        i.innmeldingId,
-                        i.brukerId,
-                        i.kommuneId,
-                        i.lokasjonId,
-                        i.beskrivelse,
-                        i.kommentar,
-                        i.status,
-                        i.opprettetDato,
-                        i.oppdatertDato,
-                        i.saksbehandlerId,
-                        i.bildeSti,
-                        k.navn as kommuneNavn,
-                        f.navn as fylkeNavn,
-                        CONCAT(s.fornavn, ' ', s.etternavn) as saksbehandlerNavn
-                    FROM Innmelding i
-                    LEFT JOIN Kommune k ON i.kommuneId = k.kommuneId
-                    LEFT JOIN Fylke f ON k.fylkeId = f.fylkeId
-                    LEFT JOIN Saksbehandler s ON i.saksbehandlerId = s.saksbehandlerId
-                    WHERE i.innmeldingId = @Id";
+                var sql = $"{SELECT_INNMELDING_BASE} WHERE i.innmeldingId = @Id";
 
                 var innmelding = await connection.QuerySingleOrDefaultAsync<InnmeldingViewModel>(sql, new { Id = id });
-                
                 if (innmelding != null)
                 {
                     innmelding.StatusClass = InnmeldingHelper.GetStatusClass(innmelding.Status);
-                    return innmelding;
                 }
 
-                return null;
+                return innmelding;
             }
             catch (Exception ex)
             {
@@ -119,40 +122,32 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
-        /// ----- HENTING AV INNMELDINGER -----
+        /// <summary>
+        /// Henter innmeldinger basert på søkekriterier med paginering
+        /// </summary>
         public async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(InnmeldingRequest request)
         {
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
                 
-                var sql = @"
-                    SELECT 
-                        i.innmeldingId,
-                        i.brukerId,
-                        i.kommuneId,
-                        i.lokasjonId,
-                        i.beskrivelse,
-                        i.status,
-                        i.opprettetDato,
-                        i.saksbehandlerId,
-                        k.navn as kommuneNavn,
-                        f.navn as fylkeNavn
-                    FROM Innmelding i
-                    INNER JOIN Kommune k ON i.kommuneId = k.kommuneId
-                    INNER JOIN Fylke f ON k.fylkeId = f.fylkeId";
-
+                // Bygg spørring basert på søkekriterier
                 var whereConditions = InnmeldingSqlHelper.BuildWhereConditions(request);
                 var parameters = InnmeldingSqlHelper.CreateParameters(request);
+                var sql = SELECT_INNMELDING_BASE;
 
                 if (whereConditions.Any())
                 {
                     sql += " WHERE " + string.Join(" AND ", whereConditions);
                 }
 
+                // Hent totalt antall treff
                 var totalItems = await InnmeldingSqlHelper.GetTotalItems(connection, sql, parameters);
+                
+                // Legg til sortering og paginering
                 sql = InnmeldingSqlHelper.AddSortingAndPagination(sql, request);
 
+                // Hent innmeldinger for gjeldende side
                 var innmeldinger = await connection.QueryAsync<InnmeldingViewModel>(sql, parameters);
                 
                 return new PagedResult<InnmeldingViewModel>
@@ -170,8 +165,9 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
-
-        /// ----- SLETTING AV INNMELDINGER -----
+        /// <summary>
+        /// Sletter en innmelding
+        /// </summary>
         public async Task SlettInnmelding(int id)
         {
             try
@@ -188,9 +184,9 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
-
-
-        /// ----- OPPDATERING AV INNMELDINGER -----
+        /// <summary>
+        /// Oppdaterer en eksisterende innmelding
+        /// </summary>
         public async Task<bool> UpdateInnmelding(InnmeldingUpdateModel updateModel)
         {
             try
@@ -199,6 +195,7 @@ namespace KartverketGruppe5.Repositories
                 var updateFields = new List<string>();
                 var parameters = new DynamicParameters();
                 
+                // Bygg dynamisk UPDATE-spørring basert på hvilke felter som skal oppdateres
                 if (updateModel.Status != null)
                 {
                     updateFields.Add("status = @Status");
@@ -236,7 +233,7 @@ namespace KartverketGruppe5.Repositories
 
                 if (!updateFields.Any()) return true;
 
-                string sql = $@"
+                var sql = $@"
                     UPDATE Innmelding 
                     SET {string.Join(", ", updateFields)}
                     WHERE innmeldingId = @InnmeldingId";
@@ -252,6 +249,9 @@ namespace KartverketGruppe5.Repositories
             }
         }
 
+        /// <summary>
+        /// Oppdaterer bildesti for en innmelding
+        /// </summary>
         public async Task UpdateBildeSti(int innmeldingId, string bildeSti)
         {
             try
@@ -271,7 +271,5 @@ namespace KartverketGruppe5.Repositories
                 throw;
             }
         }
-
-
     }
 } 
