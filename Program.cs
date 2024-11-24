@@ -30,6 +30,7 @@ builder.Services.AddScoped<IKommuneRepository, KommuneRepository>();
 builder.Services.AddScoped<ILokasjonRepository, LokasjonRepository>();
 builder.Services.AddScoped<ISaksbehandlerRepository, SaksbehandlerRepository>();
 builder.Services.AddScoped<IInnmeldingRepository, InnmeldingRepository>();
+builder.Services.AddScoped<IKommunePopulateRepository, KommunePopulateRepository>();
 
 // Legg til services til containeren.
 builder.Services.AddControllersWithViews();
