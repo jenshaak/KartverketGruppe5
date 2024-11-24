@@ -1,4 +1,3 @@
-
 using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Services
@@ -11,10 +10,13 @@ namespace KartverketGruppe5.Services
 
         public BildeService(IWebHostEnvironment webHostEnvironment, ILogger<BildeService> logger)
         {
-            _webHostEnvironment = webHostEnvironment;
-            _logger = logger;
+            _webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Lagrer et opplastet bilde for en innmelding
+        /// </summary>
         public async Task<string?> LagreBilde(IFormFile? bilde, int innmeldingId)
         {
             if (bilde == null || bilde.Length == 0)
@@ -40,6 +42,9 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Oppretter en bildemappe hvis den ikke finnes
+        /// </summary>
         private string OpprettBildemappe()
         {
             var bildemappe = Path.Combine(_webHostEnvironment.WebRootPath, BILDEMAPPE);
@@ -53,11 +58,17 @@ namespace KartverketGruppe5.Services
             return bildemappe;
         }
 
+        /// <summary>
+        /// Genererer et unikt filnavn for bildet
+        /// </summary>
         private string GenererFilnavn(int innmeldingId, string originalFilnavn)
         {
             return $"{innmeldingId}_{DateTime.Now.Ticks}{Path.GetExtension(originalFilnavn)}";
         }
 
+        /// <summary>
+        /// Lagrer bildefilen til disk
+        /// </summary>
         private async Task LagreBildeFil(IFormFile bilde, string filsti)
         {
             _logger.LogInformation("Lagrer bilde til: {Filsti}", filsti);

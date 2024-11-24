@@ -15,10 +15,15 @@ namespace KartverketGruppe5.Services
 
         public KommuneService(IKommuneRepository repository, ILogger<KommuneService> logger)
         {
-            _repository = repository;
-            _logger = logger;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Henter en spesifikk kommune basert på ID
+        /// </summary>
+        /// <param name="kommuneId">ID for kommunen som skal hentes</param>
+        /// <returns>Kommune hvis funnet, null hvis ikke</returns>
         public async Task<Kommune?> GetKommuneById(int kommuneId)
         {
             try
@@ -27,11 +32,15 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting kommune with id {KommuneId}", kommuneId);
+                _logger.LogError(ex, "Feil ved henting av kommune med id {KommuneId}", kommuneId);
                 throw;
             }
         }
 
+        /// <summary>
+        /// Henter alle kommuner
+        /// </summary>
+        /// <returns>Liste over alle kommuner</returns>
         public async Task<List<Kommune>> GetAllKommuner()
         {
             try
@@ -40,11 +49,16 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting all kommuner");
+                _logger.LogError(ex, "Feil ved henting av alle kommuner");
                 throw;
             }
         }
 
+        /// <summary>
+        /// Søker etter kommuner basert på søkeord
+        /// </summary>
+        /// <param name="searchTerm">Søkeord for kommunenavn</param>
+        /// <returns>Liste over matchende kommuner</returns>
         public async Task<List<Kommune>> SearchKommuner(string searchTerm)
         {
             try
@@ -53,7 +67,7 @@ namespace KartverketGruppe5.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error searching kommuner with term {SearchTerm}", searchTerm);
+                _logger.LogError(ex, "Feil ved søk etter kommuner med søkeord: {SearchTerm}", searchTerm);
                 throw;
             }
         }

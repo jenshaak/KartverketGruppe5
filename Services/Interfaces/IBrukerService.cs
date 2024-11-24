@@ -7,5 +7,4 @@ public interface IBrukerService
 
     Task<bool> UpdateBruker(BrukerRequest brukerRequest);
     Task<bool> DeleteBruker(int brukerId);
-    bool VerifyPassword(string password, string hashedPassword);
 } 

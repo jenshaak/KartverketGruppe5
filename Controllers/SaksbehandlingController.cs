@@ -106,7 +106,7 @@ namespace KartverketGruppe5.Controllers
         {
             try
             {
-                await _innmeldingService.UpdateInnmeldingSaksbehandler(innmeldingId, saksbehandlerId);
+                await _innmeldingService.UpdateInnmeldingStatus(innmeldingId, saksbehandlerId, UnderBehandlingStatus);
                 _notificationService.AddSuccessMessage("Innmelding videresendt");
                 return RedirectToAction("Index");
             }
@@ -136,7 +136,7 @@ namespace KartverketGruppe5.Controllers
                     return NotFound();
                 }
 
-                await _innmeldingService.UpdateInnmeldingStatus(id, UnderBehandlingStatus, saksbehandlerId);
+                await _innmeldingService.UpdateInnmeldingStatus(id, saksbehandlerId, UnderBehandlingStatus);
                 _notificationService.AddSuccessMessage("Innmelding behandlet");
                 return RedirectToAction("Index", "MineSaker");
             }

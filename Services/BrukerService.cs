@@ -16,11 +16,15 @@ namespace KartverketGruppe5.Services
             ILogger<BrukerService> logger,
             IPasswordService passwordService)
         {
-            _repository = repository;
-            _logger = logger;
-            _passwordService = passwordService;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _passwordService = passwordService ?? throw new ArgumentNullException(nameof(passwordService));
         }
 
+        /// <summary>
+        /// Henter bruker basert på email
+        /// </summary>
+        /// <returns>Bruker hvis funnet, null hvis ikke</returns>
         public async Task<Bruker?> GetBrukerByEmail(string email)
         {
             try
@@ -34,6 +38,10 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Oppretter ny bruker
+        /// </summary>
+        /// <returns>true hvis vellykket, false hvis bruker allerede eksisterer eller ved feil</returns>
         public async Task<bool> CreateBruker(Bruker bruker)
         {
             try
@@ -55,6 +63,10 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Oppdaterer eksisterende bruker
+        /// </summary>
+        /// <returns>true hvis vellykket, false hvis bruker ikke finnes eller ved feil</returns>
         public async Task<bool> UpdateBruker(BrukerRequest brukerRequest)
         {
             try
