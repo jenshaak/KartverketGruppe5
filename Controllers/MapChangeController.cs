@@ -12,18 +12,21 @@ namespace KartverketGruppe5.Controllers
         private readonly ILokasjonService _lokasjonService;
         private readonly IInnmeldingService _innmeldingService;
         private readonly IBildeService _bildeService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<MapChangeController> _logger;
 
         public MapChangeController(
             ILokasjonService lokasjonService, 
             IInnmeldingService innmeldingService,
             IBildeService bildeService,
+            INotificationService notificationService,
             ILogger<MapChangeController> logger)
         {
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
             _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
             _bildeService = bildeService ?? throw new ArgumentNullException(nameof(bildeService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _notificationService = notificationService;
         }
 
         public IActionResult Index()
@@ -130,7 +133,7 @@ namespace KartverketGruppe5.Controllers
                 }
 
                 _logger.LogInformation("Successfully saved both lokasjon and innmelding. Redirecting to MineInnmeldinger");
-                TempData["Success"] = "Innmelding er lagret";
+                _notificationService.AddSuccessMessage("Innmelding sent inn!");
                 return RedirectToAction("Index", "MineInnmeldinger");
             }
             catch (Exception ex)
