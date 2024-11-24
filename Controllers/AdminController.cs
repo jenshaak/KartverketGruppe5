@@ -12,15 +12,18 @@ namespace KartverketGruppe5.Controllers
     {
         private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly IKommunePopulateService _kommunePopulateService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(
             ISaksbehandlerService saksbehandlerService,
             IKommunePopulateService kommunePopulateService,
+            INotificationService notificationService,
             ILogger<AdminController> logger)
         {
             _saksbehandlerService = saksbehandlerService;
             _kommunePopulateService = kommunePopulateService;
+            _notificationService = notificationService;
             _logger = logger;
         }
 
@@ -165,7 +168,7 @@ namespace KartverketGruppe5.Controllers
                 var result = await _saksbehandlerService.UpdateSaksbehandler(viewModel);
                 if (result)
                 {
-                    TempData["Success"] = "Saksbehandler oppdatert!";
+                    _notificationService.AddSuccessMessage("Saksbehandler oppdatert!");
                     return RedirectToAction("Index");
                 }
                 
@@ -176,6 +179,7 @@ namespace KartverketGruppe5.Controllers
             {
                 _logger.LogError($"Error updating saksbehandler: {ex.Message}");
                 ModelState.AddModelError("", "En feil oppstod ved oppdatering");
+                _notificationService.AddErrorMessage("En feil oppstod ved oppdatering");
                 return View(viewModel);
             }
         }

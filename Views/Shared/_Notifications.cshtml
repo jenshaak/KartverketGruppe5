@@ -1,0 +1,43 @@
+@using System.Text.Json
+@using KartverketGruppe5.Models
+
+@{
+    var notificationJson = TempData["Notification"] as string;
+    NotificationMessage? notification = null;
+    if (!string.IsNullOrEmpty(notificationJson))
+    {
+        notification = JsonSerializer.Deserialize<NotificationMessage>(notificationJson);
+    }
+}
+
+@if (notification != null)
+{
+    <div class="fixed top-4 right-4 z-50" id="notification">
+        <div class="rounded-lg p-4 @notification.CssClasses flex items-center gap-2">
+            <p>@notification.Message</p>
+            <button onclick="dismissNotification()" class="text-current hover:opacity-75">
+                <i class="ph ph-x ph-lg"></i>
+            </button>
+        </div>
+    </div>
+}
+
+<script>
+    function dismissNotification() {
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }
+
+    // Auto-dismiss etter 5 sekunder
+    document.addEventListener('DOMContentLoaded', () => {
+        const notification = document.getElementById('notification');
+        if (notification) {
+            setTimeout(() => {
+                dismissNotification();
+            }, 5000);
+        }
+    });
+</script> 
