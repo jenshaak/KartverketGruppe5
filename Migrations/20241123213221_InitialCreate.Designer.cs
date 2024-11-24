@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KartverketGruppe5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241123194035_InitialCreate")]
+    [Migration("20241123213221_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -72,7 +72,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "ole@gmail.com",
                             Etternavn = "Olsen",
                             Fornavn = "Ole",
-                            OpprettetDato = new DateTime(2024, 11, 23, 19, 40, 35, 539, DateTimeKind.Utc).AddTicks(8830),
+                            OpprettetDato = new DateTime(2024, 11, 23, 21, 32, 21, 97, DateTimeKind.Utc).AddTicks(1950),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
@@ -280,7 +280,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "rune@kartverket.no",
                             Etternavn = "Bengtson",
                             Fornavn = "Rune",
-                            OpprettetDato = new DateTime(2024, 11, 23, 19, 40, 35, 540, DateTimeKind.Utc).AddTicks(1160),
+                            OpprettetDato = new DateTime(2024, 11, 23, 21, 32, 21, 97, DateTimeKind.Utc).AddTicks(4350),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         },
                         new
@@ -290,7 +290,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "lars@kartverket.no",
                             Etternavn = "Larsen",
                             Fornavn = "Lars",
-                            OpprettetDato = new DateTime(2024, 11, 23, 19, 40, 35, 540, DateTimeKind.Utc).AddTicks(1160),
+                            OpprettetDato = new DateTime(2024, 11, 23, 21, 32, 21, 97, DateTimeKind.Utc).AddTicks(4350),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });
@@ -298,7 +298,7 @@ namespace KartverketGruppe5.Migrations
             modelBuilder.Entity("KartverketGruppe5.Models.Innmelding", b =>
                 {
                     b.HasOne("KartverketGruppe5.Models.Bruker", "Bruker")
-                        .WithMany("Innmeldinger")
+                        .WithMany()
                         .HasForeignKey("BrukerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -338,11 +338,6 @@ namespace KartverketGruppe5.Migrations
                         .IsRequired();
 
                     b.Navigation("Fylke");
-                });
-
-            modelBuilder.Entity("KartverketGruppe5.Models.Bruker", b =>
-                {
-                    b.Navigation("Innmeldinger");
                 });
 #pragma warning restore 612, 618
         }
