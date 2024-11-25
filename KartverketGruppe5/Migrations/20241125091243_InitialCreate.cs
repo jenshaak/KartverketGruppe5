@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace KartverketGruppe5.Migrations
 {
     /// <inheritdoc />
@@ -175,17 +177,50 @@ namespace KartverketGruppe5.Migrations
             migrationBuilder.InsertData(
                 table: "Bruker",
                 columns: new[] { "BrukerId", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
-                values: new object[] { 1, "ole@gmail.com", "Olsen", "Ole", new DateTime(2024, 11, 24, 14, 26, 2, 477, DateTimeKind.Utc).AddTicks(8870), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+                values: new object[] { 1, "ole@gmail.com", "Olsen", "Ole", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(1160), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
 
             migrationBuilder.InsertData(
                 table: "Saksbehandler",
                 columns: new[] { "SaksbehandlerId", "Admin", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
-                values: new object[] { 1, true, "rune@kartverket.no", "Bengtson", "Rune", new DateTime(2024, 11, 24, 14, 26, 2, 478, DateTimeKind.Utc).AddTicks(1340), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+                values: new object[] { 1, true, "rune@kartverket.no", "Bengtson", "Rune", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3750), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
 
             migrationBuilder.InsertData(
                 table: "Saksbehandler",
                 columns: new[] { "SaksbehandlerId", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
-                values: new object[] { 2, "lars@kartverket.no", "Larsen", "Lars", new DateTime(2024, 11, 24, 14, 26, 2, 478, DateTimeKind.Utc).AddTicks(1340), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+                values: new object[] { 2, "lars@kartverket.no", "Larsen", "Lars", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3750), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+
+            migrationBuilder.InsertData(
+                table: "Saksbehandler",
+                columns: new[] { "SaksbehandlerId", "Admin", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
+                values: new object[] { 3, true, "andreas@kartverket.no", "Hansen", "Andreas", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3750), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+
+            migrationBuilder.InsertData(
+                table: "Saksbehandler",
+                columns: new[] { "SaksbehandlerId", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
+                values: new object[,]
+                {
+                    { 4, "arne@kartverket.no", "Olsen", "Arne", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 5, "ronny@kartverket.no", "Larsen", "Ronny", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Saksbehandler",
+                columns: new[] { "SaksbehandlerId", "Admin", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
+                values: new object[] { 6, true, "knut@kartverket.no", "Knudsen", "Knut", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" });
+
+            migrationBuilder.InsertData(
+                table: "Saksbehandler",
+                columns: new[] { "SaksbehandlerId", "Email", "Etternavn", "Fornavn", "OpprettetDato", "Passord" },
+                values: new object[,]
+                {
+                    { 7, "ivar@kartverket.no", "Imsdal", "Ivar", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 8, "ida@kartverket.no", "Carlsen", "Ida", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 9, "caroline@kartverket.no", "Ryerson", "Caroline", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 10, "jesper@kartverket.no", "Kristiansen", "Jesper", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 11, "sandra@kartverket.no", "Bakken", "Sandra", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 12, "alex@kartverket.no", "Dale", "Alex", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" },
+                    { 13, "preben@kartverket.no", "Jensen", "Preben", new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770), "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bruker_Email",
