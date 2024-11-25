@@ -181,10 +181,8 @@
                 {
                     <text>
                     try {
-                        // Logg GeoJSON-dataen for å se hva vi får
-                        console.log('Original GeoJSON:', @Html.Raw(lokasjon.GeoJson));
-                        
-                        var existingGeoJson = @Html.Raw(lokasjon.GeoJson);  // Gå tilbake til original
+                        // Sikker håndtering av GeoJSON data
+                        var existingGeoJson = JSON.parse(@Json.Serialize(lokasjon.GeoJson));
                         console.log('Parsed GeoJSON:', existingGeoJson);
 
                         var existingLayer = L.geoJSON(existingGeoJson, {
@@ -217,7 +215,7 @@
                     <text>
                     // Legg til markør hvis ingen GeoJSON
                     var marker = L.marker([@lokasjon.Latitude, @lokasjon.Longitude]).addTo(drawnItems);
-                    marker.bindPopup('@Model.Beskrivelse').openPopup();
+                    marker.bindPopup('@JavaScriptEncoder.Default.Encode(Model.Beskrivelse)').openPopup();
                     </text>
                 }
                 </text>
