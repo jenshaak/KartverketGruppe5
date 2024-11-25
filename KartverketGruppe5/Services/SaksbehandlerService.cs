@@ -141,5 +141,18 @@ namespace KartverketGruppe5.Services
                 return false;
             }
         }
+
+        public async Task<List<Saksbehandler>> SokSaksbehandlere(string sokestreng)
+        {
+            try
+            {
+                return await _repository.SokSaksbehandlere(sokestreng);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved søk etter saksbehandlere");
+                throw;
+            }
+        }
     }
 } 

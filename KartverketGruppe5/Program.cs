@@ -34,7 +34,7 @@ builder.Services.AddScoped<ISaksbehandlerRepository, SaksbehandlerRepository>();
 builder.Services.AddScoped<IInnmeldingRepository, InnmeldingRepository>();
 builder.Services.AddScoped<IKommunePopulateRepository, KommunePopulateRepository>();
 
-// Legg til services til containeren.
+// Legger til services til containeren.
 builder.Services.AddControllersWithViews();
 
 // Konfigurer Entity Framework med MariaDB
@@ -52,7 +52,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         }
     ));
 
-// Add these lines after builder.Services.AddRazorPages();
+// Legger til sessionservice
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -75,12 +75,8 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
     .SetApplicationName("KartverketGruppe5");
 
-// Legg til HttpClient som en service
+// Legger til HttpClient som en service
 builder.Services.AddHttpClient();
-
-// Alternativt, hvis du trenger en spesifikk HttpClient for KommunePopulateService
-// builder.Services.AddHttpClient<KommunePopulateService>();
-
 
 builder.Services.AddHttpContextAccessor();
 

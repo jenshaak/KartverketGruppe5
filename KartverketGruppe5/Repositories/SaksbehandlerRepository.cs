@@ -236,5 +236,28 @@ namespace KartverketGruppe5.Repositories
             "date_asc" => "opprettetDato ASC",
             _ => "opprettetDato DESC"
         };
+
+        public async Task<List<Saksbehandler>> SokSaksbehandlere(string sokestreng)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                var sql = $@"{SELECT_SAKSBEHANDLER_BASE}
+                    WHERE LOWER(fornavn) LIKE @Sokestreng 
+                    OR LOWER(etternavn) LIKE @Sokestreng 
+                    OR LOWER(email) LIKE @Sokestreng";
+
+                return (await connection.QueryAsync<Saksbehandler>(
+                    sql, 
+                    new { Sokestreng = $"%{sokestreng.ToLower()}%" }
+                )).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Database error ved søk etter saksbehandlere med søkestreng: {Sokestreng}", 
+                    sokestreng);
+                throw;
+            }
+        }
     }
 } 

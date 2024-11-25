@@ -12,5 +12,6 @@ namespace KartverketGruppe5.Repositories.Interfaces
         Task<bool> CreateSaksbehandler(Saksbehandler saksbehandler);
         Task<bool> UpdateSaksbehandler(SaksbehandlerRegistrerViewModel saksbehandler);
         Task<bool> Delete(int saksbehandlerId);
+        Task<List<Saksbehandler>> SokSaksbehandlere(string sokestreng);
     }
 } 

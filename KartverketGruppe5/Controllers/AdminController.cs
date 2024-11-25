@@ -226,5 +226,38 @@ namespace KartverketGruppe5.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        /// <summary>
+        /// Søker etter saksbehandlere
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> SokSaksbehandlere(string sokestreng)
+        {
+            if(string.IsNullOrWhiteSpace(sokestreng))
+            {
+                return Json(new List<Saksbehandler>());
+            }
+
+            if(sokestreng.Length < 1)
+            {
+                return Json(new List<Saksbehandler>());
+            }
+
+            if(sokestreng.Length > 100)
+            {
+                sokestreng = sokestreng.Substring(0, 100);
+            }
+
+            try 
+            {
+                var saksbehandlere = await _saksbehandlerService.SokSaksbehandlere(sokestreng);
+                return Json(saksbehandlere);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved søk etter saksbehandlere");
+                return Json(new List<Saksbehandler>());
+            }
+        }
     }
 } 
