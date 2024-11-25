@@ -59,7 +59,7 @@ git clone https://github.com/jenshaak/KartverketGruppe5.git
 
 2. Naviger til prosjektmappen:
 ```bash
-cd KartverketGruppe5
+cd KartverketGruppe5/KartverketGruppe5
 ```
 
 3. Start Docker containers:
