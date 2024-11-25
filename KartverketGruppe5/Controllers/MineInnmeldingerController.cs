@@ -10,6 +10,9 @@ using KartverketGruppe5.Models.Helpers;
 
 namespace KartverketGruppe5.Controllers
 {
+    /// <summary>
+    /// Controller for innmeldinger til brukere
+    /// </summary>
     [Authorize(Roles = "Bruker")]
     public class MineInnmeldingerController : BaseController
     {
@@ -35,6 +38,9 @@ namespace KartverketGruppe5.Controllers
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
         }
 
+        /// <summary>
+        /// Viser mine innmeldinger
+        /// </summary>
         public async Task<IActionResult> Index(
             string sortOrder = DefaultSortOrder, 
             string statusFilter = "",
@@ -63,6 +69,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Viser innmelding
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Detaljer(int id)
         {
@@ -96,6 +105,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Sletter innmelding
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SlettInnmelding(int innmeldingId)
@@ -114,11 +126,14 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Endrer innmelding
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile? bilde)
         {
-            // Kjør validering først
+            // Kjører validering først
             if (!ValidateInput(innmeldingModel.Beskrivelse) || !ModelState.IsValid)
             {
                 _notificationService.AddErrorMessage("Feil ved validering av innmelding");
@@ -130,7 +145,7 @@ namespace KartverketGruppe5.Controllers
                 _logger.LogInformation("Starter endring av innmelding {InnmeldingId}. ModelBrukerId: {ModelBrukerId}", 
                     innmeldingModel.InnmeldingId, innmeldingModel.BrukerId);
 
-                // Hent den originale innmeldingen først
+                // Henter den originale innmeldingen først
                 var originalInnmelding = await _innmeldingService.GetInnmeldingById(innmeldingModel.InnmeldingId);
                 if (originalInnmelding == null)
                 {
@@ -155,7 +170,7 @@ namespace KartverketGruppe5.Controllers
                 // Sett BrukerId fra originalen
                 innmeldingModel.BrukerId = originalInnmelding.BrukerId;
 
-                // Håndter lokasjon
+                // Håndterer lokasjon
                 LokasjonViewModel? lokasjon = GetLokasjonFromRequest();
                 _logger.LogInformation("Lokasjon: {Lokasjon}", lokasjon);
                 if (lokasjon != null)
@@ -176,6 +191,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Søker etter kommuner
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> SearchKommuner(string term)
         {
@@ -191,6 +209,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Henter lokasjon fra request
+        /// </summary>
         private LokasjonViewModel? GetLokasjonFromRequest()
         {
             if (!Request.Form.TryGetValue("geoJsonInput", out var geoJson) || 
@@ -219,6 +240,9 @@ namespace KartverketGruppe5.Controllers
             };
         }
 
+        /// <summary>
+        /// Henter bruker-ID fra session
+        /// </summary>
         private int? GetBrukerIdFromSession()
         {
             var brukerId = HttpContext.Session.GetInt32(BrukerIdSessionKey);
@@ -233,6 +257,9 @@ namespace KartverketGruppe5.Controllers
             return brukerId;
         }
 
+        /// <summary>
+        /// Validerer og henter innmelding-detaljer
+        /// </summary>
         private async Task<(InnmeldingViewModel? innmelding, LokasjonViewModel? lokasjon)> ValidateAndGetInnmeldingDetails(int id, int brukerId)
         {
             try

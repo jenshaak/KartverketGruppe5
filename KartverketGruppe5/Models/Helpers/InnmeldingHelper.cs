@@ -1,5 +1,8 @@
 namespace KartverketGruppe5.Models.Helpers
 {
+    /// <summary>
+    /// Hjelpemetode for innmeldinger
+    /// </summary>
     public static class InnmeldingHelper
     {
         public static List<string> GetAllStatuses()

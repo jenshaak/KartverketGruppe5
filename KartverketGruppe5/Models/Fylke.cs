@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace KartverketGruppe5.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
+    /// <summary>
+    /// Modell for fylker
+    /// </summary>
     public class Fylke
     {
         public int FylkeId { get; set; }

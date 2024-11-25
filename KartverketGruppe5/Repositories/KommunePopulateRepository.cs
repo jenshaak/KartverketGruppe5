@@ -10,6 +10,9 @@ using KartverketGruppe5.Repositories.Interfaces;
 
 namespace KartverketGruppe5.Repositories
 {
+    /// <summary>
+    /// Repository for kommuner
+    /// </summary>
     public class KommunePopulateRepository : IKommunePopulateRepository
     {
         private readonly string _connectionString;

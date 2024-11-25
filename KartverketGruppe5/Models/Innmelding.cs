@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models
 {
+    /// <summary>
+    /// Modell for innmeldinger
+    /// </summary>
     public class Innmelding
     {
         [Key]

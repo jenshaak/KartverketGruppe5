@@ -10,6 +10,9 @@ using KartverketGruppe5.Services.Interfaces;
 using KartverketGruppe5.Repositories.Interfaces;
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for lokasjoner
+    /// </summary>
     public class LokasjonService : ILokasjonService
     {
         private readonly ILokasjonRepository _repository;

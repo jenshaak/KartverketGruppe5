@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Controllers
 {
+    /// <summary>
+    /// Controller for brukerprofil
+    /// </summary>
     public class MinProfilController : Controller
     {
         private readonly IBrukerService _brukerService;
@@ -22,6 +25,9 @@ namespace KartverketGruppe5.Controllers
             _notificationService = notificationService;
         }
 
+        /// <summary>
+        /// Viser brukerprofil
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -50,6 +56,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Oppdaterer brukerprofil
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OppdaterBruker(BrukerRequest brukerRequest)
@@ -86,7 +95,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Sletter bruker
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SlettBruker(int brukerId)

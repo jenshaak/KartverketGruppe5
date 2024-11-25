@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models.ViewModels
 {
+    /// <summary>
+    /// ViewModel for saksbehandler registrering
+    /// </summary>
     public class SaksbehandlerRegistrerViewModel
     {
         [Key]

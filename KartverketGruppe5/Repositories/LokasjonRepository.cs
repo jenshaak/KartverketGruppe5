@@ -6,6 +6,9 @@ using System.Text.Json;
 
 namespace KartverketGruppe5.Repositories
 {
+    /// <summary>
+    /// Repository for lokasjoner
+    /// </summary>
     public class LokasjonRepository : ILokasjonRepository
     {
         private readonly string _connectionString;
