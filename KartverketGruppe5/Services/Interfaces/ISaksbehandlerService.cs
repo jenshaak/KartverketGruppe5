@@ -14,4 +14,5 @@ public interface ISaksbehandlerService
     Task<bool> CreateSaksbehandler(Saksbehandler saksbehandler);
     Task<bool> UpdateSaksbehandler(SaksbehandlerRegistrerViewModel saksbehandler);
     Task<bool> DeleteSaksbehandler(int saksbehandlerId);
+    Task<List<Saksbehandler>> SokSaksbehandlere(string sokestreng);
 } 

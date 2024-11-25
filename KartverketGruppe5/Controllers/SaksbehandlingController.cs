@@ -71,6 +71,21 @@ namespace KartverketGruppe5.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchKommuner(string term)
         {
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                return Json(new List<object>());
+            }
+
+            if (term.Length < 1)
+            {
+                return Json(new List<object>());
+            }
+
+            if (term.Length > 100)
+            {
+                term = term.Substring(0, 100);
+            }
+
             try
             {
                 var kommuner = await _kommuneService.SearchKommuner(term);

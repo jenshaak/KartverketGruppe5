@@ -141,24 +141,63 @@
 @section Scripts {
     <!-- Sikker mot XSS fordi vi bruker .text() og bruker bare statisk tekst -->
     <script>
-        // Søk etter saksbehandler
         $(document).ready(function() {
             $("#saksbehandlerSearch").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("tbody tr").filter(function() {
-                    var text = $(this).find("td:first").text().toLowerCase();
-                    $(this).toggle(text.indexOf(value) > -1);
-                });
-
-                // Vis eller skjul "ingen funnet" melding
-                var visibleRows = $("tbody tr:visible").length;
-                if (visibleRows === 0) {
-                    if ($("#noResults").length === 0) {
-                        $("tbody").append('<tr id="noResults"><td colspan="5" class="px-6 py-4 text-center text-gray-500">Ingen saksbehandlere funnet</td></tr>');
-                    }
-                } else {
+                
+                // Hvis søkefeltet er tomt, vis original paginert data
+                if (!value) {
+                    $("tbody tr").show();
                     $("#noResults").remove();
+                    return;
                 }
+
+                // Gjør AJAX-kall til server for å søke
+                $.get('/Admin/SokSaksbehandlere', { sokestreng: value })
+                    .done(function(saksbehandlere) {
+                        $("tbody").empty();
+                        
+                        if (saksbehandlere.length === 0) {
+                            $("tbody").append('<tr id="noResults"><td colspan="5" class="px-6 py-4 text-center text-gray-500">Ingen saksbehandlere funnet</td></tr>');
+                        } else {
+                            saksbehandlere.forEach(function(s) {
+                                var row = `
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="font-medium text-gray-900">${s.fornavn} ${s.etternavn}</div>
+                                        </td>
+                                        <td class="max-md:hidden px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">${s.email}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full ${s.admin ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}">
+                                                ${s.admin ? "Ja" : "Nei"}
+                                            </span>
+                                        </td>
+                                        <td class="max-md:hidden px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">${new Date(s.opprettetDato).toLocaleDateString()}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm flex items-center gap-2">
+                                            <a href="/Admin/Rediger/${s.saksbehandlerId}" class="btn btn-blue">
+                                                <i class="ph ph-pencil-simple ph-lg"></i>
+                                                <p class="max-md:hidden">Rediger</p>
+                                            </a>
+                                            <form action="/Admin/SlettSaksbehandler" method="post">
+                                                <input type="hidden" name="saksbehandlerId" value="${s.saksbehandlerId}" />
+                                                <button type="submit" class="btn btn-red">
+                                                    <i class="ph ph-trash ph-lg"></i>
+                                                    <p class="max-md:hidden">Slett</p>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>`;
+                                $("tbody").append(row);
+                            });
+                        }
+                    })
+                    .fail(function(error) {
+                        console.error('Feil ved søk:', error);
+                    });
             });
         });
     </script>
