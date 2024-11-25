@@ -74,7 +74,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "ole@gmail.com",
                             Etternavn = "Olsen",
                             Fornavn = "Ole",
-                            OpprettetDato = new DateTime(2024, 11, 24, 14, 26, 2, 477, DateTimeKind.Utc).AddTicks(8870),
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(1160),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
                             Slettet = false
                         });
@@ -283,7 +283,7 @@ namespace KartverketGruppe5.Migrations
                             Email = "rune@kartverket.no",
                             Etternavn = "Bengtson",
                             Fornavn = "Rune",
-                            OpprettetDato = new DateTime(2024, 11, 24, 14, 26, 2, 478, DateTimeKind.Utc).AddTicks(1340),
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3750),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         },
                         new
@@ -293,7 +293,117 @@ namespace KartverketGruppe5.Migrations
                             Email = "lars@kartverket.no",
                             Etternavn = "Larsen",
                             Fornavn = "Lars",
-                            OpprettetDato = new DateTime(2024, 11, 24, 14, 26, 2, 478, DateTimeKind.Utc).AddTicks(1340),
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3750),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 3,
+                            Admin = true,
+                            Email = "andreas@kartverket.no",
+                            Etternavn = "Hansen",
+                            Fornavn = "Andreas",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3750),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 4,
+                            Admin = false,
+                            Email = "arne@kartverket.no",
+                            Etternavn = "Olsen",
+                            Fornavn = "Arne",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 5,
+                            Admin = false,
+                            Email = "ronny@kartverket.no",
+                            Etternavn = "Larsen",
+                            Fornavn = "Ronny",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 6,
+                            Admin = true,
+                            Email = "knut@kartverket.no",
+                            Etternavn = "Knudsen",
+                            Fornavn = "Knut",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 7,
+                            Admin = false,
+                            Email = "ivar@kartverket.no",
+                            Etternavn = "Imsdal",
+                            Fornavn = "Ivar",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 8,
+                            Admin = false,
+                            Email = "ida@kartverket.no",
+                            Etternavn = "Carlsen",
+                            Fornavn = "Ida",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3760),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 9,
+                            Admin = false,
+                            Email = "caroline@kartverket.no",
+                            Etternavn = "Ryerson",
+                            Fornavn = "Caroline",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 10,
+                            Admin = false,
+                            Email = "jesper@kartverket.no",
+                            Etternavn = "Kristiansen",
+                            Fornavn = "Jesper",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 11,
+                            Admin = false,
+                            Email = "sandra@kartverket.no",
+                            Etternavn = "Bakken",
+                            Fornavn = "Sandra",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 12,
+                            Admin = false,
+                            Email = "alex@kartverket.no",
+                            Etternavn = "Dale",
+                            Fornavn = "Alex",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770),
+                            Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                        },
+                        new
+                        {
+                            SaksbehandlerId = 13,
+                            Admin = false,
+                            Email = "preben@kartverket.no",
+                            Etternavn = "Jensen",
+                            Fornavn = "Preben",
+                            OpprettetDato = new DateTime(2024, 11, 25, 9, 12, 43, 734, DateTimeKind.Utc).AddTicks(3770),
                             Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
                         });
                 });

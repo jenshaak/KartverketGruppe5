@@ -111,6 +111,116 @@ namespace KartverketGruppe5.Data
                         Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
                         Admin = false,
                         OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 3,
+                        Fornavn = "Andreas",
+                        Etternavn = "Hansen",
+                        Email = "andreas@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = true,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 4,
+                        Fornavn = "Arne",
+                        Etternavn = "Olsen",
+                        Email = "arne@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 5,
+                        Fornavn = "Ronny",
+                        Etternavn = "Larsen",
+                        Email = "ronny@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 6,
+                        Fornavn = "Knut",
+                        Etternavn = "Knudsen",
+                        Email = "knut@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = true,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 7,
+                        Fornavn = "Ivar",
+                        Etternavn = "Imsdal",
+                        Email = "ivar@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 8,
+                        Fornavn = "Ida",
+                        Etternavn = "Carlsen",
+                        Email = "ida@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 9,
+                        Fornavn = "Caroline",
+                        Etternavn = "Ryerson",
+                        Email = "caroline@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 10,
+                        Fornavn = "Jesper",
+                        Etternavn = "Kristiansen",
+                        Email = "jesper@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 11,
+                        Fornavn = "Sandra",
+                        Etternavn = "Bakken",
+                        Email = "sandra@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 12,
+                        Fornavn = "Alex",
+                        Etternavn = "Dale",
+                        Email = "alex@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
+                    },
+                    new Saksbehandler
+                    {
+                        SaksbehandlerId = 13,
+                        Fornavn = "Preben",
+                        Etternavn = "Jensen",
+                        Email = "preben@kartverket.no",
+                        Passord = "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+                        Admin = false,
+                        OpprettetDato = DateTime.UtcNow
                     }
                 );
             });
