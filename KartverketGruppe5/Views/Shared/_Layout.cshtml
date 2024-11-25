@@ -154,12 +154,7 @@
         @RenderBody()
     </main>
     <footer class="border-t-4 border-primary">
-        <div class="w-full">
-            <img src="~/bilder/www.kartverket.no_.png" alt="Kartverket footer" class="w-full h-auto">
-        </div>
-            @* <div class="container">
-                &copy; 2024 - KartverketGruppe5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div> *@
+        <partial name="_Footer" />
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

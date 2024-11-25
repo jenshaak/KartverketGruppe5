@@ -39,7 +39,7 @@ namespace KartverketGruppe5.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(LokasjonViewModel model, string beskrivelse, IFormFile? bilde)
+        public async Task<IActionResult> MeldInn(LokasjonViewModel model, string beskrivelse, IFormFile? bilde)
         {
             try
             {

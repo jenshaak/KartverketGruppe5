@@ -109,14 +109,14 @@ namespace KartverketGruppe5.Tests.Controllers
         }
 
         [Fact]
-        public async Task Index_Post_InvalidModel_ReturnsView()
+        public async Task MeldInn_InvalidModel_ReturnsView()
         {
             // Arrange
             var model = new LokasjonViewModel();
             _sut.ModelState.AddModelError("", "Test error");
 
             // Act
-            var result = await _sut.Index(model, "test beskrivelse", null) as ViewResult;
+            var result = await _sut.MeldInn(model, "test beskrivelse", null) as ViewResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -124,7 +124,7 @@ namespace KartverketGruppe5.Tests.Controllers
         }
 
         [Fact]
-        public async Task Index_Post_ValidModel_RedirectsToMineInnmeldinger()
+        public async Task MeldInn_ValidModel_RedirectsToMineInnmeldinger()
         {
             // Arrange
             SetupSessionBrukerId(1);
@@ -146,9 +146,11 @@ namespace KartverketGruppe5.Tests.Controllers
             _innmeldingService.CreateInnmelding(
                 Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<string>(), Arg.Any<string>())
                 .Returns(Task.FromResult(1));
-                // Act
-            var result = await _sut.Index(model, beskrivelse, null);
-                // Assert
+
+            // Act
+            var result = await _sut.MeldInn(model, beskrivelse, null);
+
+            // Assert
             var redirectResult = result as RedirectToActionResult;
             redirectResult.Should().NotBeNull();
             redirectResult!.ActionName.Should().Be("Index");
