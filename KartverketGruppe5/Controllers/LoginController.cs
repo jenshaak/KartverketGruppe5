@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using KartverketGruppe5.Services.Interfaces;
 namespace KartverketGruppe5.Controllers
 {
+    /// <summary>
+    /// Controller for innlogging og registrering
+    /// </summary>
     [AllowAnonymous]
     public class LoginController : Controller
     {
@@ -36,14 +39,18 @@ namespace KartverketGruppe5.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        // GET: /Login
+        /// <summary>
+        /// Viser innloggingsiden
+        /// </summary>
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        // POST: /Login
+        /// <summary>
+        /// Håndterer innlogging
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HandleLogin([FromForm] LoginViewModel model)
@@ -52,6 +59,7 @@ namespace KartverketGruppe5.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    _notificationService.AddErrorMessage("Ugyldig modell-tilstand");
                     return View("Index", model);
                 }
 
@@ -64,17 +72,21 @@ namespace KartverketGruppe5.Controllers
                 if (loginResult != null) return loginResult;
 
                 ModelState.AddModelError("", DefaultErrorMessage);
+                _notificationService.AddErrorMessage(DefaultErrorMessage);
                 return View("Index", model);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Uventet feil under innlogging for {Email}", model.Email);
                 ModelState.AddModelError("", UnexpectedErrorMessage);
+                _notificationService.AddErrorMessage(UnexpectedErrorMessage);
                 return View("Index", model);
             }
         }
 
-        // Nye private hjelpemetoder for å dele opp loginlogikken
+        /// <summary>
+        /// Prøver innlogging som saksbehandler
+        /// </summary>
         private async Task<IActionResult?> TryLoginAsSaksbehandler(LoginViewModel model)
         {
             var saksbehandler = await _saksbehandlerService.GetSaksbehandlerByEmail(model.Email);
@@ -92,6 +104,9 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Prøver innlogging som bruker
+        /// </summary>
         private async Task<IActionResult?> TryLoginAsBruker(LoginViewModel model)
         {
             var bruker = await _brukerService.GetBrukerByEmail(model.Email);
@@ -109,12 +124,18 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Viser registrering-skjema
+        /// </summary>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        /// <summary>
+        /// Håndterer registrering
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Bruker bruker)
@@ -158,6 +179,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Håndterer utlogging
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -176,11 +200,13 @@ namespace KartverketGruppe5.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Uventet feil under utlogging");
-                // Selv om det oppstår en feil, prøver vi å redirecte til home
                 return RedirectToAction("Index", "Home");
             }
         }
 
+        /// <summary>
+        /// Signer inn en bruker
+        /// </summary>
         private async Task SignInUser(string email, int userId, string userType, 
             string fornavn, string etternavn, bool isAdmin = false)
         {
@@ -201,6 +227,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Bygger brukerklaimer
+        /// </summary>
         private List<Claim> BuildUserClaims(string email, int userId, 
             string userType, bool isAdmin)
         {
@@ -224,6 +253,9 @@ namespace KartverketGruppe5.Controllers
             return claims;
         }
 
+        /// <summary>
+        /// Signer inn med klaimer
+        /// </summary>
         private async Task SignInWithClaims(List<Claim> claims)
         {
             var claimsIdentity = new ClaimsIdentity(claims, 
@@ -233,6 +265,9 @@ namespace KartverketGruppe5.Controllers
                 new ClaimsPrincipal(claimsIdentity));
         }
 
+        /// <summary>
+        /// Setter bruker-session
+        /// </summary>
         private void SetUserSession(string userType, string fornavn, 
             string etternavn, string email, int userId, bool isAdmin)
         {

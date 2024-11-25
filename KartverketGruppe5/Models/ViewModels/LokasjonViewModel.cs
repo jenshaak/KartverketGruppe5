@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models.ViewModels
 {
+    /// <summary>
+    /// ViewModel for lokasjoner
+    /// </summary>
     public class LokasjonViewModel
     {
         public int LokasjonId { get; set; }

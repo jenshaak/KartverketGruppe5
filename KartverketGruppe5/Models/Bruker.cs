@@ -2,9 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models
 {
+    /// <summary>
+    /// Modell for brukere
+    /// </summary>
     public class Bruker
     {
-        // Krav for hvordan å legg inn informasjon
         public int BrukerId { get; set; }
         
         [Required(ErrorMessage = "Fornavn er påkrevd")]

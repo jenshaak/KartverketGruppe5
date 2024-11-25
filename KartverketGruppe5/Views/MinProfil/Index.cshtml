@@ -13,8 +13,6 @@
         </a>
         <h1 class="text-3xl font-bold mt-4 text-center">Min Profil</h1>
 
-        <partial name="_Notifications" />
-
         <!--Viser informasjon om brukeren-->
         <div class="mt-4">
             <dl class="divide-y divide-black-200">
@@ -43,9 +41,6 @@
             <i class="ph ph-pencil ph-lg"></i>
             Rediger Profil
         </button>
-
-       <!-- <a asp-action="Index" class="btn btn-blue"> -->
-          <!--  <i class="ph ph-pencil ph-lg"></i> -->
 
          <!-- Skjema for Redigering av Profil (Skjult ved først lastet) -->
         <form method="post" asp-action="OppdaterBruker" class="mt-6 hidden" id="editForm">

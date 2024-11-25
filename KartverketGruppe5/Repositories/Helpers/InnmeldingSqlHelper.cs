@@ -6,6 +6,9 @@ using KartverketGruppe5.Models.Helpers;
 
 namespace KartverketGruppe5.Repositories.Helpers
 {
+    /// <summary>
+    /// Hjelpemetode for innmeldinger
+    /// </summary>
     internal static class InnmeldingSqlHelper
     {
         internal static List<string> BuildWhereConditions(InnmeldingRequest request)

@@ -13,6 +13,9 @@ using System.Data;
 
 namespace KartverketGruppe5.Repositories
 {
+    /// <summary>
+    /// Repository for innmeldinger
+    /// </summary>
     public class InnmeldingRepository : IInnmeldingRepository
     {
         private readonly string _connectionString;

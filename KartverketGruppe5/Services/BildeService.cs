@@ -2,6 +2,9 @@ using KartverketGruppe5.Services.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for bilder
+    /// </summary>
     public class BildeService : IBildeService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

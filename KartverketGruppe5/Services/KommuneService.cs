@@ -8,6 +8,9 @@ using KartverketGruppe5.Repositories.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for kommuner
+    /// </summary>
     public class KommuneService : IKommuneService
     {
         private readonly IKommuneRepository _repository;

@@ -6,6 +6,9 @@ using Dapper;
 using KartverketGruppe5.Models.Interfaces;
 namespace KartverketGruppe5.Repositories
 {
+    /// <summary>
+    /// Repository for saksbehandlere
+    /// </summary>
     public class SaksbehandlerRepository : ISaksbehandlerRepository
     {
         private readonly string _connectionString;

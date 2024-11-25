@@ -1,5 +1,8 @@
 namespace KartverketGruppe5.Models.RequestModels
 {
+    /// <summary>
+    /// Request-modell for innmeldinger
+    /// </summary>
     public class InnmeldingRequest
     {
         public int? SaksbehandlerId { get; set; }

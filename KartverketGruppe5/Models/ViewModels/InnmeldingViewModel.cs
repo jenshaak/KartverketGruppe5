@@ -2,6 +2,9 @@ using KartverketGruppe5.Models.Helpers;
 using System.ComponentModel.DataAnnotations;
 namespace KartverketGruppe5.Models.ViewModels
 {
+    /// <summary>
+    /// ViewModel for innmeldinger
+    /// </summary>
     public class InnmeldingViewModel
     {
         public InnmeldingViewModel()

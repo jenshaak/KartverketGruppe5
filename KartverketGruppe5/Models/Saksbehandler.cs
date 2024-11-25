@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models
 {
+    /// <summary>
+    /// Modell for saksbehandlere
+    /// </summary>
     public class Saksbehandler
     {
         [Key]

@@ -6,6 +6,10 @@ using KartverketGruppe5.Models.RequestModels;
 using KartverketGruppe5.Models.Interfaces;
 using KartverketGruppe5.Services.Interfaces;
 
+
+/// <summary>
+/// Base controller for alle controllers
+/// </summary>
 public abstract class BaseController : Controller
 {
     protected readonly IInnmeldingService _innmeldingService;
@@ -19,6 +23,9 @@ public abstract class BaseController : Controller
         _notificationService = notificationService;
     }
 
+    /// <summary>
+    /// Setter opp visningsdata for innmeldinger
+    /// </summary>
     protected void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
     {
         ViewData["DateSortParam"] = sortOrder == "date_asc" ? "date_desc" : "date_asc";
@@ -29,7 +36,9 @@ public abstract class BaseController : Controller
         ViewData["Statuses"] = InnmeldingHelper.GetAllStatuses();
     }
 
-    
+    /// <summary>
+    /// Oppretter en tom paged result
+    /// </summary>
     protected PagedResult<InnmeldingViewModel> CreateEmptyPagedResult()
     {
         return new PagedResult<InnmeldingViewModel>
@@ -41,6 +50,9 @@ public abstract class BaseController : Controller
         };
     }
 
+    /// <summary>
+    /// Henter innmeldinger basert på filtre og sortering
+    /// </summary>
     protected async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(
             int? id, string sortOrder, string statusFilter, 
             string fylkeFilter, string kommuneFilter, int page, bool isBruker)
@@ -66,7 +78,8 @@ public abstract class BaseController : Controller
         return await _innmeldingService.GetInnmeldinger(request);
     }
 
-    
+    /// <summary>
+
     protected string SanitizeInput(string input)
     {
         if (string.IsNullOrEmpty(input)) return string.Empty;
@@ -80,6 +93,9 @@ public abstract class BaseController : Controller
         return input;
     }
 
+    /// <summary>
+    /// Validerer input basert på maksimal lengde
+    /// </summary>
     protected bool ValidateInput(string input, int? maxLength = 1000)
     {
         var sanitizedInput = SanitizeInput(input);

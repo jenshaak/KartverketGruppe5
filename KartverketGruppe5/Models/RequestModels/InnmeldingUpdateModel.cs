@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models.RequestModels
 {
+    /// <summary>
+    /// Request-modell for oppdatering av innmeldinger
+    /// </summary>
     public class InnmeldingUpdateModel
     {
         public int InnmeldingId { get; set; }

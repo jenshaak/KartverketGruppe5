@@ -1,7 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace KartverketGruppe5.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
+    /// <summary>
     public class Kommune
     {
         public int KommuneId { get; set; }

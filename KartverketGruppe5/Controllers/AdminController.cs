@@ -5,6 +5,10 @@ using KartverketGruppe5.Services.Interfaces;
 using KartverketGruppe5.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
+/// <summary>
+/// Controller for admin-funksjoner
+/// </summary>
+
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -27,7 +31,7 @@ namespace KartverketGruppe5.Controllers
             _logger = logger;
         }
 
-
+        /// <summary>
         [HttpGet]
         public async Task<IActionResult> Index(
             string sortOrder = PagedResult<Saksbehandler>.DefaultSortOrder, 
@@ -46,6 +50,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Setter sorteringsdata for saksbehandlere
+        /// </summary>
         private void SetSortingViewData(string sortOrder, int page)
         {
             ViewData["AdminSortParam"] = sortOrder == "admin_desc" ? "admin_asc" : "admin_desc";
@@ -54,12 +61,18 @@ namespace KartverketGruppe5.Controllers
             ViewData["CurrentPage"] = page;
         }
 
+        /// <summary>
+        /// Viser saksbehandlerregistreringsskjema
+        /// </summary>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
         
+        /// <summary>
+        /// Registrerer en ny saksbehandler
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Saksbehandler saksbehandler)
@@ -79,17 +92,21 @@ namespace KartverketGruppe5.Controllers
                 }
                 
                 ModelState.AddModelError("", "Kunne ikke opprette saksbehandler");
+                _notificationService.AddErrorMessage("Kunne ikke opprette saksbehandler");
                 return View(saksbehandler);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error creating saksbehandler: {ex.Message}");
                 ModelState.AddModelError("", "En feil oppstod ved registrering");
+                _notificationService.AddErrorMessage("En feil oppstod ved registrering");
                 return View(saksbehandler);
             }
         }
 
-
+        /// <summary>
+        /// Populerer fylker og kommuner
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PopulateFylkerOgKommuner()
@@ -108,6 +125,9 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Viser saksbehandlerredigeringsskjema
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Rediger(int id)
         {
@@ -142,6 +162,9 @@ namespace KartverketGruppe5.Controllers
             };
         }
 
+        /// <summary>
+        /// Oppdaterer en saksbehandler
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Rediger(SaksbehandlerRegistrerViewModel viewModel)
@@ -177,6 +200,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Sletter en saksbehandler
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SlettSaksbehandler(int saksbehandlerId)

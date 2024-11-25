@@ -8,6 +8,9 @@ using System.Web;
 
 namespace KartverketGruppe5.Controllers
 {
+    /// <summary>
+    /// Controller for endringer på kartet
+    /// </summary>
     [Authorize(Roles = "Bruker")]
     public class MapChangeController : BaseController
     {
@@ -27,6 +30,9 @@ namespace KartverketGruppe5.Controllers
             _bildeService = bildeService;
         }
 
+        /// <summary>
+        /// Viser kartet
+        /// </summary>
         public IActionResult Index()
         {
             var brukerId = HttpContext.Session.GetInt32("BrukerId");
@@ -37,6 +43,9 @@ namespace KartverketGruppe5.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Håndterer innmelding
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MeldInn(LokasjonViewModel model, string beskrivelse, IFormFile? bilde)
@@ -66,6 +75,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Håndterer innmelding
+        /// </summary>
         private async Task<IActionResult> ProcessInnmelding(
             LokasjonViewModel model, string beskrivelse, IFormFile? bilde, int brukerId)
         {
@@ -109,6 +121,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Validerer innmelding
+        /// </summary>
         private bool ValidateModel(LokasjonViewModel model, string beskrivelse)
         {
             if (string.IsNullOrEmpty(model.GeometriType))
@@ -131,6 +146,9 @@ namespace KartverketGruppe5.Controllers
             return ModelState.IsValid;
         }
 
+        /// <summary>
+        /// Lagrer innmelding
+        /// </summary>
         private async Task<int> SaveInnmelding(int brukerId, int kommuneId, int lokasjonId, string beskrivelse)
         {
             try
@@ -159,6 +177,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Håndterer bilde-upload
+        /// </summary>
         private async Task HandleBildeUpload(IFormFile bilde, int innmeldingId)
         {
             var bildeSti = await _bildeService.LagreBilde(bilde, innmeldingId);
@@ -168,11 +189,17 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Henter bruker-ID fra session
+        /// </summary>
         private int? GetBrukerIdFromSession()
         {
             return HttpContext.Session.GetInt32(BrukerIdSessionKey);
         }
 
+        /// <summary>
+        /// Loggir input-parametere
+        /// </summary>
         private void LogInputParameters(LokasjonViewModel model, string beskrivelse)
         {
             _logger.LogInformation(
@@ -184,6 +211,9 @@ namespace KartverketGruppe5.Controllers
                 model.GeometriType ?? "null");
         }
 
+        /// <summary>
+        /// Viser innmelding
+        /// </summary>
         public async Task<IActionResult> ViewInnmelding(int id)
         {
             var innmelding = await _innmeldingService.GetInnmeldingById(id);

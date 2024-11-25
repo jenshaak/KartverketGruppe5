@@ -10,6 +10,7 @@ using KartverketGruppe5.Models.Interfaces;
 
 namespace KartverketGruppe5.Controllers
 {
+    /// <summary>
     [Authorize(Roles = "Saksbehandler,Admin")]
     public class MineSakerController : BaseController
     {
@@ -34,6 +35,9 @@ namespace KartverketGruppe5.Controllers
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
         }
 
+        /// <summary>
+        /// Viser mine saker
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index(
             string sortOrder = DefaultSortOrder, 
@@ -65,6 +69,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Viser mine saker
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Behandle(int id)
         {
@@ -90,6 +97,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Fullfører behandling
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FullforBehandling(int innmeldingId, string kommentar, string status)
@@ -117,6 +127,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Tar opp saken igjen
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TaOppSaken(int innmeldingId, int saksbehandlerId) 
@@ -126,8 +139,10 @@ namespace KartverketGruppe5.Controllers
             return RedirectToAction("Index");
         }
 
-        // Private hjelpemetode
 
+        /// <summary>
+        /// Hjelpemetode som henter behandlingsdata
+        /// </summary>
         private async Task<(InnmeldingViewModel? innmelding, LokasjonViewModel? lokasjon)> GetBehandlingData(int id)
         {
             var innmelding = await _innmeldingService.GetInnmeldingById(id);
