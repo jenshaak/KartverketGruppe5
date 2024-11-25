@@ -34,6 +34,9 @@ builder.Services.AddScoped<ISaksbehandlerRepository, SaksbehandlerRepository>();
 builder.Services.AddScoped<IInnmeldingRepository, InnmeldingRepository>();
 builder.Services.AddScoped<IKommunePopulateRepository, KommunePopulateRepository>();
 
+// Legg til DbContext som en service
+builder.Services.AddScoped<IDbContext, DbContext>();
+
 // Legg til services til containeren.
 builder.Services.AddControllersWithViews();
 

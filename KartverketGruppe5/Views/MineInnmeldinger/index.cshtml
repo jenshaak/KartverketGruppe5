@@ -50,7 +50,7 @@
             $("#kommuneSearch").autocomplete({
                 source: function(request, response) {
                     $.ajax({
-                        url: '@Url.Action("SearchKommuner", "Saksbehandling")',
+                        url: '@Url.Action("SearchKommuner", "MineInnmeldinger")',
                         dataType: "json",
                         data: {
                             term: request.term

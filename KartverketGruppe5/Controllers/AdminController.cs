@@ -74,7 +74,7 @@ namespace KartverketGruppe5.Controllers
                 var result = await _saksbehandlerService.CreateSaksbehandler(saksbehandler);
                 if (result)
                 {
-                    TempData["Success"] = "Saksbehandler opprettet!";
+                    _notificationService.AddSuccessMessage("Saksbehandler opprettet!");
                     return RedirectToAction("Index", "Admin");
                 }
                 
@@ -97,12 +97,12 @@ namespace KartverketGruppe5.Controllers
             try
             {
                 var result = await _kommunePopulateService.PopulateFylkerOgKommuner();
-                TempData["Message"] = result;
+                _notificationService.AddSuccessMessage(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Feil under oppdatering av fylker og kommuner: {ex.Message}");
-                TempData["Error"] = "Det oppstod en feil under oppdatering av fylker og kommuner.";
+                _notificationService.AddErrorMessage("Det oppstod en feil under oppdatering av fylker og kommuner.");
             }
 
             return RedirectToAction("Index");

@@ -9,6 +9,7 @@ namespace KartverketGruppe5.Repositories
     public class SaksbehandlerRepository : ISaksbehandlerRepository
     {
         private readonly string _connectionString;
+        // private readonly IDbContext _dbContext;
         private readonly ILogger<SaksbehandlerRepository> _logger;
 
         // SQL-spørringer som konstanter for bedre vedlikehold
@@ -25,11 +26,14 @@ namespace KartverketGruppe5.Repositories
 
         public SaksbehandlerRepository(
             IConfiguration configuration, 
-            ILogger<SaksbehandlerRepository> logger)
+            ILogger<SaksbehandlerRepository> logger
+            // IDbContext dbContext
+            )
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection") 
                 ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            // _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         /// <summary>

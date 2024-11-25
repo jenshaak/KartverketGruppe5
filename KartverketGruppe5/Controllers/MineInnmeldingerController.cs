@@ -171,6 +171,21 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SearchKommuner(string term)
+        {
+            try
+            {
+                var kommuner = await _kommuneService.SearchKommuner(term);
+                return Json(kommuner.Select(k => new { id = k.KommuneId, text = k.Navn }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Feil ved søk etter kommuner");
+                return Json(new List<object>());
+            }
+        }
+
         private LokasjonViewModel? GetLokasjonFromRequest()
         {
             if (!Request.Form.TryGetValue("geoJsonInput", out var geoJson) || 

@@ -177,75 +177,419 @@
       "PackagePath": "staticwebassets\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\KartverketGruppe5.bundle.scp.css",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\KartverketGruppe5.bundle.scp.css",
       "PackagePath": "staticwebassets\\KartverketGruppe5.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\bilder\\bakgrunn-ender.png",
+      "PackagePath": "staticwebassets\\bilder\\bakgrunn-ender.png"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\bilder\\bakgrunn-skog.png",
+      "PackagePath": "staticwebassets\\bilder\\bakgrunn-skog.png"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\bilder\\bakgrunn-sno.png",
+      "PackagePath": "staticwebassets\\bilder\\bakgrunn-sno.png"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\bilder\\bakgrunn-taake.png",
+      "PackagePath": "staticwebassets\\bilder\\bakgrunn-taake.png"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\bilder\\kartverket-logo-large.svg",
+      "PackagePath": "staticwebassets\\bilder\\kartverket-logo-large.svg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\bilder\\www.kartverket.no_.png",
+      "PackagePath": "staticwebassets\\bilder\\www.kartverket.no_.png"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\justeringer.css",
+      "PackagePath": "staticwebassets\\css\\justeringer.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\komponenter.css",
+      "PackagePath": "staticwebassets\\css\\komponenter.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\oppsett.css",
+      "PackagePath": "staticwebassets\\css\\oppsett.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\css\\styles.css",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\styles.css",
       "PackagePath": "staticwebassets\\css\\styles.css"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\css\\tailwind.css",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\css\\tailwind.css",
       "PackagePath": "staticwebassets\\css\\tailwind.css"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\43_638677819093743493.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\43_638677819093743493.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\44_638677826027957895.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\44_638677826027957895.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\45_638677828926343014.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\45_638677828926343014.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\46_638677830649934990.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\46_638677830649934990.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\47_638677832555657577.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\47_638677832555657577.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\48_638677837532492410.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\48_638677837532492410.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\49_638677845730491827.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\49_638677845730491827.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\49_638677846088776480.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\49_638677846088776480.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\50_638677896405666164.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\50_638677896405666164.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\50_638677896805454954.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\50_638677896805454954.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\51_638678801823218031.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\51_638678801823218031.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\56_638678944103154930.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\56_638678944103154930.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\56_638679394179879241.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\56_638679394179879241.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\57_638678936504888446.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\57_638678936504888446.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\59_638679887410735296.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\59_638679887410735296.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\59_638679890502757174.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\59_638679890502757174.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\60_638679905938952334.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\60_638679905938952334.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\60_638679906189999620.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\60_638679906189999620.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\60_638679915357570919.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\60_638679915357570919.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\62_638679962769474569.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\62_638679962769474569.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\62_638680262515885060.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\62_638680262515885060.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\62_638680323521926332.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\62_638680323521926332.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\63_638680276906738123.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\63_638680276906738123.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\63_638680277682222973.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\63_638680277682222973.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\63_638680648841563267.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\63_638680648841563267.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\64_638680324001280641.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\64_638680324001280641.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\65_638680599084518047.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\65_638680599084518047.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\66_638680653411637389.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\66_638680653411637389.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\66_638680653763521987.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\66_638680653763521987.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\67_638680699271468685.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\67_638680699271468685.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\68_638680699639742265.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\68_638680699639742265.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\70_638680883736051459.jpg",
+      "PackagePath": "staticwebassets\\innmeldingsbilder\\70_638680883736051459.jpg"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-2\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {

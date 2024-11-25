@@ -14,17 +14,20 @@ namespace KartverketGruppe5.Controllers
         private readonly IInnmeldingService _innmeldingService;
         private readonly IBildeService _bildeService;
         private readonly ILogger<MapChangeController> _logger;
+        private readonly INotificationService _notificationService;
 
         public MapChangeController(
             ILokasjonService lokasjonService, 
             IInnmeldingService innmeldingService,
             IBildeService bildeService,
+            INotificationService notificationService,
             ILogger<MapChangeController> logger)
         {
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
             _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
             _bildeService = bildeService ?? throw new ArgumentNullException(nameof(bildeService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
         public IActionResult Index()
@@ -98,13 +101,13 @@ namespace KartverketGruppe5.Controllers
                     await HandleBildeUpload(bilde, innmeldingId);
                 }
 
-                TempData["Success"] = "Innmelding er lagret";
+                _notificationService.AddSuccessMessage("Innmelding ble sendt inn");
                 return RedirectToAction("Index", "MineInnmeldinger");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved lagring av innmelding");
-                ModelState.AddModelError("", "Kunne ikke lagre innmeldingen: " + ex.Message);
+                _notificationService.AddErrorMessage("Kunne ikke lagre innmeldingen: " + ex.Message);
                 return View(model);
             }
         }
