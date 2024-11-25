@@ -28,12 +28,12 @@
 
         <!-- Handlinger -->
         <div class="mt-8 flex flex-col gap-4 w-full">
+                @if (Model.Status != "Godkjent" && Model.Status != "Avvist")
+                {
             <form asp-action="FullforBehandling" method="post" class="flex flex-col gap-4">
                 <input type="hidden" asp-for="InnmeldingId" value="@Model.InnmeldingId" />
                 <input type="hidden" asp-for="SaksbehandlerId" value="@Model.SaksbehandlerId" />
                 
-                @if (Model.Status != "Godkjent" && Model.Status != "Avvist")
-                {
                 <div class="flex flex-col gap-2">
                     <label for="kommentar" class="font-semibold">Kommentar</label>
                     <textarea name="kommentar" id="kommentar" rows="4" 
@@ -58,15 +58,17 @@
                             Godkjenn
                         </button>
                     </div>
+                </form>
                 } else {
-                    <div class="flex gap-4 text-white">
-                        <button type="submit" name="status" value="Under behandling" 
+                    <form asp-action="TaOppSaken" method="post" class="flex gap-4 text-white">
+                        <input type="hidden" asp-for="InnmeldingId" value="@Model.InnmeldingId" />
+                        <input type="hidden" asp-for="SaksbehandlerId" value="@Model.SaksbehandlerId" />
+                        <button type="submit" 
                                 class="btn btn-primary">
                             Ta opp saken igjen
                         </button>
-                    </div>
+                    </form>
                 }
-        </form>
     </div>
 </div>
 </div>

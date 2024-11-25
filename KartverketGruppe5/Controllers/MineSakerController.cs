@@ -20,7 +20,6 @@ namespace KartverketGruppe5.Controllers
         private readonly ILokasjonService _lokasjonService;
         private readonly ISaksbehandlerService _saksbehandlerService;
         private readonly IFylkeService _fylkeService;
-        private readonly INotificationService _notificationService;
         public MineSakerController(
             IInnmeldingService innmeldingService, 
             ILokasjonService lokasjonService, 
@@ -28,12 +27,11 @@ namespace KartverketGruppe5.Controllers
             ISaksbehandlerService saksbehandlerService, 
             INotificationService notificationService,
             ILogger<MineSakerController> logger)
-            : base(innmeldingService, logger)
+            : base(innmeldingService, logger, notificationService)
         {
-            _lokasjonService = lokasjonService;
-            _saksbehandlerService = saksbehandlerService;
-            _fylkeService = fylkeService;
-            _notificationService = notificationService;
+            _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
+            _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));
+            _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
         }
 
         [HttpGet]
@@ -98,8 +96,13 @@ namespace KartverketGruppe5.Controllers
         {
             try 
             {
+                if (!ValidateInput(kommentar))
+                {
+                    return View("Behandle", await _innmeldingService.GetInnmeldingById(innmeldingId));
+                }
+
                 await _innmeldingService.UpdateStatusAndKommentar(innmeldingId, kommentar, status);
-                _notificationService.AddSuccessMessage("Innmelding fullført");
+                _notificationService.AddSuccessMessage("Innmelding behandlet");
                 return RedirectToAction("Index");
             }
             catch (KeyNotFoundException)
@@ -112,6 +115,15 @@ namespace KartverketGruppe5.Controllers
                 _notificationService.AddErrorMessage("Feil ved behandling av saken.");
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TaOppSaken(int innmeldingId, int saksbehandlerId) 
+        {
+            await _innmeldingService.UpdateStatusAndKommentar(innmeldingId, null, "Under behandling");
+            _notificationService.AddSuccessMessage("Saken er tatt opp igjen");
+            return RedirectToAction("Index");
         }
 
         // Private hjelpemetode
@@ -133,5 +145,6 @@ namespace KartverketGruppe5.Controllers
             return (innmelding, lokasjon);
         }
 
+        
     }
 }

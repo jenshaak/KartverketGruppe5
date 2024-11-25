@@ -18,8 +18,8 @@ namespace KartverketGruppe5.Tests.Controllers
 {
     public class MapChangeControllerTests
     {
-        private readonly ILokasjonService _lokasjonService;
         private readonly IInnmeldingService _innmeldingService;
+        private readonly ILokasjonService _lokasjonService;
         private readonly IBildeService _bildeService;
         private readonly ILogger<MapChangeController> _logger;
         private readonly INotificationService _notificationService;
@@ -29,8 +29,8 @@ namespace KartverketGruppe5.Tests.Controllers
 
         public MapChangeControllerTests()
    {
-       _lokasjonService = Substitute.For<ILokasjonService>();
        _innmeldingService = Substitute.For<IInnmeldingService>();
+       _lokasjonService = Substitute.For<ILokasjonService>();
        _bildeService = Substitute.For<IBildeService>();
        _notificationService = Substitute.For<INotificationService>();
        _logger = Substitute.For<ILogger<MapChangeController>>();
@@ -51,8 +51,8 @@ namespace KartverketGruppe5.Tests.Controllers
        serviceProviderMock.GetService(typeof(IUrlHelperFactory)).Returns(urlHelperFactory);
        _httpContext.RequestServices = serviceProviderMock;
         _sut = new MapChangeController(
-           _lokasjonService,
            _innmeldingService,
+           _lokasjonService,
            _bildeService,
            _notificationService,
            _logger)

@@ -10,11 +10,13 @@ public abstract class BaseController : Controller
 {
     protected readonly IInnmeldingService _innmeldingService;
     protected readonly ILogger<BaseController> _logger;
+    protected readonly INotificationService _notificationService;
 
-    public BaseController(IInnmeldingService innmeldingService, ILogger<BaseController> logger)
+    public BaseController(IInnmeldingService innmeldingService, ILogger<BaseController> logger, INotificationService notificationService)
     {
         _innmeldingService = innmeldingService;
         _logger = logger;
+        _notificationService = notificationService;
     }
 
     protected void SetupViewData(string sortOrder, string statusFilter, string fylkeFilter, string kommuneFilter)
@@ -42,25 +44,60 @@ public abstract class BaseController : Controller
     protected async Task<IPagedResult<InnmeldingViewModel>> GetInnmeldinger(
             int? id, string sortOrder, string statusFilter, 
             string fylkeFilter, string kommuneFilter, int page, bool isBruker)
+    {
+        var request = new InnmeldingRequest
         {
-            var request = new InnmeldingRequest
-            {
-                SortOrder = sortOrder,
-                StatusFilter = statusFilter,
-                FylkeFilter = fylkeFilter,
-                KommuneFilter = kommuneFilter,
-                Page = page
-            };
+            SortOrder = sortOrder,
+            StatusFilter = statusFilter,
+            FylkeFilter = fylkeFilter,
+            KommuneFilter = kommuneFilter,
+            Page = page
+        };
 
-            if (isBruker && id != null)
-            {
-                request.InnmelderBrukerId = id.Value;
-            }
-            else if (id != null)
-            {
-                request.SaksbehandlerId = id.Value;
-            }
-
-            return await _innmeldingService.GetInnmeldinger(request);
+        if (isBruker && id != null)
+        {
+            request.InnmelderBrukerId = id.Value;
         }
+        else if (id != null)
+        {
+            request.SaksbehandlerId = id.Value;
+        }
+
+        return await _innmeldingService.GetInnmeldinger(request);
+    }
+
+    
+    protected string SanitizeInput(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return string.Empty;
+
+        input = System.Web.HttpUtility.HtmlEncode(input);
+        
+        input = input.Trim();
+        
+        input = System.Text.RegularExpressions.Regex.Replace(input, @"\s+", " ");
+        
+        return input;
+    }
+
+    protected bool ValidateInput(string input, int? maxLength = 1000)
+    {
+        var sanitizedInput = SanitizeInput(input);
+
+        if (string.IsNullOrEmpty(sanitizedInput))
+        {
+            ModelState.AddModelError("", "Tekst-feltet er påkrevd");
+            _notificationService.AddErrorMessage("Tekst-feltet er påkrevd");
+            return false;
+        }
+        
+        if (input.Length > maxLength)
+        {
+            ModelState.AddModelError("", $"Tekst-feltet er for langt (max {maxLength} tegn)");
+            _notificationService.AddErrorMessage($"Tekst-feltet er for langt (max {maxLength} tegn)");
+            return false;
+        }
+
+        return true;
+    }
 } 

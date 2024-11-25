@@ -20,7 +20,6 @@ namespace KartverketGruppe5.Controllers
         private readonly ILokasjonService _lokasjonService;
         private readonly IKommuneService _kommuneService;        
         private readonly IFylkeService _fylkeService;
-        private readonly INotificationService _notificationService;
 
         public MineInnmeldingerController(
             IInnmeldingService innmeldingService, 
@@ -29,12 +28,11 @@ namespace KartverketGruppe5.Controllers
             IFylkeService fylkeService, 
             INotificationService notificationService,
             ILogger<MineInnmeldingerController> logger)
-            : base(innmeldingService, logger)
+            : base(innmeldingService, logger, notificationService)
         {
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
             _kommuneService = kommuneService ?? throw new ArgumentNullException(nameof(kommuneService));
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
-            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
         public async Task<IActionResult> Index(
@@ -120,6 +118,13 @@ namespace KartverketGruppe5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EndreInnmelding(InnmeldingViewModel innmeldingModel, IFormFile? bilde)
         {
+            // Kjør validering først
+            if (!ValidateInput(innmeldingModel.Beskrivelse) || !ModelState.IsValid)
+            {
+                _notificationService.AddErrorMessage("Feil ved validering av innmelding");
+                return View(innmeldingModel);
+            }
+
             try 
             {
                 _logger.LogInformation("Starter endring av innmelding {InnmeldingId}. ModelBrukerId: {ModelBrukerId}", 

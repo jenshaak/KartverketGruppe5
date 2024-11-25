@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ri3q8Or/kTe+siVDn5Ej4OpKH1yJ25wzGVDDxCZtxkE=",
+  "Hash": "LCpup4pewOgzD2EKRJVR8tOQ4ZAUGXN5eMz3izEgIqI=",
   "Source": "KartverketGruppe5",
   "BasePath": "_content/KartverketGruppe5",
   "Mode": "Default",
@@ -1744,6 +1744,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\innmeldingsbilder\\70_638680883736051459.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\innmeldingsbilder\\75_638681244388169252.jpg",
+      "SourceId": "KartverketGruppe5",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\",
+      "BasePath": "_content/KartverketGruppe5",
+      "RelativePath": "innmeldingsbilder/75_638681244388169252.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\innmeldingsbilder\\75_638681244388169252.jpg"
     },
     {
       "Identity": "C:\\Users\\jensh\\OneDrive\\Skrivebord\\Skole\\UiA høst 2024\\vs-24\\KartverketGruppe5\\KartverketGruppe5\\wwwroot\\js\\site.js",

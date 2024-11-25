@@ -21,7 +21,6 @@ namespace KartverketGruppe5.Controllers
         private readonly ILokasjonService _lokasjonService;
         private readonly IKommuneService _kommuneService;
         private readonly IFylkeService _fylkeService;
-        private readonly INotificationService _notificationService;
         public SaksbehandlingController(
             ISaksbehandlerService saksbehandlerService, 
             IInnmeldingService innmeldingService, 
@@ -30,13 +29,12 @@ namespace KartverketGruppe5.Controllers
             IFylkeService fylkeService, 
             ILogger<SaksbehandlingController> logger,
             INotificationService notificationService)
-            : base(innmeldingService, logger)
+            : base(innmeldingService, logger, notificationService)
         {
             _saksbehandlerService = saksbehandlerService ?? throw new ArgumentNullException(nameof(saksbehandlerService));
             _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
             _kommuneService = kommuneService ?? throw new ArgumentNullException(nameof(kommuneService));
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
-            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
         [HttpGet]
@@ -137,13 +135,13 @@ namespace KartverketGruppe5.Controllers
                 }
 
                 await _innmeldingService.UpdateInnmeldingStatus(id, saksbehandlerId, UnderBehandlingStatus);
-                _notificationService.AddSuccessMessage("Innmelding behandlet");
+                _notificationService.AddSuccessMessage("Du har blitt ansvarlig for innmeldingen");
                 return RedirectToAction("Index", "MineSaker");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Feil ved behandling av innmelding {InnmeldingId}", id);
-                _notificationService.AddErrorMessage("Feil ved behandling av innmelding");
+                _logger.LogError(ex, "Feil ved overtakelse av innmelding {InnmeldingId}", id);
+                _notificationService.AddErrorMessage("Feil ved overtakelse av innmelding");
                 return RedirectToAction("Index");
             }
         }
