@@ -1,5 +1,5 @@
 using KartverketGruppe5.Models.Helpers;
-
+using System.ComponentModel.DataAnnotations;
 namespace KartverketGruppe5.Models.ViewModels
 {
     public class InnmeldingViewModel
@@ -39,7 +39,12 @@ namespace KartverketGruppe5.Models.ViewModels
         public int BrukerId { get; set; }
         public int KommuneId { get; set; }
         public int LokasjonId { get; set; }
+
+        [Required(ErrorMessage = "Beskrivelse er påkrevd")]
+        [StringLength(1000, ErrorMessage = "Beskrivelse kan ikke være lengre enn 1000 tegn")]
         public string Beskrivelse { get; set; } = string.Empty;
+
+        [StringLength(1000, ErrorMessage = "Kommentar kan ikke være lengre enn 1000 tegn")]
         public string? Kommentar { get; set; }
         public string Status { get; set; } = "Ny";
         public DateTime OpprettetDato { get; set; }

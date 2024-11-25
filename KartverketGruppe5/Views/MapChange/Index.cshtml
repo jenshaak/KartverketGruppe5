@@ -5,7 +5,6 @@
 
 <div class="page-container bakgrunn-bilde-taake">
     <div class="relative flex flex-col gap-12 items-center justify-center bg-bg/85 rounded-xl p-8 mapChange-width">
-    <partial name="_Notifications" />
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-back">
             <i class="ph ph-arrow-left ph-lg"></i>
             Tilbake
@@ -18,8 +17,10 @@
                 <textarea 
                     id="beskrivelse" 
                     name="beskrivelse" 
-                    class="textarea" 
+                    class="textarea"
                     placeholder="Beskriv endringen du vil registrere"
+                    minlength="1"
+                    maxlength="1000"
                     required
                 ></textarea>
             </div>

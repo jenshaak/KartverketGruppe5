@@ -4,30 +4,27 @@ using KartverketGruppe5.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using KartverketGruppe5.Services.Interfaces;
+using System.Web;
+
 namespace KartverketGruppe5.Controllers
 {
     [Authorize(Roles = "Bruker")]
-    public class MapChangeController : Controller
+    public class MapChangeController : BaseController
     {
         private const string BrukerIdSessionKey = "BrukerId";
         private readonly ILokasjonService _lokasjonService;
-        private readonly IInnmeldingService _innmeldingService;
         private readonly IBildeService _bildeService;
-        private readonly ILogger<MapChangeController> _logger;
-        private readonly INotificationService _notificationService;
 
         public MapChangeController(
-            ILokasjonService lokasjonService, 
             IInnmeldingService innmeldingService,
+            ILokasjonService lokasjonService,
             IBildeService bildeService,
             INotificationService notificationService,
             ILogger<MapChangeController> logger)
+            : base(innmeldingService, logger, notificationService)
         {
-            _lokasjonService = lokasjonService ?? throw new ArgumentNullException(nameof(lokasjonService));
-            _innmeldingService = innmeldingService ?? throw new ArgumentNullException(nameof(innmeldingService));
-            _bildeService = bildeService ?? throw new ArgumentNullException(nameof(bildeService));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
+            _lokasjonService = lokasjonService;
+            _bildeService = bildeService;
         }
 
         public IActionResult Index()
@@ -48,7 +45,7 @@ namespace KartverketGruppe5.Controllers
             {
                 LogInputParameters(model, beskrivelse);
 
-                if (!ValidateInput(model, beskrivelse))
+                if (!ValidateModel(model, beskrivelse))
                 {
                     return View(model);
                 }
@@ -112,22 +109,22 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        private bool ValidateInput(LokasjonViewModel model, string beskrivelse)
+        private bool ValidateModel(LokasjonViewModel model, string beskrivelse)
         {
             if (string.IsNullOrEmpty(model.GeometriType))
             {
                 model.GeometriType = "Point";
             }
 
-            if (string.IsNullOrEmpty(beskrivelse))
+            if (!ValidateInput(beskrivelse))
             {
-                ModelState.AddModelError("", "Beskrivelse er påkrevd");
                 return false;
             }
 
             if (string.IsNullOrEmpty(model.GeoJson))
             {
-                ModelState.AddModelError("", "GeoJson data mangler");
+                ModelState.AddModelError("", "Oppmerking i kartet er påkrevd");
+                _notificationService.AddErrorMessage("Oppmerking i kartet er påkrevd");
                 return false;
             }
 
@@ -148,14 +145,16 @@ namespace KartverketGruppe5.Controllers
 
                 if (innmeldingId <= 0)
                 {
+                    _notificationService.AddErrorMessage("Klarte ikke å opprette innmelding");
                     throw new Exception("Feil ved lagring av innmelding");
                 }
-
+                
                 return innmeldingId;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Feil ved lagring av innmelding");
+                _notificationService.AddErrorMessage("Klarte ikke å opprette innmelding");
                 throw;
             }
         }
