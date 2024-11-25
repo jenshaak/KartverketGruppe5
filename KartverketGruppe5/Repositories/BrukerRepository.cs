@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace KartverketGruppe5.Repositories
 {
+    /// <summary>
+    /// Repository for brukere
+    /// </summary>
     public class BrukerRepository : IBrukerRepository
     {
         private readonly string _connectionString;

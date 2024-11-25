@@ -5,6 +5,9 @@ using Dapper;
 
 namespace KartverketGruppe5.Repositories
 {
+    /// <summary>
+    /// Repository for kommuner
+    /// </summary>
     public class KommuneRepository : IKommuneRepository
     {
         private readonly string _connectionString;

@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KartverketGruppe5.Models.RequestModels
 {
+    /// <summary>
+    /// Request-modell for brukere
+    /// </summary>
     public class BrukerRequest
     {
         [Key]

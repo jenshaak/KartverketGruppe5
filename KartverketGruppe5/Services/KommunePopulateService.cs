@@ -10,6 +10,9 @@ using KartverketGruppe5.Repositories.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for populering av kommuner
+    /// </summary>
     public class KommunePopulateService : IKommunePopulateService
     {
         private readonly HttpClient _httpClient;

@@ -2,6 +2,9 @@
 
 namespace KartverketGruppe5.Models
 {
+    /// <summary>
+    /// Modell for notifikasjonsmeldinger
+    /// </summary>
     public class NotificationMessage
     {
         public string Message { get; set; }

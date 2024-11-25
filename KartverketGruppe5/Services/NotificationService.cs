@@ -8,6 +8,9 @@ using System.Text.Json;
 
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for notifikasjoner
+    /// </summary>
     public class NotificationService : INotificationService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

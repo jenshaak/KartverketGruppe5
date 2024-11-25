@@ -5,6 +5,9 @@ using KartverketGruppe5.Services.Interfaces;
 using KartverketGruppe5.Models.RequestModels;
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for brukere
+    /// </summary>
     public class BrukerService : IBrukerService
     {
         private readonly IBrukerRepository _repository;

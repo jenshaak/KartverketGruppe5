@@ -10,6 +10,9 @@ using KartverketGruppe5.Models.Helpers;
 
 namespace KartverketGruppe5.Controllers
 {
+    /// <summary>
+    /// Controller for saksbehandling
+    /// </summary>
     [Authorize(Roles = "Saksbehandler,Admin")] 
     public class SaksbehandlingController : BaseController
     {
@@ -37,6 +40,9 @@ namespace KartverketGruppe5.Controllers
             _fylkeService = fylkeService ?? throw new ArgumentNullException(nameof(fylkeService));
         }
 
+        /// <summary>
+        /// Viser saksbehandlingssiden
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index(
             string sortOrder = DefaultSortOrder, 
@@ -59,6 +65,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Søker etter kommuner
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> SearchKommuner(string term)
         {
@@ -74,7 +83,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Viser detaljer for en innmelding
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Detaljer(int id)
         {
@@ -98,6 +109,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Videresender en innmelding
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Videresend(int innmeldingId, int saksbehandlerId)
@@ -116,6 +130,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
+        /// <summary>
+        /// Behandler en innmelding
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Behandle(int id)
@@ -146,8 +163,9 @@ namespace KartverketGruppe5.Controllers
             }
         }
 
-        // Private hjelpemetode
-
+        /// <summary>
+        /// Hjelpemetode som henter behandlingsdata
+        /// </summary>
         private async Task<(InnmeldingViewModel? innmelding, LokasjonViewModel? lokasjon, List<Saksbehandler> saksbehandlere)> 
             GetDetaljerData(int id)
         {

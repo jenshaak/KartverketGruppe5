@@ -10,6 +10,9 @@ using KartverketGruppe5.Repositories.Interfaces;
 
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for saksbehandlere
+    /// </summary>
     public class SaksbehandlerService : ISaksbehandlerService
     {
         private readonly ISaksbehandlerRepository _repository;
@@ -76,6 +79,9 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Oppretter en saksbehandler
+        /// </summary>
         public async Task<bool> CreateSaksbehandler(Saksbehandler saksbehandler)
         {
             try
@@ -92,6 +98,9 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Oppdaterer en saksbehandler
+        /// </summary>
         public async Task<bool> UpdateSaksbehandler(SaksbehandlerRegistrerViewModel saksbehandler)
         {
             try
@@ -117,6 +126,9 @@ namespace KartverketGruppe5.Services
             }
         }
 
+        /// <summary>
+        /// Sletter en saksbehandler
+        /// </summary>
         public async Task<bool> DeleteSaksbehandler(int saksbehandlerId)
         {
             try

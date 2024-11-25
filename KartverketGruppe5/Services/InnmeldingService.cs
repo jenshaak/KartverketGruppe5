@@ -10,6 +10,9 @@ using KartverketGruppe5.Repositories.Interfaces;
 using KartverketGruppe5.Models.Helpers;
 namespace KartverketGruppe5.Services
 {
+    /// <summary>
+    /// Service for innmeldinger
+    /// </summary>
     public class InnmeldingService : IInnmeldingService
     {
         private readonly IInnmeldingRepository _repository;
