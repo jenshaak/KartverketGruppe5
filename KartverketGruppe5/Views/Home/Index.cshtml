@@ -7,8 +7,6 @@
 
 <div class="w-full text-center flex flex-col items-center justify-center gap-4 bakgrunn-bilde">
     <div class="flex flex-col items-center gap-4 bg-bg/80 rounded-xl p-4">
-
-    <!-- Knapper for brukere som ikke er saksbehandlere -->
     @if (userType != "Saksbehandler")
     {
         <a asp-controller="MapChange" asp-action="Index" class="no-underline">
@@ -27,8 +25,6 @@
             </div>
         </a>
     }
-
-    <!-- Knapper for saksbehandlere -->
     else if (userType == "Saksbehandler")
     {
         <a asp-controller="Saksbehandling" asp-action="Index" class="no-underline">
@@ -47,8 +43,6 @@
                 <h3>Mine saker</h3>
             </div>
         </a>
-
-        <!-- Knapp for administrasjon -->
         @if (isAdmin)
         {
         <div class="bg-custom-gray w-4/5 h-1 rounded-full"></div>
